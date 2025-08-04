@@ -1,13 +1,15 @@
 import React from 'react';
-import { useRouteError } from 'react-router';
+import { Link, useRouteError } from 'react-router';
 import Error from '/error-page.png';
+import { IoArrowUndo } from 'react-icons/io5';
 
 const ErrorPage = () => {
     const error = useRouteError();
-    console.log(error)
     return (
-        <div className='border'>
-            <img src={Error} alt="" className='border' />
+        <div className='flex flex-col items-center justify-center gap-0'>
+            <img src={Error} alt="" className='w-fit' />
+            <p className='text-red-500'>{error.data}</p>
+            <Link to="/" className='btn bg-primary text-white'><IoArrowUndo />Back to Home</Link>
         </div>
     );
 };

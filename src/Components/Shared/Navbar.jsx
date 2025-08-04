@@ -47,7 +47,7 @@ const Navbar = () => {
     };
 
     return (
-    <div className="navbar bg-white">
+    <div className="navbar bg-secondary px-0 2xl:px-[7%] pr-1 md:pr-0">
         <div className="navbar-start">
             <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -59,7 +59,9 @@ const Navbar = () => {
                         {links}
                 </ul>
             </div>
-            <a className="btn btn-ghost text-xl">daisyUI</a>
+            <Link to="/" className='cursor-pointer'>
+                <img src="/my-hostel-logo.png" alt="" className='w-13' />
+            </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 gap-1">
@@ -71,7 +73,7 @@ const Navbar = () => {
                 <span className='absolute text-[#FF4D00] -top-2 right-1'>1</span>
                 <IoIosNotificationsOutline size={25} className='text-[#FF4D00]'/>
             </div>
-            <Link className="btn bg-[#FF4D00] text-white">Join Us</Link>
+            <Link to="/login" className="btn bg-[#FF4D00] text-white">Join Us</Link>
             <div className="relative inline-block text-left" ref={dropdownRef}>
                 {/* Avatar Button */}
                 <button
