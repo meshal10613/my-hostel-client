@@ -8,8 +8,11 @@ import LoginAnime from '../../assets/animation/Login.json';
 import Lottie from "lottie-react";
 import { Link } from "react-router";
 import { IoArrowUndo } from "react-icons/io5";
+import axios from "axios";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 export default function AuthPage() {
+    const { registerUser, updateUserProfile, setUser } = useAuthContext();
     const [isLogin, setIsLogin] = useState(true);
 
     const {
@@ -18,11 +21,49 @@ export default function AuthPage() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         if(isLogin){
             delete data.name;
-        };
-        console.log(isLogin ? "Login Data:" : "Register Data:", data);
+            console.log(data)
+        }else{
+            const formData = new FormData();
+            formData.append("image", data.image[0]);
+            const uploadKey = import.meta.env.VITE_imgbb_apikey;
+            const res = await axios.post(`https://api.imgbb.com/1/upload?key=${uploadKey}`, formData, {
+                headers: {
+                    "content-type": "multipart/form-data",
+                },
+            });
+            registerUser(data.email, data.password)
+            .then((result) => {
+                const user = result.user;
+                const creationTime = new Date(user?.metadata?.creationTime).toLocaleString();
+                const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
+                const updateData = {
+                    displayName: data.name,
+                    photoURL: res.data.data.url
+                };
+                const serverData = {
+                    displayName: data.name,
+                    email: result.user.email,
+                    photoURL: res.data.data.url,
+                    badge: "Bronze",
+                    creationTime,
+                    lastSignInTime
+                };
+                updateUserProfile(updateData)
+                .then(() => {
+                    setUser({...user, ...updateData});
+                    console.log(serverData)
+                })
+                .catch(() => {
+                    setUser(user);
+                });
+            })
+            .catch((error) => {
+                alert(error.message);
+            })
+        }
     };
 
     const slideAnimation = {
