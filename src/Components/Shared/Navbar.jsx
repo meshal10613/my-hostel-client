@@ -73,7 +73,7 @@ const Navbar = () => {
                 <span className='absolute text-[#FF4D00] -top-2 right-1'>1</span>
                 <IoIosNotificationsOutline size={25} className='text-[#FF4D00]'/>
             </div>
-            <Link to="/login" className="btn bg-[#FF4D00] text-white">Join Us</Link>
+            <Link to="/auth" className="btn bg-[#FF4D00] text-white">Join Us</Link>
             <div className="relative inline-block text-left" ref={dropdownRef}>
                 {/* Avatar Button */}
                 <button

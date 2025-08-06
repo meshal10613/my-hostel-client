@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import Facebook from '../../assets/facebook.png'
+import Facebook from '../../assets/facebook.png';
+import LoginAnime from '../../assets/animation/Login.json';
+import Lottie from "lottie-react";
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -31,23 +33,7 @@ export default function AuthPage() {
                 {/* Left Illustration */}
                 <div className="hidden md:flex md:w-1/2 items-center justify-center bg-white p-6">
                 <AnimatePresence mode="wait">
-                    {isLogin ? (
-                    <motion.img
-                        key="login-illustration"
-                        {...slideAnimation}
-                        src="https://illustrations.popsy.co/gray/laptop-working.svg"
-                        alt="Login Illustration"
-                        className="w-80"
-                    />
-                    ) : (
-                    <motion.img
-                        key="register-illustration"
-                        {...slideAnimation}
-                        src="https://illustrations.popsy.co/gray/sign-up.svg"
-                        alt="Register Illustration"
-                        className="w-80"
-                    />
-                    )}
+                    <Lottie animationData={LoginAnime} className="w-fit mx-auto"/>
                 </AnimatePresence>
                 </div>
 

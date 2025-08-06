@@ -5,6 +5,7 @@ import ErrorPage from "../Components/Shared/ErrorPage";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
 import AuthPage from "../Pages/Authentication/AuthPage";
+import Loading from "../Components/Shared/Loading";
 
 export const router = createBrowserRouter([
     {
@@ -15,16 +16,12 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home/>
+            },
+            {
+                path: "/meals",
+                element: <Loading/>
             }
         ]
-    },
-    {
-        path: "/login",
-        element: <Login/>
-    },
-    {
-        path: "/register",
-        element: <Register/>
     },
     {
         path: "/auth",
