@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaFacebook, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Facebook from '../../assets/facebook.png';
 import LoginAnime from '../../assets/animation/Login.json';
 import Lottie from "lottie-react";
+import { Link } from "react-router";
+import { IoArrowUndo } from "react-icons/io5";
 
 export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -17,6 +19,9 @@ export default function AuthPage() {
     } = useForm();
 
     const onSubmit = (data) => {
+        if(isLogin){
+            delete data.name;
+        };
         console.log(isLogin ? "Login Data:" : "Register Data:", data);
     };
 
@@ -28,169 +33,183 @@ export default function AuthPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen p-4">
-            <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden">
-                {/* Left Illustration */}
+        <div className="flex flex-col justify-center items-center min-h-screen p-4 gap-5">
+            <Link to="/" className='btn bg-white border border-primary text-primary'><IoArrowUndo />Back to Home</Link>
+            <div className="flex flex-col md:flex-row w-full mx-auto max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div className="hidden md:flex md:w-1/2 items-center justify-center bg-white p-6">
-                <AnimatePresence mode="wait">
-                    <Lottie animationData={LoginAnime} className="w-fit mx-auto"/>
-                </AnimatePresence>
+                    <AnimatePresence mode="wait">
+                        <Lottie animationData={LoginAnime} className="w-fit mx-auto"/>
+                    </AnimatePresence>
                 </div>
 
-                {/* Right Form */}
                 <div className="flex-1 p-8 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                    {isLogin ? (
-                    <motion.div
-                        key="login-form"
-                        {...slideAnimation}
-                        className="w-full max-w-sm"
-                    >
-                        <h2 className="text-2xl font-bold mb-6">Login</h2>
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        <div>
-                            <input
-                            {...register("email", { required: "Email is required" })}
-                            type="email"
-                            placeholder="Email"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.email.message}
-                            </p>
-                            )}
-                        </div>
-                        <div>
-                            <input
-                            {...register("password", { required: "Password is required" })}
-                            type="password"
-                            placeholder="Password"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            {errors.password && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.password.message}
-                            </p>
-                            )}
-                        </div>
-                        {/* <div className="flex items-center gap-2">
-                            <input type="checkbox" className="w-4 h-4" />
-                            <span className="text-sm text-gray-600">Remember me</span>
-                        </div> */}
-                        <button
-                            type="submit"
-                            className="w-full btn bg-primary text-white py-3 rounded-lg"
+                    <AnimatePresence mode="wait">
+                        {isLogin ? (
+                        // Login Form
+                        <motion.div
+                            key="login-form"
+                            {...slideAnimation}
+                            className="w-full max-w-sm"
                         >
-                            Login
-                        </button>
-                        </form>
+                            <h2 className="text-2xl font-bold mb-6">Login</h2>
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                <div>
+                                    <input
+                                    {...register("email", { required: "Email is required" })}
+                                    type="email"
+                                    placeholder="Email"
+                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.email && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.email.message}
+                                    </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input
+                                    {...register("password", { required: "Password is required" })}
+                                    type="password"
+                                    placeholder="Password"
+                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.password && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.password.message}
+                                    </p>
+                                    )}
+                                </div>
+                                {/* <div className="flex items-center gap-2">
+                                    <input type="checkbox" className="w-4 h-4" />
+                                    <span className="text-sm text-gray-600">Remember me</span>
+                                </div> */}
+                                    
+                                <button
+                                    type="submit"
+                                    className="btn w-full bg-primary text-white py-3 rounded-lg"
+                                >
+                                    Login
+                                </button>
+                            </form>
+                            {/* Social Login */}
+                            <p className="text-center text-sm my-4">Or login with</p>
+                            <div className="flex justify-center items-center gap-3">
+                                <button className="w-10 h-10 rounded-full cursor-pointer">
+                                    <FaGithub size={35} className="w-fit mx-auto" />
+                                </button>
+                                <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
+                                    <FcGoogle size={35} className="w-fit mx-auto" />
+                                </button>
+                                <button className="w-10 h-10 border text-white rounded-full cursor-pointer">
+                                    <img src={Facebook} alt="" className="w-fit" />
+                                </button>
+                            </div>
 
-                        {/* Social Login */}
-                        <p className="text-center text-sm my-4">Or login with</p>
-                        <div className="flex justify-center items-center gap-3">
-                            <button className="w-10 h-10 rounded-full cursor-pointer">
-                                <FaGithub size={35} className="w-fit mx-auto" />
-                            </button>
-                            <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
-                                <FcGoogle size={35} className="w-fit mx-auto" />
-                            </button>
-                            <button className="w-10 h-10 border text-white rounded-full">
-                                <img src={Facebook} alt="" className="w-fit" />
-                            </button>
-                        </div>
-
-                        <p className="text-center text-sm mt-4">
-                        Don’t have an account?{" "}
-                        <button
-                            onClick={() => setIsLogin(false)}
-                            className="text-primary hover:underline cursor-pointer"
-                        >
-                            Create an account
-                        </button>
-                        </p>
-                    </motion.div>
-                    ) : (
-                    <motion.div
-                        key="register-form"
-                        {...slideAnimation}
-                        className="w-full max-w-sm"
-                    >
-                        <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        <div>
-                            <input
-                            {...register("name", { required: "Name is required" })}
-                            type="text"
-                            placeholder="Your Name"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            {errors.name && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.name.message}
-                            </p>
-                            )}
-                        </div>
-                        <div>
-                            <input
-                            {...register("email", { required: "Email is required" })}
-                            type="email"
-                            placeholder="Email"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.email.message}
-                            </p>
-                            )}
-                        </div>
-                        <div>
-                            <input
-                            {...register("password", { required: "Password is required" })}
-                            type="password"
-                            placeholder="Password"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                            {errors.password && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.password.message}
-                            </p>
-                            )}
-                        </div>
-                        <button
-                            type="submit"
-                            className="w-full btn bg-primary text-white py-3 rounded-lg"
-                        >
-                            Sign Up
-                        </button>
-                        </form>
-
-                        {/* Social Register */}
-                        <p className="text-center text-sm my-4">Or sign up with</p>
-                        <div className="flex justify-center gap-3">
-                            <button className="w-10 h-10 rounded-full cursor-pointer">
-                                <FaGithub size={35} className="w-fit mx-auto" />
-                            </button>
-                            <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
-                                <FcGoogle size={35} className="w-fit mx-auto" />
-                            </button>
-                            <button className="w-10 h-10 border text-white rounded-full">
-                                <img src={Facebook} alt="" className="w-fit" />
-                            </button>
-                        </div>
-
-                        <p className="text-center text-sm mt-4">
-                            Already have an account?{" "}
+                            <p className="text-center text-sm mt-4">
+                            Don’t have an account?{" "}
                             <button
-                                onClick={() => setIsLogin(true)}
+                                onClick={() => setIsLogin(false)}
                                 className="text-primary hover:underline cursor-pointer"
                             >
-                                Login
+                                Create an account
                             </button>
-                        </p>
-                    </motion.div>
-                    )}
-                </AnimatePresence>
+                            </p>
+                        </motion.div>
+                        ) : (
+                        // Register Form
+                        <motion.div
+                            key="register-form"
+                            {...slideAnimation}
+                            className="w-full max-w-sm"
+                        >
+                            <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                <div>
+                                    <input
+                                    {...register("image", { required: "Image is required" })}
+                                    type="file"
+                                    placeholder="Your Image"
+                                    className="w-full file-inputltw1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.image && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.image.message}
+                                    </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input
+                                    {...register("name", { required: "Name is required" })}
+                                    type="text"
+                                    placeholder="Your Name"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.name && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.name.message}
+                                    </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input
+                                    {...register("email", { required: "Email is required" })}
+                                    type="email"
+                                    placeholder="Email"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.email && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.email.message}
+                                    </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <input
+                                    {...register("password", { required: "Password is required" })}
+                                    type="password"
+                                    placeholder="Password"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    />
+                                    {errors.password && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.password.message}
+                                    </p>
+                                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full btn bg-primary text-white py-2 rounded-lg"
+                                >
+                                    Sign Up
+                                </button>
+                            </form>
+
+                            {/* Social Register */}
+                            <p className="text-center text-sm my-2">Or sign up with</p>
+                            <div className="flex justify-center gap-3">
+                                <button className="w-10 h-10 rounded-full cursor-pointer">
+                                    <FaGithub size={35} className="w-fit mx-auto" />
+                                </button>
+                                <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
+                                    <FcGoogle size={35} className="w-fit mx-auto" />
+                                </button>
+                                <button className="w-10 h-10 border text-white rounded-full cursor-pointer">
+                                    <img src={Facebook} alt="" className="w-fit" />
+                                </button>
+                            </div>
+
+                            <p className="text-center text-sm mt-2">
+                                Already have an account?{" "}
+                                <button
+                                    onClick={() => setIsLogin(true)}
+                                    className="text-primary hover:underline cursor-pointer"
+                                >
+                                    Login
+                                </button>
+                            </p>
+                        </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>
