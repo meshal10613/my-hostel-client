@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, NavLink } from 'react-router';
 import Swal from 'sweetalert2';
+import useAuthContext from '../../Hooks/useAuthContext';
 
 const Navbar = () => {
+    const { user, logOut } = useAuthContext();
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef();
     const links = <>
@@ -28,7 +30,7 @@ const Navbar = () => {
     const handleLogout = () => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You will be logged out!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#FF4D00",
@@ -36,16 +38,27 @@ const Navbar = () => {
             confirmButtonText: "Yes, delete it!"
             }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success",
-                    confirmButtonColor: "#FF4D00"
-                });
+                logOut()
+                .then(() => {
+                    Swal.fire({
+                        title: "Congratulations!",
+                        text: "You have successfully logged out",
+                        icon: "success",
+                        confirmButtonColor: "#FF4D00"
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        title: "Sorry!",
+                        text: `${error.message}`,
+                        icon: "error",
+                        confirmButtonColor: "#FF4D00"
+                    });
+                })
             }
         });
     };
-
+    console.log(user)
     return (
     <div className="navbar bg-secondary px-0 2xl:px-[7%] pr-1 md:pr-0">
         <div className="navbar-start">
@@ -73,30 +86,35 @@ const Navbar = () => {
                 <span className='absolute text-[#FF4D00] -top-2 right-1'>1</span>
                 <IoIosNotificationsOutline size={25} className='text-[#FF4D00]'/>
             </div>
-            <Link to="/auth" className="btn bg-[#FF4D00] text-white">Join Us</Link>
-            <div className="relative inline-block text-left" ref={dropdownRef}>
-                {/* Avatar Button */}
-                <button
-                    onClick={() => setOpen(!open)}
-                    className="btn btn-ghost btn-circle avatar"
-                >
-                    <div className="w-10 rounded-full">
-                    <img
-                        src="https://i.pravatar.cc/100"
-                        alt="Profile"
-                    />
-                    </div>
-                </button>
+            {
+                user ?
+                <div className="relative inline-block text-left" ref={dropdownRef}>
+                    {/* Avatar Button */}
+                    <button
+                        onClick={() => setOpen(!open)}
+                        className="btn btn-ghost btn-circle avatar"
+                    >
+                        <div className="w-10 rounded-full">
+                        <img
+                            src={user?.photoURL} //https://i.pravatar.cc/100
+                            referrerPolicy='no-referrer'
+                            alt="Profile"
+                        />
+                        </div>
+                    </button>
 
-                {/* Dropdown Menu */}
-                {open && (
-                    <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 mx-auto absolute right-0">
-                        <li><Link className='hover:text-white hover:bg-[#FF4D00] cursor-auto'>Meshal</Link></li>
-                        <li><Link className='hover:text-white hover:bg-[#FF4D00]'>Dashboard</Link></li>
-                        <li><Link onClick={handleLogout} className='hover:text-white hover:bg-[#FF4D00]'>Logout</Link></li>
-                    </ul>
-                )}
-            </div>
+                    {/* Dropdown Menu */}
+                    {open && (
+                        <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 mx-auto absolute right-0">
+                            <li><Link className='hover:text-white hover:bg-[#FF4D00] cursor-auto'>{user?.displayName}</Link></li>
+                            <li><Link className='hover:text-white hover:bg-[#FF4D00]'>Dashboard</Link></li>
+                            <li><Link onClick={handleLogout} className='hover:text-white hover:bg-[#FF4D00]'>Logout</Link></li>
+                        </ul>
+                    )}
+                </div>
+                :
+                <Link to="/auth" className="btn bg-[#FF4D00] text-white">Join Us</Link>
+            }
         </div>
     </div>
     );
