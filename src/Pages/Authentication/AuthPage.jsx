@@ -10,9 +10,10 @@ import { Link } from "react-router";
 import { IoArrowUndo } from "react-icons/io5";
 import axios from "axios";
 import useAuthContext from "../../Hooks/useAuthContext";
+import Swal from "sweetalert2";
 
 export default function AuthPage() {
-    const { registerUser, updateUserProfile, setUser } = useAuthContext();
+    const { registerUser, updateUserProfile, setUser, loginUser } = useAuthContext();
     const [isLogin, setIsLogin] = useState(true);
 
     const {
@@ -24,7 +25,21 @@ export default function AuthPage() {
     const onSubmit = async(data) => {
         if(isLogin){
             delete data.name;
-            console.log(data)
+            const email = data.email;
+            const password = data.password;
+            loginUser(email, password)
+            .then((result) => {
+                const user = result.user;
+                const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
+                const serverData = {
+                    email: data.email,
+                    lastSignInTime
+                };
+                console.log(serverData);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         }else{
             const formData = new FormData();
             formData.append("image", data.image[0]);
@@ -64,6 +79,30 @@ export default function AuthPage() {
                 alert(error.message);
             })
         }
+    };
+
+    const handleGithub = () => {
+        Swal.fire({
+            title: "Sorry!",
+            text: "Github hasn't implementd yet",
+            icon: "question"
+        });
+    };
+
+    const handleGoogle = () => {
+        Swal.fire({
+            title: "Sorry!",
+            text: "Google hasn't implementd yet",
+            icon: "question"
+        });
+    };
+
+    const handleFacebook = () => {
+        Swal.fire({
+            title: "Sorry!",
+            text: "Facebook hasn't implementd yet",
+            icon: "question"
+        });
     };
 
     const slideAnimation = {
@@ -135,13 +174,13 @@ export default function AuthPage() {
                             {/* Social Login */}
                             <p className="text-center text-sm my-4">Or login with</p>
                             <div className="flex justify-center items-center gap-3">
-                                <button className="w-10 h-10 rounded-full cursor-pointer">
+                                <button onClick={handleGithub} className="w-10 h-10 rounded-full cursor-pointer">
                                     <FaGithub size={35} className="w-fit mx-auto" />
                                 </button>
-                                <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
+                                <button onClick={handleGoogle} className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
                                     <FcGoogle size={35} className="w-fit mx-auto" />
                                 </button>
-                                <button className="w-10 h-10 border text-white rounded-full cursor-pointer">
+                                <button onClick={handleFacebook} className="w-10 h-10 border text-white rounded-full cursor-pointer">
                                     <img src={Facebook} alt="" className="w-fit" />
                                 </button>
                             </div>
@@ -228,13 +267,13 @@ export default function AuthPage() {
                             {/* Social Register */}
                             <p className="text-center text-sm my-2">Or sign up with</p>
                             <div className="flex justify-center gap-3">
-                                <button className="w-10 h-10 rounded-full cursor-pointer">
+                                <button onClick={handleGithub} className="w-10 h-10 rounded-full cursor-pointer">
                                     <FaGithub size={35} className="w-fit mx-auto" />
                                 </button>
-                                <button className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
+                                <button onClick={handleGoogle} className="w-10 h-10 rounded-full group cursor-pointer shadow-2xl bg-base-100 p-0">
                                     <FcGoogle size={35} className="w-fit mx-auto" />
                                 </button>
-                                <button className="w-10 h-10 border text-white rounded-full cursor-pointer">
+                                <button onClick={handleFacebook} className="w-10 h-10 border text-white rounded-full cursor-pointer">
                                     <img src={Facebook} alt="" className="w-fit" />
                                 </button>
                             </div>
