@@ -11,10 +11,13 @@ import { IoArrowUndo } from "react-icons/io5";
 import axios from "axios";
 import useAuthContext from "../../Hooks/useAuthContext";
 import Swal from "sweetalert2";
+import useAxios from "../../Hooks/useAxios";
 
 export default function AuthPage() {
     const { registerUser, updateUserProfile, setUser, loginUser } = useAuthContext();
     const [isLogin, setIsLogin] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const axiosInstance = useAxios();
 
     const {
         register,
@@ -23,21 +26,32 @@ export default function AuthPage() {
     } = useForm();
 
     const onSubmit = async(data) => {
+        setIsLoading(true);
         if(isLogin){
             delete data.name;
             const email = data.email;
             const password = data.password;
             loginUser(email, password)
-            .then((result) => {
+            .then(async(result) => {
                 const user = result.user;
                 const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
                 const serverData = {
                     email: data.email,
                     lastSignInTime
                 };
-                console.log(serverData);
+                const userRes = await axiosInstance.post("/users", serverData);
+                if(userRes.data.modifiedCount){
+                    // navigate(from);
+                    setIsLoading(false);
+                    Swal.fire({
+                        icon: "success",
+                        title: "Congratulations!",
+                        text: `Login successfully`,
+                    });
+                };
             })
             .catch((error) => {
+                setIsLoading(false);
                 console.log(error)
             })
         }else{
@@ -50,7 +64,7 @@ export default function AuthPage() {
                 },
             });
             registerUser(data.email, data.password)
-            .then((result) => {
+            .then(async(result) => {
                 const user = result.user;
                 const creationTime = new Date(user?.metadata?.creationTime).toLocaleString();
                 const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
@@ -67,9 +81,18 @@ export default function AuthPage() {
                     lastSignInTime
                 };
                 updateUserProfile(updateData)
-                .then(() => {
+                .then(async() => {
                     setUser({...user, ...updateData});
-                    console.log(serverData)
+                    const userRes = await axiosInstance.post("/users", serverData);
+                    if(userRes.data.insertedId){
+                        // navigate(from);
+                        setIsLoading(false);
+                        Swal.fire({
+                            icon: "success",
+                            title: "Congratulations!",
+                            text: `Sign up successfully`,
+                        });
+                    };
                 })
                 .catch(() => {
                     setUser(user);
@@ -166,9 +189,14 @@ export default function AuthPage() {
                                     
                                 <button
                                     type="submit"
-                                    className="btn w-full bg-primary text-white py-3 rounded-lg"
+                                    className={`btn w-full bg-primary text-white py-3 rounded-lg
+                                        ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
                                 >
-                                    Login
+                                    {isLoading ? 
+                                    <div className="loading loading-spinner">
+
+                                    </div>
+                                    : "Login"}
                                 </button>
                             </form>
                             {/* Social Login */}
@@ -258,9 +286,14 @@ export default function AuthPage() {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full btn bg-primary text-white py-2 rounded-lg"
+                                    className={`btn w-full bg-primary text-white py-3 rounded-lg
+                                        ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
                                 >
-                                    Sign Up
+                                    {isLoading ? 
+                                    <div className="loading loading-spinner">
+
+                                    </div>
+                                    : "Signup"}
                                 </button>
                             </form>
 
