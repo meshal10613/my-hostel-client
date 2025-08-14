@@ -14,6 +14,11 @@ li a.active{
     color: white;
 }
 
+.dashlink li a.active{
+    color: white;
+    background-color: #FF4D00;
+}
+
 .background{
     background-image: url('/src/assets/meal-1.jpg');
     background-size: cover;
