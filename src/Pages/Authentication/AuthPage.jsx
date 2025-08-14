@@ -55,6 +55,11 @@ export default function AuthPage() {
             .catch((error) => {
                 setIsLoading(false);
                 console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "Sorry!",
+                    text: `${error.message}`,
+                });
             })
         }else{
             const formData = new FormData();
