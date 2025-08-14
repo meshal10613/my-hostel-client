@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import Facebook from '../../assets/facebook.png';
 import LoginAnime from '../../assets/animation/Login.json';
 import Lottie from "lottie-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { IoArrowUndo } from "react-icons/io5";
 import axios from "axios";
 import useAuthContext from "../../Hooks/useAuthContext";
@@ -18,6 +18,8 @@ export default function AuthPage() {
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const axiosInstance = useAxios();
+    const navigate = useNavigate();
+    const from = "/";
 
     const {
         register,
@@ -41,7 +43,7 @@ export default function AuthPage() {
                 };
                 const userRes = await axiosInstance.post("/users", serverData);
                 if(userRes.data.modifiedCount){
-                    // navigate(from);
+                    navigate(from);
                     setIsLoading(false);
                     Swal.fire({
                         icon: "success",
@@ -85,7 +87,7 @@ export default function AuthPage() {
                     setUser({...user, ...updateData});
                     const userRes = await axiosInstance.post("/users", serverData);
                     if(userRes.data.insertedId){
-                        // navigate(from);
+                        navigate(from);
                         setIsLoading(false);
                         Swal.fire({
                             icon: "success",
