@@ -14,7 +14,6 @@ const Navbar = () => {
         <li><NavLink to="/upcomingMels">Upcoming Meals</NavLink></li>
     </>;
 
-    // Close dropdown if clicked outside
     useEffect(() => {
         const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
