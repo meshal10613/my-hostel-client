@@ -8,7 +8,7 @@ const Banner = () => {
         console.log(banner)
     };
     return (
-        <div className='bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden'>
+        <div className='bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden mb-10'>
             <div className='flex flex-col items-center lg:items-baseline justify-baseline space-y-3'>
                 <h2 className='text-white text-6xl font-semibold'>Are you starving?</h2>
                 <p>Within a few clicks, find meals that are accessible near you</p>
