@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { CiLogout } from 'react-icons/ci';
 import { FaCreditCard, FaRegComments, FaUsers, FaUtensils } from 'react-icons/fa';
@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 import useAuthContext from '../Hooks/useAuthContext';
 
 const DashboardLayout = () => {
-    const { logOut } = useAuthContext();
-    const [dash, setDash] = useState("My Profile");
+    const { logOut, user } = useAuthContext();
 
     const handleLogout = () => {
         Swal.fire({
@@ -52,25 +51,34 @@ const DashboardLayout = () => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
         {/* Navbar */}
-            <div className="navbar bg-base-300 w-full lg:hidden">
-                <div className="flex-none">
-                    <label htmlFor="my-drawer-2" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        className="inline-block h-6 w-6 stroke-current"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                        ></path>
-                    </svg>
-                    </label>
+            <div className="navbar justify-between items-center bg-base-300 w-full">
+                <div className='flex items-center'>
+                    <div className="flex-none lg:hidden">
+                        <label htmlFor="my-drawer-2" aria-label="open sidebar" className="btn btn-square btn-ghost">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            className="inline-block h-6 w-6 stroke-current"
+                        >
+                            <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4 6h16M4 12h16M4 18h16"
+                            ></path>
+                        </svg>
+                        </label>
+                    </div>
+                    <div className="mx-1 flex-1 text-xl font-semibold">{user?.displayName}</div>
                 </div>
-                <div className="mx-2 flex-1 px-2 md:hidden">{dash}</div>
+                <Link to="/dashboard/my-profile" className="w-10 h-10 rounded-full">
+                    <img 
+                        src={user?.photoURL} 
+                        alt={user?.displayName}
+                        referrerPolicy='no-referrer'
+                        className='w-10 h-10 rounded-full'/>
+                </Link>
             </div>
             {/* page content here */}
             {/* <Outlet/> */}
@@ -86,61 +94,61 @@ const DashboardLayout = () => {
                     </Link>
                     {/* Sidebar content here */}
                     <li>
-                        <NavLink to="/dashboard/my-profile" onClick={() => setDash("My Profile")}>
+                        <NavLink to="/dashboard/my-profile">
                             <MdPerson className="inline-block mr-2" />
                             My Profile
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/requested-meals" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/requested-meals">
                             <FaUtensils className="inline-block mr-2" />
                             Requested Meals
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/my-reviews" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/my-reviews">
                             <MdRateReview className="inline-block mr-2" />
                             My Reviews
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/payment-history" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/payment-history">
                             <FaCreditCard className="inline-block mr-2" />
                             Payment History
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/manage-reviews" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/manage-reviews">
                             <FaUsers className="inline-block mr-2" />
                             Manage Users
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/add-meal" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/add-meal">
                             <GiHotMeal className="inline-block mr-2" />
                             Add Meal
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/all-meals" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/all-meals">
                             <MdFastfood  className="inline-block mr-2" />
                             All Meals
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/all-reviews" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/all-reviews">
                             <FaRegComments className="inline-block mr-2" />
                             All Reviews
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/serve-meals" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/serve-meals">
                             <GiChefToque className="inline-block mr-2" />
                             Serve Meals
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/upcoming-meals" onClick={() => setDash("My Reviews")}>
+                        <NavLink to="/dashboard/upcoming-meals">
                             <AiOutlineCalendar className="inline-block mr-2" />
                             Upcoming Meals
                         </NavLink>

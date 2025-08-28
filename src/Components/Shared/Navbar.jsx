@@ -94,11 +94,11 @@ const Navbar = () => {
                         className="btn btn-ghost btn-circle avatar"
                     >
                         <div className="w-10 rounded-full">
-                        <img
-                            src={user?.photoURL} //https://i.pravatar.cc/100
-                            referrerPolicy='no-referrer'
-                            alt="Profile"
-                        />
+                            <img
+                                src={user?.photoURL} //https://i.pravatar.cc/100
+                                referrerPolicy='no-referrer'
+                                alt="Profile"
+                            />
                         </div>
                     </button>
 
