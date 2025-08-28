@@ -105,9 +105,9 @@ const Navbar = () => {
                     {/* Dropdown Menu */}
                     {open && (
                         <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 mx-auto absolute right-0">
-                            <li><Link className='hover:text-white hover:bg-[#FF4D00] cursor-auto'>{user?.displayName}</Link></li>
-                            <li><Link to="/dashboard/my-profile" className='hover:text-white hover:bg-[#FF4D00]'>Dashboard</Link></li>
-                            <li><Link onClick={handleLogout} className='hover:text-white hover:bg-[#FF4D00]'>Logout</Link></li>
+                            <li><Link className='hover:text-white hover:bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] cursor-auto'>{user?.displayName}</Link></li>
+                            <li><Link to="/dashboard/my-profile" className='hover:text-white hover:bg-gradient-to-r from-[#FFAE00] to-[#FF8A00]'>Dashboard</Link></li>
+                            <li><Link onClick={handleLogout} className='hover:text-white hover:bg-gradient-to-r from-[#FFAE00] to-[#FF8A00]'>Logout</Link></li>
                         </ul>
                     )}
                 </div>

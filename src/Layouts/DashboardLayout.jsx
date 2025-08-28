@@ -143,7 +143,7 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <button onClick={handleLogout} className='btn bg-[#FF4D00] text-white'><CiLogout />Logout</button>
+                <button onClick={handleLogout} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'><CiLogout />Logout</button>
             </div>
         </div>
     </div>
