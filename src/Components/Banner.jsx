@@ -17,7 +17,7 @@ const Banner = () => {
                     <button type="submit" className='btn bg-gradient-to-r from-[#FF7A7A] to-[#F65900] text-white'>Find Food</button>
                 </form>
             </div>
-            <img src={BannerImage} alt="Banner Image" className='w-fit absolute -bottom-10 right-20 hidden lg:block' />
+            <img src={BannerImage} alt="Banner Image" className='w-fit absolute -bottom-10 right-0 xl:right-20 hidden lg:block' />
         </div>
     );
 };
