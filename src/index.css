@@ -15,9 +15,19 @@ li a.active{
     color: white;
 }
 
+li a:hover{
+    background: linear-gradient(to right, #FFAE00, #FF8A00);
+    color: white;
+}
+
 .dashlink li a.active{
     color: white;
     background: linear-gradient(to right, #FFAE00, #FF8A00);
+}
+
+.dashlink li a:hover{
+    background: linear-gradient(to right, #FFAE00, #FF8A00);
+    color: white;
 }
 
 .background{
