@@ -46,6 +46,9 @@ const DashboardLayout = () => {
 
     return (
     <div className="drawer lg:drawer-open">
+        {/* <Helmet>
+            <title>Dashboard</title>
+        </Helmet> */}
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
         {/* Navbar */}
