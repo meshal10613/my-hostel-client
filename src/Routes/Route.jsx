@@ -15,6 +15,7 @@ import AllMeals from "../Pages/Dashboard/AllMeals";
 import AllReviews from "../Pages/Dashboard/AllReviews";
 import ServeMeals from "../Pages/Dashboard/ServeMeals";
 import UpcomingMeals from "../Pages/Dashboard/UpcomingMeals";
+import EditProfile from "../Pages/Dashboard/EditProfile";
 
 export const router = createBrowserRouter([
     {
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
             {
                 path: "upcoming-meals",
                 element: <UpcomingMeals/>
+            },
+            {
+                path: "edit-profile",
+                element: <EditProfile/>
             }
         ]
     }
