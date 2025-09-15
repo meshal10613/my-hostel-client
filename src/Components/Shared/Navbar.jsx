@@ -71,8 +71,9 @@ const Navbar = () => {
                         {links}
                 </ul>
             </div>
-            <Link to="/" className='cursor-pointer'>
-                <img src="/my-hostel-logo.png" alt="" className='w-13' />
+            <Link to="/" className='cursor-pointer flex items-center gap-2'>
+                <img src="/logo.png" alt="" className='w-10' />
+                <h2 className='text-2xl font-bold text-[#F17228]'>food<span className='text-[#FFB30E]'>wagon</span></h2>
             </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

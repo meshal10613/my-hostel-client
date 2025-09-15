@@ -89,9 +89,9 @@ const DashboardLayout = () => {
             <div className='menu bg-base-200 text-base-content min-h-full w-64 2xl:w-80 flex flex-col justify-between p-4 '>
                 <ul className="dashlink">
                     {/* <Logo/> */}
-                    <Link to="/" className='cursor-pointer flex items-center justify-center gap-3 hover:bg-base-300 rounded-xl'>
-                        <img src="/my-hostel-logo.png" alt="" className='w-13' />
-                        <h2 className='text-2xl font-semibold'>My Hostel</h2>
+                    <Link to="/" className='cursor-pointer flex items-center justify-center gap-2 py-3'>
+                        <img src="/logo.png" alt="" className='w-10' />
+                        <h2 className='text-2xl font-bold text-[#F17228]'>food<span className='text-[#FFB30E]'>wagon</span></h2>
                     </Link>
                     {/* Sidebar content here */}
                     <li>
