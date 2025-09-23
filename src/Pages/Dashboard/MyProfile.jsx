@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 
 const MyProfile = () => {
     const { user } = useAuthContext();
+    console.log(user)
     if(!user){
         return <Loading/>;
     };
@@ -16,7 +17,7 @@ const MyProfile = () => {
                 <title>Dashboard | My Profile</title>
                 <meta name="description" content="User dashboard my profile page" />
             </Helmet>
-            <div className='bg-base-200 m-2 lg:m-5 p-5 rounded-2xl flex items-center justify-between gap-5'>
+            <div className='bg-base-200 m-2 lg:m-5 p-5 rounded-2xl flex flex-col items-center justify-between gap-5 max-w-2xl'>
                 <div>
                     <img src={user?.photoURL} alt="" className='w-20 h-20 rounded-full' />
                 </div>

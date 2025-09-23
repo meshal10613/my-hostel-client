@@ -9,7 +9,7 @@ import play from '../assets/install/play.png';
 const Instal = () => {
     return (
         <div className='bg-[#FEEFD0] mb-10 pt-20'>
-            <div className='bg-white w-fit mx-auto flex flex-col md:flex-row items-center justify-center p-5 lg:p-10 rounded-3xl shadow-xl mb-10'>
+            <div className='bg-white w-fit mx-auto flex flex-col md:flex-row items-center justify-center p-5 lg:p-10 rounded-3xl shadow-xl mb-10 lg:mb-20'>
                 <div className='flex items-center gap-2'>
                     <img src={discount} alt="discount" className='w-24 md:w-28' />
                     <h2 className='text-2xl font-bold bg-gradient-to-r from-[#FB3C00] to-[#FFB800] bg-clip-text text-transparent'>Daily <br /> Discounts</h2>
