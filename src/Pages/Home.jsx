@@ -3,6 +3,7 @@ import Banner from '../Components/Banner';
 import HowItWorks from '../Components/HowItWorks';
 import ProceedToPower from '../Components/ProceedToPower';
 import Instal from '../Components/Instal';
+import Footer from '../Components/Shared/Footer';
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
             <HowItWorks/>
             <ProceedToPower/>
             <Instal/>
+            <Footer/>
         </div>
     );
 };

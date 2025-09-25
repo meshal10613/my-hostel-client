@@ -30,6 +30,9 @@ export const router = createBrowserRouter([
             {
                 path: "/meals",
                 element: <Loading/>
+            },
+            {
+                path: "/upcomingMeals",
             }
         ]
     },
