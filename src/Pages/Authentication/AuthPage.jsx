@@ -34,15 +34,15 @@ export default function AuthPage() {
             const email = data.email;
             const password = data.password;
             loginUser(email, password)
-            .then(async(result) => {
-                const user = result.user;
-                const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
+            .then(async() => {
+                // const user = result.user;
+                // const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
                 const serverData = {
                     email: data.email,
-                    lastSignInTime
+                    // lastSignInTime
                 };
                 const userRes = await axiosInstance.post("/users", serverData);
-                if(userRes.data.modifiedCount){
+                if(userRes.status === 200){
                     navigate(from);
                     setIsLoading(false);
                     Swal.fire({
