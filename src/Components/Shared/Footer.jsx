@@ -40,9 +40,9 @@ const Footer = () => {
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>FOLLOW US</h2>
                     <div className='flex items-center gap-3'>
-                        <a href="" target="_blank" rel="noopener noreferrer"><FaFacebook size={20} /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><FaGithub size={20} /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><FaLinkedin size={20} /></a>
+                        <a href="https://www.facebook.com/meshal.67" target="_blank" rel="noopener noreferrer"><FaFacebook size={20} /></a>
+                        <a href="https://github.com/meshal10613" target="_blank" rel="noopener noreferrer"><FaGithub size={20} /></a>
+                        <a href="https://www.linkedin.com/in/10613-meshal" target="_blank" rel="noopener noreferrer"><FaLinkedin size={20} /></a>
                     </div>
                     <p>Receive exclusive offers in your mailbox</p>
                     <form className="flex items-center space-x-2 bg-transparent py-4">

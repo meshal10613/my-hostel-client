@@ -12,7 +12,6 @@ const Home = () => {
             <HowItWorks/>
             <ProceedToPower/>
             <Instal/>
-            <Footer/>
         </div>
     );
 };

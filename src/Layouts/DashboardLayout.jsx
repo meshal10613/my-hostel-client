@@ -86,7 +86,7 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-            <div className='menu bg-base-200 text-base-content min-h-full w-64 2xl:w-80 flex flex-col justify-between p-4 '>
+            <div className='menu bg-base-200 text-base-content min-h-full w-64 2xl:w-80 flex flex-col justify-between py-4 pl-4 pr-0'>
                 <ul className="dashlink">
                     {/* <Logo/> */}
                     <Link to="/" className='cursor-pointer flex items-center justify-center gap-2 py-3'>
@@ -155,7 +155,7 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <button onClick={handleLogout} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'><CiLogout />Logout</button>
+                <button onClick={handleLogout} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white rounded-tl-3xl rounded-bl-3xl rounded-tr-none rounded-br-none'><CiLogout />Logout</button>
             </div>
         </div>
     </div>
