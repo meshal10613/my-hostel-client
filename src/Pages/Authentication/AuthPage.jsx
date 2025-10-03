@@ -42,7 +42,7 @@ export default function AuthPage() {
                     // lastSignInTime
                 };
                 const userRes = await axiosInstance.post("/users", serverData);
-                if(userRes.status === 200){
+                if(userRes.status === 200 && userRes.statusText ==="OK"){
                     navigate(from);
                     setIsLoading(false);
                     Swal.fire({
@@ -91,7 +91,8 @@ export default function AuthPage() {
                 .then(async() => {
                     setUser({...user, ...updateData});
                     const userRes = await axiosInstance.post("/users", serverData);
-                    if(userRes.data.insertedId){
+                    console.log(userRes)
+                    if(userRes.status === 200 && userRes.statusText ==="OK"){
                         navigate(from);
                         setIsLoading(false);
                         Swal.fire({
