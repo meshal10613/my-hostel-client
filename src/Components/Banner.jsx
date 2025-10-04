@@ -14,7 +14,7 @@ const Banner = () => {
                 <p>Within a few clicks, find meals that are accessible near you</p>
                 <form onSubmit={handleBannerSearch} className='bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5'>
                     <input type="text" name="banner" id="" placeholder='Search Your Meal' className='flex-1 bg-gray-100 h-10 rounded-md pl-3' required />
-                    <button type="submit" className='btn bg-gradient-to-r from-[#FF7A7A] to-[#F65900] text-white'>Find Food</button>
+                    <button type="submit" className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'>Find Food</button>
                 </form>
             </div>
             <img src={BannerImage} alt="Banner Image" className='w-fit absolute -bottom-10 right-0 xl:right-20 hidden lg:block' />

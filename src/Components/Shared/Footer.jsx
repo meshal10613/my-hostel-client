@@ -2,8 +2,10 @@ import React from 'react';
 import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import { Link } from 'react-router';
+import useAuthContext from '../../Hooks/useAuthContext';
 
 const Footer = () => {
+    const { user } = useAuthContext();
     return (
         <div className='bg-black py-10 px-0 2xl:px-[7%]'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around gap-10 lg:gap-0 pl-5 lg:pl-0'>
@@ -11,29 +13,32 @@ const Footer = () => {
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Company</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/">Home</Link>
-                        <Link to="/meals">Meals</Link>
-                        <Link to="/upcomingMeals">Upcoming Meals</Link>
-                        <Link to="/">Dashboard</Link>
+                        <Link to="/" className='link-hover'>Home</Link>
+                        <Link to="/meals" className='link-hover'>Meals</Link>
+                        <Link to="/upcomingMeals" className='link-hover'>Upcoming Meals</Link>
+                        {
+                            user && 
+                            <Link to="/dashboard/my-profile" className='link-hover'>Dashboard</Link>
+                        }
                     </div>
                 </div>
                 {/* Contact */}
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Contact</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/">Help & Support</Link>
-                        <Link to="/">Partner with us</Link>
-                        <Link to="/">Ride with us</Link>
+                        <Link to="/" className='link-hover'>Help & Support</Link>
+                        <Link to="/" className='link-hover'>Partner with us</Link>
+                        <Link to="/" className='link-hover'>Ride with us</Link>
                     </div>
                 </div>
                 {/* Legal */}
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Legal</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/">Terms & Conditions</Link>
-                        <Link to="/">Refund & Cancellation</Link>
-                        <Link to="/">Privacy Policy</Link>
-                        <Link to="/">Cookie Policy</Link>
+                        <Link to="/" className='link-hover'>Terms & Conditions</Link>
+                        <Link to="/" className='link-hover'>Refund & Cancellation</Link>
+                        <Link to="/" className='link-hover'>Privacy Policy</Link>
+                        <Link to="/" className='link-hover'>Cookie Policy</Link>
                     </div>
                 </div>
                 {/* Follow Us */}

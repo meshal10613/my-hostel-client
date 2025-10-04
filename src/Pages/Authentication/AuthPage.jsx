@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import useAxios from "../../Hooks/useAxios";
 
 export default function AuthPage() {
-    const { registerUser, updateUserProfile, setUser, loginUser } = useAuthContext();
+    const { user, registerUser, updateUserProfile, setUser, loginUser } = useAuthContext();
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const axiosInstance = useAxios();
@@ -26,6 +26,10 @@ export default function AuthPage() {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    if(user){
+        navigate(from);
+    };
 
     const onSubmit = async(data) => {
         setIsLoading(true);
@@ -169,7 +173,7 @@ export default function AuthPage() {
                                     {...register("email", { required: "Email is required" })}
                                     type="email"
                                     placeholder="Email"
-                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary"
                                     />
                                     {errors.email && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -182,7 +186,7 @@ export default function AuthPage() {
                                     {...register("password", { required: "Password is required" })}
                                     type="password"
                                     placeholder="Password"
-                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary"
                                     />
                                     {errors.password && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -197,7 +201,7 @@ export default function AuthPage() {
                                     
                                 <button
                                     type="submit"
-                                    className={`btn w-full bg-primary text-white py-3 rounded-lg
+                                    className={`btn w-full bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg
                                         ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
                                 >
                                     {isLoading ? 
@@ -245,7 +249,7 @@ export default function AuthPage() {
                                     {...register("image", { required: "Image is required" })}
                                     type="file"
                                     placeholder="Your Image"
-                                    className="w-full file-inputltw1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full file-inputltw1 p-2 border rounded-lg focus:outline-none  focus:border-primary"
                                     />
                                     {errors.image && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -258,7 +262,7 @@ export default function AuthPage() {
                                     {...register("name", { required: "Name is required" })}
                                     type="text"
                                     placeholder="Your Name"
-                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
                                     />
                                     {errors.name && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -271,7 +275,7 @@ export default function AuthPage() {
                                     {...register("email", { required: "Email is required" })}
                                     type="email"
                                     placeholder="Email"
-                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
                                     />
                                     {errors.email && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -284,7 +288,7 @@ export default function AuthPage() {
                                     {...register("password", { required: "Password is required" })}
                                     type="password"
                                     placeholder="Password"
-                                    className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
                                     />
                                     {errors.password && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -294,7 +298,7 @@ export default function AuthPage() {
                                 </div>
                                 <button
                                     type="submit"
-                                    className={`btn w-full bg-primary text-white py-3 rounded-lg
+                                    className={`btn w-full bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg
                                         ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}
                                 >
                                     {isLoading ? 
