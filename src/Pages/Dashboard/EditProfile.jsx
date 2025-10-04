@@ -20,19 +20,19 @@ const EditProfile = () => {
     
     return (
     <div className="card w-96 bg-base-100 rounded-2xl shadow-xl mx-auto mt-10 relative">
-        <Link to="/dashboard/my-profile" className='btn bg-base-100 border-none w-fit abosolute top-0 left-0 text-primary'>
-            <TiArrowBackOutline size={25} />
+        <Link to="/dashboard/my-profile" className='btn bg-transparent text-primary border-none w-fit abosolute top-0 left-0'>
+            <TiArrowBackOutline size={25} className='transition-all hover:scale-110' />
         </Link>
         <p 
-            className={`absolute top-0 right-0 ${user?.emailVerified ? "bg-green-500" : "bg-red-500"} text-white rounded-tr-2xl p-1`}
+            className={`absolute top-0 right-0 ${user?.emailVerified ? "bg-green-500" : "bg-gradient-to-r from-[#FFAE00] to-[#FF8A00]"} text-white rounded-tr-2xl p-1`}
             >
             {user?.emailVerified ? "Verified" : "Not Verified"}
         </p>
         <figure className="px-10 pt-10">
             <img
-            src={user?.photoURL || "https://via.placeholder.com/150"}
-            alt="Profile"
-            className="rounded-full w-24 h-24 object-cover"
+                src={user?.photoURL || "https://via.placeholder.com/150"}
+                alt="Profile"
+                className="rounded-full w-24 h-24 object-cover"
             />
         </figure>
         <form onSubmit={handleEditProfile} className="card-body items-center text-center">
@@ -44,7 +44,7 @@ const EditProfile = () => {
                     name='displayName'
                     value={user?.displayName}
                     onChange={(e) => (e.target.displayName = e.target.value)}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full border rounded-lg focus:outline-none focus:border-primary"
                     placeholder='Enter Your Name'
                 />
             </div>
@@ -57,7 +57,7 @@ const EditProfile = () => {
                     name='email'
                     value={user?.email}
                     onChange={(e) => (e.target.email = e.target.value)}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full border rounded-lg focus:outline-none focus:border-primary"
                     placeholder='Enter Your Email'
                     readOnly
                 />
@@ -70,7 +70,7 @@ const EditProfile = () => {
                     type='file'
                     name='photoURL'
                     onChange={(e) => (e.target.photoURL = e.target.value)}
-                    className="file-input input-bordered w-full"
+                    className="file-input input-bordered w-full border rounded-lg focus:outline-none focus:border-primary"
                 />
             </div>
 
@@ -82,7 +82,7 @@ const EditProfile = () => {
                     name='phoneNumber'
                     value={user?.phoneNumber}
                     onChange={(e) => (e.target.phoneNumber = e.target.value)}
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full border rounded-lg focus:outline-none focus:border-primary"
                     placeholder='Enter Your Phone Number'
                 />
             </div>

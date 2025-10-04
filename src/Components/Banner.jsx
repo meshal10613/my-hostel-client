@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BannerImage from '../assets/Banner.png'
 
 const Banner = () => {
+    const [err, setErr] = useState(false);
     const handleBannerSearch = (e) => {
         e.preventDefault();
         const banner = e.target.banner.value;
+        if(!banner){
+            return setErr(true);
+        };
+        setErr(false);
         console.log(banner)
     };
     return (
@@ -13,7 +18,10 @@ const Banner = () => {
                 <h2 className='text-white text-5xl md:text-6xl font-semibold'>Are you starving?</h2>
                 <p>Within a few clicks, find meals that are accessible near you</p>
                 <form onSubmit={handleBannerSearch} className='bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5'>
-                    <input type="text" name="banner" id="" placeholder='Search Your Meal' className='flex-1 bg-gray-100 h-10 rounded-md pl-3' required />
+                    <input 
+                        type="text" name="banner" id="" 
+                        placeholder={err ? "Please Enter Your Meal...." : 'Search Your Meal'} 
+                        className='flex-1 bg-gray-100 h-10 rounded-md pl-3 focus:border-2 focus:border-primary focus:outline-none' />
                     <button type="submit" className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'>Find Food</button>
                 </form>
             </div>
