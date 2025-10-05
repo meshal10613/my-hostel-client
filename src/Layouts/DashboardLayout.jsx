@@ -4,13 +4,18 @@ import { CiLogout } from 'react-icons/ci';
 import { FaCreditCard, FaRegComments, FaUsers, FaUtensils } from 'react-icons/fa';
 import { GiChefToque, GiHotMeal } from 'react-icons/gi';
 import { MdFastfood, MdPerson, MdRateReview } from 'react-icons/md';
-import { Link, NavLink, Outlet } from 'react-router';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuthContext from '../Hooks/useAuthContext';
 import { Helmet } from 'react-helmet';
 
 const DashboardLayout = () => {
     const { logOut, user } = useAuthContext();
+    const navigate = useNavigate();
+
+    if(!user){
+        return navigate("/");
+    };
 
     const handleLogout = () => {
         Swal.fire({
@@ -18,18 +23,19 @@ const DashboardLayout = () => {
             text: "You will be logged out!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#FF4D00",
-            cancelButtonColor: "#1F3A93",
+            confirmButtonColor: "#FFAE00",
+            cancelButtonColor: "red",
             confirmButtonText: "Yes, Logout!"
             }).then((result) => {
             if (result.isConfirmed) {
                 logOut()
                 .then(() => {
+                    navigate("/");
                     Swal.fire({
                         title: "Congratulations!",
                         text: "You have successfully logged out",
                         icon: "success",
-                        confirmButtonColor: "#FF4D00"
+                        confirmButtonColor: "#FFAE00"
                     });
                 })
                 .catch((error) => {
@@ -37,7 +43,7 @@ const DashboardLayout = () => {
                         title: "Sorry!",
                         text: `${error.message}`,
                         icon: "error",
-                        confirmButtonColor: "#FF4D00"
+                        confirmButtonColor: "#FFAE00"
                     });
                 })
             }

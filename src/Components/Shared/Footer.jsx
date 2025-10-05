@@ -3,9 +3,20 @@ import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 import { Link } from 'react-router';
 import useAuthContext from '../../Hooks/useAuthContext';
+import Swal from 'sweetalert2';
 
 const Footer = () => {
     const { user } = useAuthContext();
+    const handleSubscribe = (e) => {
+        e.preventDefault();
+        // const email = e.target.email.value;
+        Swal.fire({
+            icon: "success",
+            title: "Congratulations!",
+            text: `thank you for subscribing`,
+            confirmButtonColor: "#FFAE00"
+        });
+    };
     return (
         <div className='bg-black py-10 px-0 2xl:px-[7%]'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around gap-10 lg:gap-0 pl-5 lg:pl-0'>
@@ -50,11 +61,12 @@ const Footer = () => {
                         <a href="https://www.linkedin.com/in/10613-meshal" target="_blank" rel="noopener noreferrer"><FaLinkedin size={20} /></a>
                     </div>
                     <p>Receive exclusive offers in your mailbox</p>
-                    <form className="flex items-center space-x-2 bg-transparent py-4">
+                    <form onSubmit={handleSubscribe} className="flex items-center space-x-2 bg-transparent py-4">
                         <div className="flex items-center bg-gray-800 text-white px-4 py-2 rounded-md w-full max-w-xs shadow-inner">
                             <FiMail className="text-gray-400 mr-2" />
                             <input
                                 type="email"
+                                name='email'
                                 placeholder={`Enter Your email`}
                                 className="bg-transparent focus:outline-none w-full placeholder:text-gray-400"
                             />

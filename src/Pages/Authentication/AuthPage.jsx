@@ -103,6 +103,7 @@ export default function AuthPage() {
                             icon: "success",
                             title: "Congratulations!",
                             text: `Sign up successfully`,
+                            confirmButtonColor: "#FFAE00"
                         });
                     };
                 })
@@ -111,7 +112,12 @@ export default function AuthPage() {
                 });
             })
             .catch((error) => {
-                alert(error.message);
+                Swal.fire({
+                    icon: "error",
+                    title: "Sorry!",
+                    text: `${error.message}`,
+                    confirmButtonColor: "#FFAE00"
+                });
             })
         }
     };
@@ -120,7 +126,8 @@ export default function AuthPage() {
         Swal.fire({
             title: "Sorry!",
             text: "Github hasn't implementd yet",
-            icon: "question"
+            icon: "question",
+            confirmButtonColor: "#FFAE00"
         });
     };
 
@@ -128,7 +135,8 @@ export default function AuthPage() {
         Swal.fire({
             title: "Sorry!",
             text: "Google hasn't implementd yet",
-            icon: "question"
+            icon: "question",
+            confirmButtonColor: "#FFAE00"
         });
     };
 
@@ -136,7 +144,8 @@ export default function AuthPage() {
         Swal.fire({
             title: "Sorry!",
             text: "Facebook hasn't implementd yet",
-            icon: "question"
+            icon: "question",
+            confirmButtonColor: "#FFAE00"
         });
     };
 
@@ -149,7 +158,9 @@ export default function AuthPage() {
 
     return (
         <div className="flex flex-col justify-center items-center min-h-screen p-4 gap-5">
-            <Link to="/" className='btn bg-white border border-primary text-primary'><IoArrowUndo />Back to Home</Link>
+            <Link to="/" className='btn bg-white border border-primary text-primary transition-all hover:bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] hover:border-none hover:text-white'>
+                <IoArrowUndo />Back to Home
+            </Link>
             <div className="flex flex-col md:flex-row w-full mx-auto max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden">
                 <div className="hidden md:flex md:w-1/2 items-center justify-center bg-white p-6">
                     <AnimatePresence mode="wait">

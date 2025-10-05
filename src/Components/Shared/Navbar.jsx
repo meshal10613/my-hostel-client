@@ -32,8 +32,8 @@ const Navbar = () => {
             text: "You will be logged out!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#FF4D00",
-            cancelButtonColor: "#1F3A93",
+            confirmButtonColor: "#FFAE00",
+            cancelButtonColor: "red",
             confirmButtonText: "Yes, Logout!"
             }).then((result) => {
             if (result.isConfirmed) {
@@ -43,7 +43,7 @@ const Navbar = () => {
                         title: "Congratulations!",
                         text: "You have successfully logged out",
                         icon: "success",
-                        confirmButtonColor: "#FF4D00"
+                        confirmButtonColor: "#FFAE00"
                     });
                 })
                 .catch((error) => {
@@ -51,7 +51,7 @@ const Navbar = () => {
                         title: "Sorry!",
                         text: `${error.message}`,
                         icon: "error",
-                        confirmButtonColor: "#FF4D00"
+                        confirmButtonColor: "#FFAE00"
                     });
                 })
             }
