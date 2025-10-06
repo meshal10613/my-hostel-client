@@ -4,14 +4,16 @@ import HowItWorks from '../Components/HowItWorks';
 import ProceedToPower from '../Components/ProceedToPower';
 import Instal from '../Components/Instal';
 import Footer from '../Components/Shared/Footer';
+import Membership from '../Components/Membership';
 
 const Home = () => {
     return (
         <div>
             <Banner/>
-            <HowItWorks/>
             <ProceedToPower/>
-            <Instal/>
+            <HowItWorks/>
+            <Membership/>
+            {/* <Instal/> */}
         </div>
     );
 };
