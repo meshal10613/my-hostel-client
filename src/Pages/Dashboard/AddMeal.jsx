@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
@@ -25,12 +26,23 @@ const AddMeal = () => {
         setIngredients(ingredients.filter((_, i) => i !== index));
     };
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
+        // Image upload to imgbb
+        const uploadKey = import.meta.env.VITE_imgbb_apikey;
+        const imageFile = data.image[0];
+        const formD = new FormData();
+        formD.append("image", imageFile);
+        const res = await axios.post(`https://api.imgbb.com/1/upload?key=${uploadKey}`, formD, {
+            headers: {
+                "content-type": "multipart/form-data",
+            },
+        });
+
         data.price = parseInt(data.price);
         const formData = {
             ...data,
             ingredients,
-            image: data.image[0], // single file
+            image: res.data.data.url, // single file
         };
         console.log(formData);
 
