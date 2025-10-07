@@ -95,7 +95,6 @@ export default function AuthPage() {
                 .then(async() => {
                     setUser({...user, ...updateData});
                     const userRes = await axiosInstance.post("/users", serverData);
-                    console.log(userRes)
                     if(userRes.status === 200 && userRes.statusText ==="OK"){
                         navigate(from);
                         setIsLoading(false);

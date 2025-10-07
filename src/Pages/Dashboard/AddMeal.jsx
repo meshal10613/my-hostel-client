@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAuthContext from '../../Hooks/useAuthContext';
+import Swal from 'sweetalert2';
 
 const AddMeal = () => {
     const {
@@ -13,6 +16,9 @@ const AddMeal = () => {
 
     const [ingredients, setIngredients] = useState([]);
     const [inputValue, setInputValue] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const axiosSecure = useAxiosSecure();
+    const { user } = useAuthContext();
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && inputValue.trim() !== "") {
@@ -27,6 +33,7 @@ const AddMeal = () => {
     };
 
     const onSubmit = async(data) => {
+        setIsLoading(true);
         // Image upload to imgbb
         const uploadKey = import.meta.env.VITE_imgbb_apikey;
         const imageFile = data.image[0];
@@ -44,11 +51,24 @@ const AddMeal = () => {
             ingredients,
             image: res.data.data.url, // single file
         };
+        formData.distributerName = user.displayName;
+        formData.distributerEmail = user.email;
         console.log(formData);
 
-        // reset form
-        reset();
-        setIngredients([]);
+        // post the meal data to database
+        const userRes = await axiosSecure.post("/meals", formData);
+        console.log(userRes, userRes.data.insertedId)
+        if(userRes.status === 200 && userRes.statusText ==="OK"){
+            setIsLoading(false);
+            Swal.fire({
+                icon: "success",
+                title: "Congratulations!",
+                text: `Meal added successfully`,
+                confirmButtonColor: "#FFAE00"
+            });
+            reset();
+            setIngredients([]);
+        };
     };
     return (
         <>
@@ -149,8 +169,12 @@ const AddMeal = () => {
                     </div>
 
                     {/* Submit */}
-                    <button type="submit" className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full">
-                    Add Meal
+                    <button type="submit" className={`btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`}>
+                        {isLoading ? 
+                        <div className="loading loading-spinner">
+
+                        </div>
+                        : "Add Meal"}
                     </button>
                 </form>
             </div>
