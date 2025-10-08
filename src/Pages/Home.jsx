@@ -5,11 +5,13 @@ import ProceedToPower from '../Components/ProceedToPower';
 import Instal from '../Components/Instal';
 import Footer from '../Components/Shared/Footer';
 import Membership from '../Components/Membership';
+import MealsCategory from '../Components/MealsCategory';
 
 const Home = () => {
     return (
         <div>
             <Banner/>
+            <MealsCategory/>
             <ProceedToPower/>
             <HowItWorks/>
             <Membership/>
