@@ -246,7 +246,7 @@ const AllMeals = () => {
                     readOnly
                 />
                 <div className={`modal ${isViewOpen ? "modal-open" : ""}`}>
-                    <div className="modal-box max-w-3xl">
+                    <div className="modal-box max-w-3xl bg-white">
                     <button
                         className="btn btn-sm btn-circle btn-ghost absolute right-3 top-3"
                         onClick={handleCloseView}

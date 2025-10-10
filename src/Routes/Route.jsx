@@ -18,6 +18,7 @@ import UpcomingMeals from "../Pages/Dashboard/UpcomingMeals";
 import EditProfile from "../Pages/Dashboard/EditProfile";
 import MealDetails from "../Pages/Meals/MealDetails";
 import Meals from "../Pages/Meals/Meals";
+import ForgetPass from "../Pages/Authentication/ForgetPass";
 
 export const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
     {
         path: "/auth",
         element: <AuthPage/>
+    },
+    {
+        path: "/forget-pass",
+        element: <ForgetPass/>
     },
     {
         path: "/dashboard",

@@ -161,7 +161,10 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <button onClick={handleLogout} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white rounded-tl-3xl rounded-bl-3xl rounded-tr-none rounded-br-none'><CiLogout />Logout</button>
+                <div className='flex flex-col'>
+                    <div className='divider'></div>
+                    <button onClick={handleLogout} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white rounded-tl-3xl rounded-bl-3xl rounded-tr-none rounded-br-none'><CiLogout />Logout</button>
+                </div>
             </div>
         </div>
     </div>

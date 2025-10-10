@@ -204,10 +204,13 @@ export default function AuthPage() {
                                     </p>
                                     )}
                                 </div>
-                                {/* <div className="flex items-center gap-2">
-                                    <input type="checkbox" className="w-4 h-4" />
-                                    <span className="text-sm text-gray-600">Remember me</span>
-                                </div> */}
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <input type="checkbox" className="w-4 h-4" />
+                                        <span className="text-sm text-gray-600">Remember me</span>
+                                    </div>
+                                    <Link to='/forget-pass' className="link link-hover hover:text-primary">Forget Password?</Link>
+                                </div>
                                     
                                 <button
                                     type="submit"
