@@ -58,8 +58,9 @@ const Navbar = () => {
         });
     };
     console.log(user)
+     //bg-secondary
     return (
-    <div className="navbar bg-secondary px-0 2xl:px-[7%] pr-1 md:pr-0">
+    <div className="navbar px-0 2xl:px-[7%] pr-1 md:pr-0">
         <div className="navbar-start">
             <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
