@@ -1,10 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../../Components/Shared/Loading';
 
 const ManageUsers = () => {
+    const queryClient = useQueryClient();
     const axiosSecure = useAxiosSecure();
     const { data: users = [], isLoading } = useQuery({
         queryKey: ["users"],
@@ -13,6 +14,20 @@ const ManageUsers = () => {
             return res.data;
         }
     });
+      // mutation: make admin
+    const makeAdminMutation = useMutation({
+        mutationFn: async (id) => {
+            const res = await axiosSecure.patch(`/users/admin/${id}`);
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["users"]);
+        },
+    });
+
+    const handleMakeAdmin = (id) => {
+        makeAdminMutation.mutate(id);
+    };
     return (
         <>
             <Helmet>
@@ -61,9 +76,9 @@ const ManageUsers = () => {
                                     <span className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none">Admin</span>
                                     ) : (
                                     <button
-                                        // onClick={() => handleMakeAdmin(user._id)}
+                                        onClick={() => handleMakeAdmin(user.id)}
                                         className="btn bg-white text-primary border-none"
-                                        // disabled={makeAdminMutation.isLoading}
+                                        disabled={makeAdminMutation.isLoading}
                                     >
                                         Make Admin
                                     </button>
