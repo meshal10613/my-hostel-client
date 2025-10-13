@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxios from '../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from './Shared/Loading';
@@ -8,6 +8,8 @@ import { FaStar } from 'react-icons/fa';
 const MealsCategory = () => {
     const [isActive, setIsActive] = useState("all");
     const [category, setCategory] = useState("");
+    const [showAll, setShowAll] = useState(false);
+    const [display, setDisplay] = useState([]);
     const axios = useAxios();
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["category", category],
@@ -16,10 +18,6 @@ const MealsCategory = () => {
             return res.data;
         }
     });
-
-    if(isLoading){
-        return <Loading/>;
-    };
 
     const handleMealsButton = (meal) => {
         setIsActive(meal);
@@ -33,6 +31,15 @@ const MealsCategory = () => {
             setCategory("");
         };
     };
+
+    useEffect(() => {
+        if(showAll){
+            setDisplay(meals);
+        }else{
+            setDisplay(meals.slice(0, 12));
+        }
+    }, [showAll, meals]);
+
     return (
         <div className='px-0 2xl:px-[7%]'>
             <div className='flex items-center justify-center gap-3 meals-btn'>
@@ -49,9 +56,12 @@ const MealsCategory = () => {
                     Dinner
                 </button>
             </div>
+            {
+                isLoading && <Loading/>
+            }
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 p-10 gap-5'>
                 {
-                    meals.map((m) => (
+                    display.map((m) => (
                         <div key={m?.id} className='border-2 border-base-200 rounded-2xl p-5 bg-white space-y-3'>
                             <div className='relative'>
                                 <img src={m?.image} alt={m?.title} className='h-60 w-full object-cover rounded-md' />
@@ -65,6 +75,11 @@ const MealsCategory = () => {
                             <Link to={`/meal/${m.id}`} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full'>Details</Link>
                         </div>
                     ))
+                }
+            </div>
+            <div className='flex items-center justify-center'>
+                {
+                    meals.length > 12 && <button onClick={() => setShowAll(!showAll)} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none text-center'>{ showAll ? "See Less" : "See More" }</button>
                 }
             </div>
         </div>
