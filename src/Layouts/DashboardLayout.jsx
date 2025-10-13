@@ -125,7 +125,7 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/dashboard/manage-reviews">
+                        <NavLink to="/dashboard/manage-users">
                             <FaUsers className="inline-block mr-2" />
                             Manage Users
                         </NavLink>

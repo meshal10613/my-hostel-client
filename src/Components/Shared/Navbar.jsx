@@ -11,7 +11,7 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/meals">Meals</NavLink></li>
-        <li><NavLink to="/upcomingMels">Upcoming Meals</NavLink></li>
+        <li><NavLink to="/upcomingMeals">Upcoming Meals</NavLink></li>
     </>;
 
     useEffect(() => {

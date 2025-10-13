@@ -87,6 +87,7 @@ export default function AuthPage() {
                     displayName: data.name,
                     email: result.user.email,
                     photoURL: res.data.data.url,
+                    role: "user",
                     badge: "Bronze",
                     creationTime,
                     lastSignInTime

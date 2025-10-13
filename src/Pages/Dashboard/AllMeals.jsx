@@ -42,9 +42,6 @@ const AllMeals = () => {
     };
 
     const handleUpdate = (id) => {
-        // navigate to edit page — change this to use your router (react-router / next/router)
-        // Example with react-router:
-        // navigate(`/meals/edit/${id}`);
         window.location.href = `/meals/edit/${id}`;
     };
 
@@ -98,8 +95,8 @@ const AllMeals = () => {
                         <tr>
                         <th>Meal</th>
                         <th>Likes</th>
-                        <th>Reviews</th>
                         <th>Rating</th>
+                        <th>Reviews</th>
                         <th>Distributor</th>
                         <th className="text-right">Actions</th>
                         </tr>
@@ -134,13 +131,10 @@ const AllMeals = () => {
                             </td>
 
                             <td>{typeof meal.likes === "number" ? meal.likes : 0}</td>
-                            <td>{typeof meal.reviews_count === "number" ? meal.reviews_count : 0}</td>
                             <td>
-                            <div className="flex items-center gap-2">
                                 <span className="font-medium">{meal.rating ?? "—"}</span>
-                                <span className="text-xs text-gray-400">/5</span>
-                            </div>
                             </td>
+                            <td>{typeof meal.reviews_count === "number" ? meal.reviews_count : 0}</td>
                             <td>{meal?.distributerName || "—"}</td>
                             <td className="text-right">
                             <div className="inline-flex gap-2">
@@ -205,8 +199,8 @@ const AllMeals = () => {
 
                             <div className="mt-3 flex flex-wrap gap-2 items-center">
                                 <div className="badge badge-outline">Likes: {meal?.likes ?? 0}</div>
-                                <div className="badge badge-outline">Reviews: {meal?.reviews_count ?? 0}</div>
                                 <div className="badge badge-outline">Rating: {meal?.rating ?? "—"}</div>
+                                <div className="badge badge-outline">Reviews: {meal?.reviews_count ?? 0}</div>
                             </div>
 
                             <div className="mt-3 flex gap-2">

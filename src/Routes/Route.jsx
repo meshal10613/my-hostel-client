@@ -9,7 +9,6 @@ import MyProfile from "../Pages/Dashboard/MyProfile";
 import RequestedMeals from "../Pages/Dashboard/RequestedMeals";
 import MyReviews from "../Pages/Dashboard/MyReviews";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
-import ManageReviews from "../Pages/Dashboard/ManageReviews";
 import AddMeal from "../Pages/Dashboard/AddMeal";
 import AllMeals from "../Pages/Dashboard/AllMeals";
 import AllReviews from "../Pages/Dashboard/AllReviews";
@@ -19,6 +18,7 @@ import EditProfile from "../Pages/Dashboard/EditProfile";
 import MealDetails from "../Pages/Meals/MealDetails";
 import Meals from "../Pages/Meals/Meals";
 import ForgetPass from "../Pages/Authentication/ForgetPass";
+import ManageUsers from "../Pages/Dashboard/ManageReviews";
 
 export const router = createBrowserRouter([
     {
@@ -72,8 +72,8 @@ export const router = createBrowserRouter([
                 element: <PaymentHistory/>
             },
             {
-                path: "manage-reviews",
-                element: <ManageReviews/>
+                path: "manage-users",
+                element: <ManageUsers/>
             },
             {
                 path: "add-meal",
