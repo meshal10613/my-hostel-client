@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -7,10 +7,11 @@ import Loading from '../../Components/Shared/Loading';
 const ManageUsers = () => {
     const queryClient = useQueryClient();
     const axiosSecure = useAxiosSecure();
+    const [search, setSearch] = useState("");
     const { data: users = [], isLoading } = useQuery({
-        queryKey: ["users"],
+        queryKey: ["users", search],
         queryFn: async() => {
-            const res = await axiosSecure.get(`/users`);
+            const res = await axiosSecure.get(`/users?search=${search}`);
             return res.data;
         }
     });
@@ -28,6 +29,12 @@ const ManageUsers = () => {
     const handleMakeAdmin = (id) => {
         makeAdminMutation.mutate(id);
     };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const search = e.target.search.value;
+        setSearch(search);
+    };
     return (
         <>
             <Helmet>
@@ -42,15 +49,15 @@ const ManageUsers = () => {
                 </div>
 
                 {/* Search box */}
-                {/* <div className="form-control mb-4 w-full max-w-sm">
+                <form onSubmit={handleSearch} className="form-control mb-4 w-full max-w-sm flex items-center justify-center gap-3">
                     <input
                     type="text"
+                    name='search'
                     placeholder="Search by username or email"
                     className="input input-bordered w-full"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
                     />
-                </div> */}
+                    <button type='submit' className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none">Search</button>
+                </form>
 
                 {/* Users table */}
                 <div className="overflow-x-auto">
