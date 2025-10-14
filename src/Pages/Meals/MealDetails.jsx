@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import useAxios from '../../Hooks/useAxios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -25,13 +25,36 @@ const MealDetails = () => {
     // mutation: make admin
     const increaseLike = useMutation({
         mutationFn: async (id) => {
-            const res = await axios.patch(`/meals/like/${id}`, { likes: meal?.likes });
+            const res = await axios.patch(`/meals/like/${id}`, 
+                { 
+                    mealId: meal?.id, 
+                    likes: meal?.likes,
+                    userName: user?.displayName,
+                    userEmail: user?.email
+                });
             return res.data;
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["meal"]);
         },
     });
+
+    useEffect(() => {
+        const fetchLikes = async() => {
+            const res = await axios.get(`/likes/${meal?.id}`, 
+                {
+                    params: { q: user?.email }
+                }
+            );
+            if(res.status === 200 && res.statusText === "OK" && res.data !== ""){
+                setLiked(true);
+            }else{
+                setLiked(false);
+            }
+        };
+
+        fetchLikes();
+    }, [meal, axios, user]);
 
     if(isLoading){
         return <Loading/>;
@@ -44,6 +67,13 @@ const MealDetails = () => {
                 title: "Sorry!",
                 text: "Please login to continue",
                 icon: "question",
+                confirmButtonColor: "#FFAE00"
+            });
+        }else if(liked){
+            Swal.fire({
+                title: "Sorry!",
+                text: "You've already liked",
+                icon: "error",
                 confirmButtonColor: "#FFAE00"
             });
         }else{
@@ -69,10 +99,6 @@ const MealDetails = () => {
             <div className='flex-1 space-y-3'>
                 <h2 className='text-4xl font-semibold'>{meal?.title} <span className='badge badge-primary'>{meal?.category}</span></h2>
                 <p className='text-xl'>$ {meal?.price}</p>
-                {/* <div className='flex items-center justify-between'>
-                    <p className='text-xl'>Likes: {meal?.likes}</p>
-                    <p className='text-xl'>Rating: {meal?.rating}</p>
-                </div> */}
                 <p>{meal?.description}</p>
                 <div className='space-y-1'>
                     <h4>Ingredients:</h4>
@@ -85,7 +111,10 @@ const MealDetails = () => {
                     </div>
                 </div>
                 <div className='flex items-center justify-between gap-5 w-1/2'>
-                    <button onClick={() => handleLike(meal?.id)} className='flex items-center gap-2 btn btn-block bg-white border border-primary text-primary transition-all'>
+                    <button 
+                        onClick={() => handleLike(meal?.id)} 
+                        className={`flex items-center gap-2 btn btn-block bg-white border border-primary text-primary transition-all ${liked ? "cursor-not-allowed" : "cursor-pointer"}`}
+                        >
                         {
                             liked ?
                             <FaHeart size={20} className='text-red-500' />:
