@@ -15,7 +15,7 @@ const ManageUsers = () => {
             return res.data;
         }
     });
-      // mutation: make admin
+    // mutation: make admin
     const makeAdminMutation = useMutation({
         mutationFn: async (id) => {
             const res = await axiosSecure.patch(`/users/admin/${id}`);

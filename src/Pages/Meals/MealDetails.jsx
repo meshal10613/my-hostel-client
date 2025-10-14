@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import useAxios from '../../Hooks/useAxios';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../../Components/Shared/Loading';
 import { format } from "date-fns";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import useAuthContext from '../../Hooks/useAuthContext';
 import Swal from 'sweetalert2';
 
 const MealDetails = () => {
+    const queryClient = useQueryClient();
     const axios = useAxios();
     const { id } = useParams();
     const { user } = useAuthContext();
@@ -19,6 +20,17 @@ const MealDetails = () => {
             const res = await axios.get(`/meals/${id}`);
             return res.data;
         }
+    });
+
+    // mutation: make admin
+    const increaseLike = useMutation({
+        mutationFn: async (id) => {
+            const res = await axios.patch(`/meals/like/${id}`, { likes: meal?.likes });
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["meal"]);
+        },
     });
 
     if(isLoading){
@@ -35,9 +47,7 @@ const MealDetails = () => {
                 confirmButtonColor: "#FFAE00"
             });
         }else{
-            console.log(id)
-            setLiked(true)
-            meal.likes = meal?.likes + 1;
+            increaseLike.mutate(id);
         };
     };
 
