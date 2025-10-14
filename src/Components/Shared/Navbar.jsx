@@ -57,7 +57,6 @@ const Navbar = () => {
             }
         });
     };
-    console.log(user)
      //bg-secondary
     return (
     <div className="navbar px-0 2xl:px-[7%] pr-1 md:pr-0">
