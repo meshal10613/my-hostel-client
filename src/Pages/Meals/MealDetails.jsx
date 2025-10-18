@@ -6,6 +6,7 @@ import Loading from '../../Components/Shared/Loading';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import useAuthContext from '../../Hooks/useAuthContext';
 import Swal from 'sweetalert2';
+import AddReview from './AddReview';
 
 const MealDetails = () => {
     const queryClient = useQueryClient();
@@ -129,6 +130,7 @@ const MealDetails = () => {
                     </button>
                     <button onClick={() => handleRequestMeal(meal?.id)} className='btn w-full bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg'>Request Meal</button>
                 </div>
+                <AddReview id={id}/>
             </div>
             <div className='flex-1'>
                 <img src={meal?.image} alt={meal?.title} className='rounded-2xl w-[100%] h-98 md:h-[500px] object-cover' />
