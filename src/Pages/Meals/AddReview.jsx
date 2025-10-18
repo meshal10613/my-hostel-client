@@ -59,10 +59,10 @@ const AddReview = ({id}) => {
         }
     };
     return (
-    <div className="flex justify-center mt-10">
+    <div className="flex justify-center flex-1">
         {/* Button to open modal */}
         <button
-            className="btn btn-primary"
+            className="btn btn-block text-primary bg-white border border-primary"
             onClick={() => setIsOpen(true)}
         >
             Add Review

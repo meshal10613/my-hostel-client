@@ -7,6 +7,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import useAuthContext from '../../Hooks/useAuthContext';
 import Swal from 'sweetalert2';
 import AddReview from './AddReview';
+import Review from './Review';
 
 const MealDetails = () => {
     const queryClient = useQueryClient();
@@ -103,7 +104,20 @@ const MealDetails = () => {
         <div className='px-0 2xl:px-[7%] flex flex-col-reverse md:flex-row md:items-center justify-between gap-10 my-10 mx-5 md:mx-0'>
 
             <div className='flex-1 space-y-3'>
-                <h2 className='text-4xl font-semibold'>{meal?.title} <span className='badge badge-primary'>{meal?.category}</span></h2>
+                <div className='flex items-center justify-between'>
+                    <h2 className='text-4xl font-semibold'>{meal?.title} <span className='badge badge-primary'>{meal?.category}</span></h2>
+                    <button 
+                        onClick={() => handleLike(meal?.id)} 
+                        className={`text-primary transition-all ${liked ? "cursor-not-allowed" : "cursor-pointer"} tooltip tooltip-bottom`}
+                        data-tip={`${liked ? "Liked": "Like"}`}
+                        >
+                        {
+                            liked ?
+                            <FaHeart size={20} className='text-red-500' />:
+                            <FaRegHeart size={20} className='text-red-500' />
+                        }
+                    </button>
+                </div>
                 <p className='text-xl'>$ {meal?.price}</p>
                 <p>{meal?.description}</p>
                 <div className='space-y-1'>
@@ -116,26 +130,16 @@ const MealDetails = () => {
                         }
                     </div>
                 </div>
-                <div className='flex items-center justify-between gap-5 w-1/2'>
-                    <button 
-                        onClick={() => handleLike(meal?.id)} 
-                        className={`flex items-center gap-2 btn btn-block bg-white border border-primary text-primary transition-all ${liked ? "cursor-not-allowed" : "cursor-pointer"}`}
-                        >
-                        {
-                            liked ?
-                            <FaHeart size={20} className='text-red-500' />:
-                            <FaRegHeart size={20} className='text-red-500' />
-                        }
-                        {meal?.likes}
-                    </button>
-                    <button onClick={() => handleRequestMeal(meal?.id)} className='btn w-full bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg'>Request Meal</button>
+                <div className='flex items-center justify-between gap-5'>
+                    <AddReview id={id}/>
+                    <button onClick={() => handleRequestMeal(meal?.id)} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg flex-1'>Request Meal</button>
                 </div>
-                <AddReview id={id}/>
             </div>
             <div className='flex-1'>
                 <img src={meal?.image} alt={meal?.title} className='rounded-2xl w-[100%] h-98 md:h-[500px] object-cover' />
             </div>
         </div>
+        <Review/>
     </>
     );
 };
