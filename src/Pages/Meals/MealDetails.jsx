@@ -17,14 +17,14 @@ const MealDetails = () => {
     const [liked, setLiked] = useState(false);
     const [loading, setLoading] = useState(false);
     const { data: meal = [], isLoading } = useQuery({
-        queryKey: ["meal"],
+        queryKey: ["meal", id],
         queryFn: async() => {
             const res = await axios.get(`/meals/${id}`);
             return res.data;
         }
     });
 
-    // mutation: make admin
+    // mutation: update like
     const increaseLike = useMutation({
         mutationFn: async (id) => {
             const res = await axios.patch(`/meals/like/${id}`, 
@@ -131,7 +131,7 @@ const MealDetails = () => {
                     </div>
                 </div>
                 <div className='flex items-center justify-between gap-5'>
-                    <AddReview id={id}/>
+                    <AddReview id={id} queryClient={queryClient}/>
                     <button onClick={() => handleRequestMeal(meal?.id)} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg flex-1'>Request Meal</button>
                 </div>
             </div>
@@ -139,7 +139,10 @@ const MealDetails = () => {
                 <img src={meal?.image} alt={meal?.title} className='rounded-2xl w-[100%] h-98 md:h-[500px] object-cover' />
             </div>
         </div>
-        <Review/>
+        {
+            meal.reviews &&
+            <Review reviews={meal.reviews} />
+        }
     </>
     );
 };

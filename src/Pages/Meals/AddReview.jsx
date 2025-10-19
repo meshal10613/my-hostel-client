@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import useAuthContext from '../../Hooks/useAuthContext';
 import useAxios from '../../Hooks/useAxios';
 import Swal from 'sweetalert2';
+import StarRating from './StarRating';
 
-const AddReview = ({id}) => {
+const AddReview = ({ id, queryClient }) => {
     const { user } = useAuthContext();
     const axios = useAxios();
     const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +45,7 @@ const AddReview = ({id}) => {
             setRating("");
             setReview("");
             setIsOpen(false);
+            queryClient.invalidateQueries(["meal"]);
         }else if(res.data.data === "You've already reviewed this meal!"){
             Swal.fire({
                 icon: "error",
@@ -76,22 +78,7 @@ const AddReview = ({id}) => {
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Rating Input */}
-                        <div>
-                            <label className="label">
-                            <span className="label-text">Rating (0.00 - 5.00)</span>
-                            </label>
-                            <input
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            max="5"
-                            pattern="^(?:[0-4](?:\.\d{1,2})?|5(?:\.00?)?)$"
-                            value={rating}
-                            onChange={(e) => setRating(e.target.value)}
-                            className="input input-bordered w-full"
-                            required
-                            />
-                        </div>
+                        <StarRating onRatingChange={setRating} />
 
                         {/* Review Textarea */}
                         <div>
