@@ -33,12 +33,13 @@ const AddReview = ({ id, queryClient }) => {
         };
 
         const res = await axios.post("/ratings", serverData);
-        if(res.status === 200 && res.statusText ==="OK" && res.data?.data !== "You've already reviewed this meal!"){
+        console.log(res)
+        if(res.data.success === true && res.data.action === "created"){
             setLoad(false);
             Swal.fire({
                 icon: "success",
                 title: "Congratulations!",
-                text: `Rating added successfully`,
+                text: `Rating added successfully!`,
                 confirmButtonColor: "#FFAE00"
             });
             // reset fields
@@ -46,11 +47,24 @@ const AddReview = ({ id, queryClient }) => {
             setReview("");
             setIsOpen(false);
             queryClient.invalidateQueries(["meal"]);
-        }else if(res.data.data === "You've already reviewed this meal!"){
+        }else if(res.data.success === true && res.data.action === "updated"){
+            Swal.fire({
+                icon: "success",
+                title: "Congratulations!",
+                text: `Rating updated successfully`,
+                confirmButtonColor: "#FFAE00"
+            });
+            setLoad(false);
+            // reset fields
+            setRating("");
+            setReview("");
+            setIsOpen(false);
+            queryClient.invalidateQueries(["meal"]);
+        }else{
             Swal.fire({
                 icon: "error",
-                title: "Congratulations!",
-                text: `${res?.data?.data}`,
+                title: "Sorry!",
+                text: `${res.data.message}`,
                 confirmButtonColor: "#FFAE00"
             });
             setLoad(false);
