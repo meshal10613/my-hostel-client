@@ -53,6 +53,7 @@ export default function AuthPage() {
                         icon: "success",
                         title: "Congratulations!",
                         text: `Login successfully`,
+                        confirmButtonColor: "#FFAE00"
                     });
                 };
             })
@@ -63,6 +64,7 @@ export default function AuthPage() {
                     icon: "error",
                     title: "Sorry!",
                     text: `${error.message}`,
+                    confirmButtonColor: "#FFAE00"
                 });
             })
         }else{

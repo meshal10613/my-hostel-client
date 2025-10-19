@@ -14,7 +14,7 @@ const Meals = () => {
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["meals", search, category],
         queryFn: async() => {
-            const res = await axios.get(`/mealsFilter`, {
+            const res = await axios.get(`/meals`, {
             params: {
                 search,
                 category,
@@ -31,6 +31,7 @@ const Meals = () => {
         const search = e.target.search.value;
         setSearch(search);
     };
+    console.log(meals)
     return (
         <div className='px-0 2xl:px-[7%]'>
             {/* Filters Section */}
