@@ -98,7 +98,7 @@ const Navbar = () => {
                             <img
                                 src={user?.photoURL} //https://i.pravatar.cc/100
                                 referrerPolicy='no-referrer'
-                                alt="Profile"
+                                alt={user?.displayName}
                             />
                         </div>
                     </button>

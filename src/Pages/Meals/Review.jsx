@@ -86,32 +86,32 @@ const Review = ({reviews}) => {
 
                         {/* Dots + Arrows */}
                         <div className="flex justify-center items-center gap-4 mt-6">
-                        <button
-                            onClick={handlePrev}
-                            className="btn btn-circle btn-sm bg-base-200 text-primary hover:bg-primary hover:text-white"
-                        >
-                            <FaArrowLeft />
-                        </button>
-
-                        <div className="flex gap-2">
-                            {reviews.map((_, index) => (
                             <button
-                                key={index}
-                                className={`w-3 h-3 rounded-full ${current === index ? 'bg-primary' : 'bg-base-300'}`}
-                                onClick={() => {
-                                setCurrent(index);
-                                setShowFullText(false);
-                                }}
-                            />
-                            ))}
-                        </div>
+                                onClick={handlePrev}
+                                className="btn btn-circle btn-sm bg-base-200 text-primary hover:bg-primary hover:text-white"
+                            >
+                                <FaArrowLeft />
+                            </button>
 
-                        <button
-                            onClick={handleNext}
-                            className="btn btn-circle btn-sm bg-base-200 text-primary hover:bg-primary hover:text-white"
-                        >
-                            <FaArrowRight />
-                        </button>
+                            <div className="flex gap-2">
+                                {reviews.map((_, index) => (
+                                <button
+                                    key={index}
+                                    className={`w-3 h-3 rounded-full ${current === index ? 'bg-primary' : 'bg-base-300'}`}
+                                    onClick={() => {
+                                    setCurrent(index);
+                                    setShowFullText(false);
+                                    }}
+                                />
+                                ))}
+                            </div>
+
+                            <button
+                                onClick={handleNext}
+                                className="btn btn-circle btn-sm bg-base-200 text-primary hover:bg-primary hover:text-white"
+                            >
+                                <FaArrowRight />
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -158,7 +158,7 @@ const ReviewCard = ({ review, position, isActive, onClick, showFullText }) => {
                     <input
                         key={num}
                         type="radio"
-                        name={`rating-${review?.ratingUserName}`} // unique per review
+                        name={`rating-${review?.reviewUserName}`} // unique per review
                         className="mask mask-star-2 bg-orange-400"
                         checked={num === Math.round(review?.rating)}
                         readOnly
@@ -170,12 +170,12 @@ const ReviewCard = ({ review, position, isActive, onClick, showFullText }) => {
             <div className="flex items-center gap-4 mt-auto">
                 <div className="avatar">
                     <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <img src={review?.ratingUserPhotoURL} alt={review?.ratingUserName} />
+                        <img src={review?.reviewUserPhotoURL} alt={review?.reviewUserName} referrerPolicy='no-referrer' />
                     </div>
                 </div>
                 <div className="text-left">
-                    <p className="font-bold text-neutral">{review?.ratingUserName}</p>
-                    {/* <p className="text-sm text-base-content">{review?.title}</p> */}
+                    <p className="font-bold text-neutral">{review?.reviewUserName}</p>
+                    <p className="text-sm text-base-content">{review?.mealTitle}</p>
                 </div>
             </div>
         </div>

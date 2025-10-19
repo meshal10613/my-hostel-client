@@ -4,7 +4,7 @@ import useAxios from '../../Hooks/useAxios';
 import Swal from 'sweetalert2';
 import StarRating from './StarRating';
 
-const AddReview = ({ id, queryClient }) => {
+const AddReview = ({ id, queryClient, title, category }) => {
     const { user } = useAuthContext();
     const axios = useAxios();
     const [isOpen, setIsOpen] = useState(false);
@@ -25,15 +25,16 @@ const AddReview = ({ id, queryClient }) => {
 
         const serverData = {
             mealId: id,
+            mealTitle: title,
+            mealCategory: category,
             rating: ratingValue,
             review,
-            ratingUserName: user?.displayName,
-            ratingUserEmail: user?.email,
-            ratingUserPhotoURL: user?.photoURL
+            reviewUserName: user?.displayName,
+            reviewUserEmail: user?.email,
+            reviewUserPhotoURL: user?.photoURL
         };
 
-        const res = await axios.post("/ratings", serverData);
-        console.log(res)
+        const res = await axios.post("/reviews", serverData);
         if(res.data.success === true && res.data.action === "created"){
             setLoad(false);
             Swal.fire({

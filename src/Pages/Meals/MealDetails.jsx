@@ -131,7 +131,12 @@ const MealDetails = () => {
                     </div>
                 </div>
                 <div className='flex items-center justify-between gap-5'>
-                    <AddReview id={id} queryClient={queryClient}/>
+                    <AddReview 
+                        id={id} 
+                        queryClient={queryClient} 
+                        title={meal?.title} 
+                        category={meal?.category}
+                    />
                     <button onClick={() => handleRequestMeal(meal?.id)} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg flex-1'>Request Meal</button>
                 </div>
             </div>
