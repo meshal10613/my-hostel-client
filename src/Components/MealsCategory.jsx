@@ -39,7 +39,6 @@ const MealsCategory = () => {
             setDisplay(meals.slice(0, 12));
         }
     }, [showAll, meals]);
-    console.log(meals)
 
     return (
         <div className='px-0 2xl:px-[7%]'>

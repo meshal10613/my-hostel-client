@@ -32,7 +32,6 @@ const MyReviews = () => {
         alert(`View meal details with id: ${id}`);
     };
 
-    console.log(reviews)
     return (
         <>
             <Helmet>

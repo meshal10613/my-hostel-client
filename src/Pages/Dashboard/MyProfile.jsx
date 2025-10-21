@@ -7,7 +7,6 @@ import { Link } from 'react-router';
 
 const MyProfile = () => {
     const { user } = useAuthContext();
-    console.log(user)
     if(!user){
         return <Loading/>;
     };

@@ -31,7 +31,6 @@ const Meals = () => {
         const search = e.target.search.value;
         setSearch(search);
     };
-    console.log(meals)
     return (
         <div className='px-0 2xl:px-[7%]'>
             {/* Filters Section */}

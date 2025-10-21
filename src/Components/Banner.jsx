@@ -10,7 +10,6 @@ const Banner = () => {
             return setErr(true);
         };
         setErr(false);
-        console.log(banner)
     };
     return (
         <div className='bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden mb-10'>
