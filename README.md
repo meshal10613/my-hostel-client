@@ -1,12 +1,23 @@
-# React + Vite
+# My Hostel  
+[Live Demo](https://my-hostel-a1da5.web.app/)  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎯 Project Overview  
+My Hostel is a web-application designed to streamline hostel management:  
+- Enables students to browse available rooms, check pricing, and see hostel details.  
+- Allows hostel managers/admins to create, update, and approve hostel room listings.  
+- Implements user authentication (students & admins) and a simple dashboard for each role.  
+- Deployed using Firebase Hosting for fast, secure hosting.  
 
-Currently, two official plugins are available:
+## 🧰 Tech Stack  
+- Frontend: React 
+- Styling: Tailwind CSS + DaisyUI  
+- Backend/API: Express.js + MongoDB + Prisma
+- Authentication: Firebase Auth/ JWT
+- Hosting & Database: Firebase Hosting
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Features  
+- User roles: User & Admin  
+- Role-based access control  
+- Real-time data updates for availability  
+- Responsive design: works on mobile & desktop  
+- Secure deployment: SSL + Firebase built-in protections  
