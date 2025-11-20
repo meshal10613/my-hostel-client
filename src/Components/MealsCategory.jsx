@@ -71,7 +71,9 @@ const MealsCategory = () => {
                                 </span>
                             </div>
                             <h2 className='text-2xl font-semibold'>{m?.title}</h2>
-                            <p className='text-base text-black'>${m?.price}</p>
+                            <p className='text-base text-black flex items-center gap-1'>
+                                ৳<span>{m?.price}</span>
+                            </p>
                             <Link to={`/meal/${m.id}`} className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full'>Details</Link>
                         </div>
                     ))

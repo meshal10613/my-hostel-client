@@ -19,6 +19,7 @@ import MealDetails from "../Pages/Meals/MealDetails";
 import Meals from "../Pages/Meals/Meals";
 import ForgetPass from "../Pages/Authentication/ForgetPass";
 import ManageUsers from "../Pages/Dashboard/ManageReviews";
+import Checkout from "../Pages/Checkout/Checkout";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/upcomingMeals",
+            },
+            {
+                path: "/checkout/:packageName",
+                element: <Checkout/>
             }
         ]
     },

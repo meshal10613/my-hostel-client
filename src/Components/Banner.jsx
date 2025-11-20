@@ -30,7 +30,7 @@ const Banner = () => {
                 </p>
                 <form
                     onSubmit={handleBannerSearch}
-                    className="bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5"
+                    className="bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5 z-20"
                 >
                     <input
                         type="text"
@@ -51,7 +51,7 @@ const Banner = () => {
                     </button>
                 </form>
             </div>
-            <img src={Bowl} alt="Banner Image" className={`w-fit absolute -bottom-60 -right-60 lg:hidden ${animate ? "slide-up-small" : ""}`}/>
+            <img src={Bowl} alt="Banner Image" className={`w-fit absolute rounded-full shadow-[0_0_60px_40px_rgba(255,255,255,0.4)] -bottom-60 -right-60 lg:hidden ${animate ? "slide-up-small" : ""} z-0`}/>
             <img
                 src={Bowl}
                 alt="Banner Image" className={`w-fit absolute rounded-full shadow-[0_0_60px_40px_rgba(255,255,255,0.4)] right-0 xl:right-20 hidden lg:block ${animate ? "slide-up" : ""}`}
