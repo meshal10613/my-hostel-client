@@ -1,0 +1,29 @@
+@keyframes slideUpSmall {
+	0% {
+		bottom: -600px;
+		transform: rotate(0deg);
+	}
+	100% {
+		bottom: -300px;
+		transform: rotate(360deg);
+	}
+}
+
+.slide-up-small {
+	animation: slideUpSmall 1.2s ease-out forwards;
+}
+
+@keyframes slideUp {
+	0% {
+		bottom: -600px;
+		transform: rotate(0deg);
+	}
+	100% {
+		bottom: -150px;
+		transform: rotate(360deg);
+	}
+}
+
+.slide-up {
+	animation: slideUp 1.2s ease-out forwards;
+}

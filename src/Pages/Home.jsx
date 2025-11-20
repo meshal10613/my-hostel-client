@@ -2,10 +2,8 @@ import React from 'react';
 import Banner from '../Components/Banner';
 import HowItWorks from '../Components/HowItWorks';
 import ProceedToPower from '../Components/ProceedToPower';
-import Instal from '../Components/Instal';
-import Footer from '../Components/Shared/Footer';
-import Membership from '../Components/Membership';
 import MealsCategory from '../Components/MealsCategory';
+import PremiumPackages from '../Components/PremiumPackages';
 
 const Home = () => {
     return (
@@ -13,8 +11,8 @@ const Home = () => {
             <Banner/>
             <MealsCategory/>
             <ProceedToPower/>
+            <PremiumPackages/>
             <HowItWorks/>
-            <Membership/>
             {/* <Instal/> */}
         </div>
     );

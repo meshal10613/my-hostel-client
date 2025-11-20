@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Membership = () => {
+const PremiumPackages = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Membership = () => {
     );
 };
 
-export default Membership;
+export default PremiumPackages;

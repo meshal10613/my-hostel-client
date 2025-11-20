@@ -1,30 +1,61 @@
-import React, { useState } from 'react';
-import BannerImage from '../assets/Banner.png'
+import React, { useEffect, useState } from "react";
+import "./Banner.css";
+import Bowl from "../assets/foodBowl.png";
 
 const Banner = () => {
     const [err, setErr] = useState(false);
+    const [animate, setAnimate] = useState(false);
     const handleBannerSearch = (e) => {
         e.preventDefault();
         const banner = e.target.banner.value;
-        if(!banner){
+        if (!banner) {
             return setErr(true);
-        };
+        }
         setErr(false);
     };
+
+    useEffect(() => {
+        // Trigger animation when component loads
+        setAnimate(true);
+    }, []);
+
     return (
-        <div className='bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden mb-10'>
-            <div className='flex flex-col items-center lg:items-baseline justify-baseline space-y-3'>
-                <h2 className='text-white text-5xl md:text-6xl font-semibold'>Are you starving?</h2>
-                <p>Within a few clicks, find meals that are accessible near you</p>
-                <form onSubmit={handleBannerSearch} className='bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5'>
-                    <input 
-                        type="text" name="banner" id="" 
-                        placeholder={err ? "Please Enter Your Meal...." : 'Search Your Meal'} 
-                        className='flex-1 bg-gray-100 h-10 rounded-md pl-3 focus:border-2 focus:border-primary focus:outline-none' />
-                    <button type="submit" className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'>Find Food</button>
+        <div className="bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden mb-10">
+            <div className="flex flex-col items-center lg:items-baseline justify-baseline space-y-3 z-30">
+                <h2 className="text-white text-5xl md:text-6xl font-semibold">
+                    Are you starving?
+                </h2>
+                <p>
+                    Within a few clicks, find meals that are accessible near you
+                </p>
+                <form
+                    onSubmit={handleBannerSearch}
+                    className="bg-white min-w-xs md:min-w-md max-w-2xl flex flex-row items-center gap-5 rounded-xl p-5"
+                >
+                    <input
+                        type="text"
+                        name="banner"
+                        id=""
+                        placeholder={
+                            err
+                                ? "Please Enter Your Meal...."
+                                : "Search Your Meal"
+                        }
+                        className="flex-1 bg-gray-100 h-10 rounded-md pl-3 focus:border-2 focus:border-primary focus:outline-none"
+                    />
+                    <button
+                        type="submit"
+                        className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white"
+                    >
+                        Find Food
+                    </button>
                 </form>
             </div>
-            <img src={BannerImage} alt="Banner Image" className='w-fit absolute -bottom-10 right-0 xl:right-20 hidden lg:block' />
+            <img src={Bowl} alt="Banner Image" className={`w-fit absolute -bottom-60 -right-60 lg:hidden ${animate ? "slide-up-small" : ""}`}/>
+            <img
+                src={Bowl}
+                alt="Banner Image" className={`w-fit absolute rounded-full shadow-[0_0_60px_40px_rgba(255,255,255,0.4)] right-0 xl:right-20 hidden lg:block ${animate ? "slide-up" : ""}`}
+            />
         </div>
     );
 };
