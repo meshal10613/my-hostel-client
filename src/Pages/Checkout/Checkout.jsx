@@ -6,7 +6,7 @@ const Checkout = () => {
 	console.log(packageName)
 	return (
 		<div>
-			
+			<h2>Check Out Page!</h2>
 		</div>
 	);
 };
