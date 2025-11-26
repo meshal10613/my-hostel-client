@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [paymentInfo, setPaymentInfo] = useState({});
 
     const loginUser = (email, password) => {
         setLoading(true);
@@ -42,6 +43,8 @@ const AuthProvider = ({children}) => {
         setUser,
         loading,
         setLoading,
+        paymentInfo,
+        setPaymentInfo,
         loginUser,
         registerUser,
         logOut,

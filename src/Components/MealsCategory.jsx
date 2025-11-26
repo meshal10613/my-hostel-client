@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useAxios from '../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from './Shared/Loading';
@@ -9,7 +9,6 @@ const MealsCategory = () => {
     const [isActive, setIsActive] = useState("all");
     const [category, setCategory] = useState("");
     const [showAll, setShowAll] = useState(false);
-    const [display, setDisplay] = useState([]);
     const axios = useAxios();
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["category", category],
@@ -32,13 +31,8 @@ const MealsCategory = () => {
         };
     };
 
-    useEffect(() => {
-        if(showAll){
-            setDisplay(meals);
-        }else{
-            setDisplay(meals.slice(0, 12));
-        }
-    }, [showAll, meals]);
+    const display = showAll ? meals : meals.slice(0, 12);
+
 
     return (
         <div className='px-0 2xl:px-[7%]'>

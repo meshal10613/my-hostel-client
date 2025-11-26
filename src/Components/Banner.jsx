@@ -41,11 +41,11 @@ const Banner = () => {
                                 ? "Please Enter Your Meal...."
                                 : "Search Your Meal"
                         }
-                        className="flex-1 bg-gray-100 h-10 rounded-md pl-3 focus:border-2 focus:border-primary focus:outline-none"
+                        className="flex-1 bg-white h-10 rounded-md pl-3 focus:border-2 focus:border-gray-200 focus:outline-none"
                     />
                     <button
                         type="submit"
-                        className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white"
+                        className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none"
                     >
                         Find Food
                     </button>

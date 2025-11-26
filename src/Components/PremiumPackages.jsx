@@ -1,14 +1,17 @@
 import React from "react";
 import "./PremiumPackages.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useAuthContext from "../Hooks/useAuthContext";
 
 const PremiumPackages = () => {
+    const { setPaymentInfo } = useAuthContext();
+    const navigate = useNavigate();
     const packages = [
         {
             id: 1,
             name: "Silver",
             price: 2999,
-            supports: [
+            benefits: [
                 "1️⃣ 2 Meals / Day",
                 "2️⃣ Basic Support",
                 "3️⃣ Access to Daily Menu",
@@ -20,7 +23,7 @@ const PremiumPackages = () => {
             id: 2,
             name: "Gold",
             price: 3999,
-            supports: [
+            benefits: [
                 "1️⃣ 3 Meals / Day",
                 "2️⃣ Basic Support",
                 "3️⃣ Access to Daily Menu",
@@ -32,8 +35,8 @@ const PremiumPackages = () => {
             id: 3,
             name: "Platinum",
             price: 4999,
-            supports: [
-                "1️⃣ 2 Meals / Day",
+            benefits: [
+                "1️⃣ 3 Meals / Day",
                 "2️⃣ 3 Basic Support",
                 "3️⃣ Access to Daily Menu",
             ],
@@ -41,8 +44,26 @@ const PremiumPackages = () => {
             location: "platinum",
         },
     ];
+    const handlePayment = (p) => {
+        const item = {
+            packageName: p.name,
+            price: p.price,
+            benefits: p.benefits,
+        }
+        setPaymentInfo(item);
+        navigate(`/checkout/${p.location}`);
+    }
     return (
         <>
+            <h2 className="text-4xl font-bold text-center">
+                Choose Your Perfect{" "}
+                <span className="text-[#FFAE00] mb-3">Meal Package</span>
+            </h2>
+            <p className="text-gray-500 text-center mb-3">
+                Choose from our Silver, Gold, or Platinum packages and enjoy
+                flexible daily meal options designed to fit your routine and
+                budget.
+            </p>
             <div className="container mx-auto my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {packages.map((p) => (
                     <div key={p.id} className="card mx-auto">
@@ -105,17 +126,18 @@ const PremiumPackages = () => {
                                 ৳ <span>{p.price}</span>
                             </p>
                             <ul className="text-black">
-                                <li>1️⃣ 2 Meals / Day</li>
-                                <li>2️⃣ Basic Support</li>
-                                <li>3️⃣ Access to Daily Menu</li>
+                                {p.benefits.map((s) => (
+                                    <li key={s}>{s}</li>
+                                ))}
                             </ul>
-                            <Link
-                                to={`/checkout/${p.location}`}
+                            <button
+                                onClick={() => handlePayment(p)}
+                                // to={`/checkout/${p.location}`}
                                 type="submit"
-                                className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-black border-none"
+                                className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none"
                             >
                                 Get Started
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 ))}
