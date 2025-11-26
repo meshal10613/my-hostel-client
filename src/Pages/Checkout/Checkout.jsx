@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import useAuthContext from "../../Hooks/useAuthContext";
+import { Navigate } from "react-router";
 
 const Checkout = () => {
-    const [method, setMethod] = useState("stripe");
+    const [method, setMethod] = useState("Stripe");
     const { paymentInfo, setPaymentInfo } = useAuthContext();
 
     const fadeIn = {
@@ -12,9 +13,12 @@ const Checkout = () => {
     };
 
     const handlePayment = (m) => {
-        console.log(m);
+        const paymentMethod = m;
+        setPaymentInfo({ paymentMethod, ...paymentInfo });
         console.log(paymentInfo);
     };
+
+    if (!paymentInfo.price) return <Navigate to="/" />;
 
     return (
         <div className="w-full min-h-screen p-4 2xl:px-[7%] md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-base-200">
@@ -38,9 +42,9 @@ const Checkout = () => {
                             <input
                                 type="radio"
                                 name="payment"
-                                value="stripe"
-                                checked={method === "stripe"}
-                                onChange={() => setMethod("stripe")}
+                                value="SSLCommerz"
+                                checked={method === "Stripe"}
+                                onChange={() => setMethod("Stripe")}
                                 className="radio radio-primary"
                             />
                             <span className="font-medium">Stripe</span>
@@ -50,9 +54,9 @@ const Checkout = () => {
                             <input
                                 type="radio"
                                 name="payment"
-                                value="ssl"
-                                checked={method === "ssl"}
-                                onChange={() => setMethod("ssl")}
+                                value="SSLCommerz"
+                                checked={method === "SSLCommerz"}
+                                onChange={() => setMethod("SSLCommerz")}
                                 className="radio radio-primary"
                             />
                             <span className="font-medium">SSLCommerz</span>
@@ -65,7 +69,7 @@ const Checkout = () => {
 
                 {/* Dynamic Description */}
                 <motion.div key={method} {...fadeIn}>
-                    {method === "stripe" && (
+                    {method === "Stripe" && (
                         <div className="space-y-2">
                             <h3 className="text-2xl font-semibold text-[#FFAE00]">
                                 Stripe Payment
@@ -156,7 +160,7 @@ const Checkout = () => {
                         </div>
                     )}
 
-                    {method === "ssl" && (
+                    {method === "SSLCommerz" && (
                         <div className="space-y-2">
                             <h3 className="text-2xl font-semibold text-[#FFAE00]">
                                 SSLCommerz Payment
@@ -280,13 +284,13 @@ const Checkout = () => {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1, transition: { delay: 0.1 } }}
-						className="space-y-2"
+                        className="space-y-2"
                     >
                         <p className="flex items-center justify-between">
                             Package: <strong>Gold</strong>
                         </p>
                         <p className="flex items-center justify-between">
-                            Total: <strong>৳{paymentInfo.price}</strong>
+                            Total: <strong>৳{paymentInfo.price || 0}</strong>
                         </p>
                         <p className="flex items-center justify-between">
                             Discount:{" "}
@@ -297,7 +301,8 @@ const Checkout = () => {
                         </p>
                         <div className="divider"></div>
                         <p className="flex items-center justify-between">
-                            Grand Total: <strong>৳{paymentInfo.price}</strong>
+                            Grand Total:{" "}
+                            <strong>৳{paymentInfo.price || 0}</strong>
                         </p>
                     </motion.div>
                 </motion.div>
@@ -318,7 +323,7 @@ const Checkout = () => {
                         Complete Your Payment
                     </motion.h2>
 
-                    {method === "stripe" && (
+                    {method === "Stripe" && (
                         <motion.div {...fadeIn} className="space-y-4">
                             <p className="text-sm text-base-content/70">
                                 Stripe checkout will appear here.
@@ -332,7 +337,7 @@ const Checkout = () => {
                         </motion.div>
                     )}
 
-                    {method === "ssl" && (
+                    {method === "SSLCommerz" && (
                         <motion.div {...fadeIn} className="space-y-4">
                             <p className="text-sm text-base-content/70">
                                 SSLCommerz checkout will appear here.
