@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useAuthContext from "../../Hooks/useAuthContext";
-import { Navigate } from "react-router";
 import StripeContent from "./StripeContent";
 import SSLCommerzContent from "./SSLCommerzContent";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Checkout = () => {
     const [method, setMethod] = useState("Stripe");
-    const { paymentInfo, setPaymentInfo } = useAuthContext();
+    const { user, paymentInfo } = useAuthContext();
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -18,10 +19,20 @@ const Checkout = () => {
         animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
     };
 
-    const handlePayment = (m) => {
+    const handlePayment = async(m) => {
         const paymentMethod = m;
-        setPaymentInfo({ paymentMethod, ...paymentInfo });
-        console.log(paymentInfo);
+        const info = {
+            paymentMethod,
+            ...paymentInfo,
+            userName: user.displayName,
+            userEmail: user.email,
+            status: "Pending",
+        };
+        const res = await axiosSecure.post("/ssl/create-payment", info);
+        console.log(res.data)
+        if(res.status === 200 && res.data.status === "SUCCESS"){
+            window.open(res.data.GatewayPageURL);
+        }
     };
 
     if (!paymentInfo.price) return <Navigate to="/" />;
@@ -152,7 +163,7 @@ const Checkout = () => {
                                 Stripe checkout will appear here.
                             </p>
                             <button
-                                onClick={() => handlePayment(method)}
+                                // onClick={() => handlePayment(method)}
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full shadow-md hover:scale-[1.03] transition"
                             >
                                 Pay with Stripe

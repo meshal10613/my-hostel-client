@@ -9,7 +9,7 @@ const ProceedToPower = () => {
     return (
         <div className='py-20 mb-10 mx-5 px-0 md:px-[7%] space-y-20'>
             {/* Proceed 1 */}
-            <div className='bg-white shadow-2xl rounded-2xl flex flex-col md:flex-row justify-between'>
+            <div className='bg-white shadow-2xl rounded-2xl flex flex-col-reverse md:flex-row justify-between'>
                 <div className='p-10 lg:p-20 flex flex-col justify-between gap-10'>
                     <div className='space-y-3'>
                         <h2 className='text-4xl font-bold'>Best deals <span className='text-[#FFAE00]'>Crispy <br /> Sandwiches</span></h2>
@@ -18,7 +18,7 @@ const ProceedToPower = () => {
                     <Link className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'>PROCEED TO ORDER<RiArrowRightSLine size={20} /></Link>
                 </div>
                 <div className=''>
-                    <img src={Proceed1} alt="" className='md:rounded-tr-2xl rounded-br-2xl rounded-bl-2xl md:rounded-bl-none bg-cover h-full' />
+                    <img src={Proceed1} alt="" className='rounded-tl-2xl rounded-tr-2xl md:rounded-tr-2xl md:rounded-tl-none md:rounded-br-2xl md:rounded-bl-none bg-cover h-full' />
                 </div>
             </div>
             {/* Proceed 2 */}
@@ -35,7 +35,7 @@ const ProceedToPower = () => {
                 </div>
             </div>
             {/* Proceed 3 */}
-            <div className='bg-white shadow-2xl rounded-2xl flex flex-col md:flex-row justify-between'>
+            <div className='bg-white shadow-2xl rounded-2xl flex flex-col-reverse md:flex-row justify-between'>
                 <div className='p-10 lg:p-20 flex flex-col justify-between gap-10'>
                     <div className='space-y-3'>
                         <h2 className='text-4xl font-bold'>Best deals <span className='text-[#FFAE00]'>Crispy <br /> Sandwiches</span></h2>
@@ -44,7 +44,7 @@ const ProceedToPower = () => {
                     <Link className='btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white'>PROCEED TO ORDER <RiArrowRightSLine size={20} /></Link>
                 </div>
                 <div className=''>
-                    <img src={Proceed3} alt="" className='md:rounded-tr-2xl rounded-br-2xl rounded-bl-2xl md:rounded-bl-none bg-cover h-full' />
+                    <img src={Proceed3} alt="" className='rounded-tl-2xl rounded-tr-2xl md:rounded-tr-2xl md:rounded-tl-none md:rounded-br-2xl md:rounded-bl-none bg-cover h-full' />
                 </div>
             </div>
         </div>
