@@ -20,90 +20,95 @@ import Meals from "../Pages/Meals/Meals";
 import ForgetPass from "../Pages/Authentication/ForgetPass";
 import ManageUsers from "../Pages/Dashboard/ManageReviews";
 import Checkout from "../Pages/Checkout/Checkout";
+import SuccessPayment from "../Pages/Checkout/SuccessPayment";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <HomeLayout/>,
-        errorElement: <ErrorPage/>,
+        element: <HomeLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
-                element: <Home/>
+                element: <Home />,
             },
             {
                 path: "/meals",
-                element: <Meals/>
+                element: <Meals />,
             },
             {
                 path: "/meal/:id",
-                element: <MealDetails/>
+                element: <MealDetails />,
             },
             {
                 path: "/upcomingMeals",
             },
             {
                 path: "/checkout/:packageName",
-                element: <Checkout/>
-            }
-        ]
+                element: <Checkout />,
+            },
+        ],
+    },
+    {
+        path: "/success-payment",
+        element: <SuccessPayment />,
     },
     {
         path: "/auth",
-        element: <AuthPage/>
+        element: <AuthPage />,
     },
     {
         path: "/forget-pass",
-        element: <ForgetPass/>
+        element: <ForgetPass />,
     },
     {
         path: "/dashboard",
-        element: <DashboardLayout/>,
+        element: <DashboardLayout />,
         children: [
             {
                 path: "my-profile",
-                element: <MyProfile/>
+                element: <MyProfile />,
             },
             {
                 path: "requested-meals",
-                element: <RequestedMeals/>
+                element: <RequestedMeals />,
             },
             {
                 path: "my-reviews",
-                element: <MyReviews/>
+                element: <MyReviews />,
             },
             {
                 path: "payment-history",
-                element: <PaymentHistory/>
+                element: <PaymentHistory />,
             },
             {
                 path: "manage-users",
-                element: <ManageUsers/>
+                element: <ManageUsers />,
             },
             {
                 path: "add-meal",
-                element: <AddMeal/>
+                element: <AddMeal />,
             },
             {
                 path: "all-meals",
-                element: <AllMeals/>
+                element: <AllMeals />,
             },
             {
                 path: "all-reviews",
-                element: <AllReviews/>
+                element: <AllReviews />,
             },
             {
                 path: "serve-meals",
-                element: <ServeMeals/>
+                element: <ServeMeals />,
             },
             {
                 path: "upcoming-meals",
-                element: <UpcomingMeals/>
+                element: <UpcomingMeals />,
             },
             {
                 path: "edit-profile",
-                element: <EditProfile/>
-            }
-        ]
-    }
+                element: <EditProfile />,
+            },
+        ],
+    },
 ]);

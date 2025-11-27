@@ -1,11 +1,8 @@
 import React from "react";
 import "./PremiumPackages.css";
-import { Link, useNavigate } from "react-router";
-import useAuthContext from "../Hooks/useAuthContext";
+import { Link } from "react-router";
 
 const PremiumPackages = () => {
-    const { setPaymentInfo } = useAuthContext();
-    const navigate = useNavigate();
     const packages = [
         {
             id: 1,
@@ -44,15 +41,7 @@ const PremiumPackages = () => {
             location: "platinum",
         },
     ];
-    const handlePayment = (p) => {
-        const item = {
-            packageName: p.name,
-            price: p.price,
-            benefits: p.benefits,
-        }
-        setPaymentInfo(item);
-        navigate(`/checkout/${p.location}`);
-    }
+
     return (
         <>
             <h2 className="text-4xl font-bold text-center">
@@ -130,14 +119,13 @@ const PremiumPackages = () => {
                                     <li key={s}>{s}</li>
                                 ))}
                             </ul>
-                            <button
-                                onClick={() => handlePayment(p)}
-                                // to={`/checkout/${p.location}`}
+                            <Link 
+                                to={`/checkout/${p.location}`}
                                 type="submit"
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none"
                             >
                                 Get Started
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}

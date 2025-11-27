@@ -4,11 +4,53 @@ import useAuthContext from "../../Hooks/useAuthContext";
 import StripeContent from "./StripeContent";
 import SSLCommerzContent from "./SSLCommerzContent";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useParams } from "react-router";
+
+const packages = [
+    {
+        id: 1,
+        name: "Silver",
+        price: 2999,
+        benefits: [
+            "1️⃣ 2 Meals / Day",
+            "2️⃣ Basic Support",
+            "3️⃣ Access to Daily Menu",
+        ],
+        logo: "https://i.ibb.co.com/LhRLy4Bt/1.png",
+        location: "silver",
+    },
+    {
+        id: 2,
+        name: "Gold",
+        price: 3999,
+        benefits: [
+            "1️⃣ 3 Meals / Day",
+            "2️⃣ Basic Support",
+            "3️⃣ Access to Daily Menu",
+        ],
+        logo: "https://i.ibb.co.com/MDZT9JXf/2.png",
+        location: "gold",
+    },
+    {
+        id: 3,
+        name: "Platinum",
+        price: 4999,
+        benefits: [
+            "1️⃣ 3 Meals / Day",
+            "2️⃣ 3 Basic Support",
+            "3️⃣ Access to Daily Menu",
+        ],
+        logo: "https://i.ibb.co.com/60Tyy732/3.png",
+        location: "platinum",
+    },
+];
 
 const Checkout = () => {
+    const { packageName } = useParams();
     const [method, setMethod] = useState("Stripe");
-    const { user, paymentInfo } = useAuthContext();
+    const { user } = useAuthContext();
     const axiosSecure = useAxiosSecure();
+    const newPackage = packages.find((p) => p.location === packageName);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -19,23 +61,24 @@ const Checkout = () => {
         animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
     };
 
-    const handlePayment = async(m) => {
+    const handlePayment = async (m) => {
         const paymentMethod = m;
         const info = {
             paymentMethod,
-            ...paymentInfo,
+            packageName: newPackage.name,
+            benefits: newPackage.benefits,
+            price: newPackage.price,
             userName: user.displayName,
             userEmail: user.email,
             status: "Pending",
         };
+        
         const res = await axiosSecure.post("/ssl/create-payment", info);
-        console.log(res.data)
+        console.log(res.data);
         if(res.status === 200 && res.data.status === "SUCCESS"){
-            window.open(res.data.GatewayPageURL);
+            window.location.replace(res.data.GatewayPageURL);
         }
     };
-
-    if (!paymentInfo.price) return <Navigate to="/" />;
 
     return (
         <div className="w-full min-h-screen p-4 2xl:px-[7%] md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-base-200">
@@ -124,19 +167,19 @@ const Checkout = () => {
                             Package: <strong>Gold</strong>
                         </p>
                         <p className="flex items-center justify-between">
-                            Total: <strong>৳{paymentInfo.price || 0}</strong>
+                            Total: <strong>৳{newPackage?.price || 0}</strong>
                         </p>
                         <p className="flex items-center justify-between">
                             Discount:{" "}
-                            <strong>৳{paymentInfo?.discount || 0}</strong>
+                            <strong>৳{newPackage?.discount || 0}</strong>
                         </p>
                         <p className="flex items-center justify-between">
-                            Tax: <strong>৳{paymentInfo?.tax || 0}</strong>
+                            Tax: <strong>৳{newPackage?.tax || 0}</strong>
                         </p>
                         <div className="divider"></div>
                         <p className="flex items-center justify-between">
                             Grand Total:{" "}
-                            <strong>৳{paymentInfo.price || 0}</strong>
+                            <strong>৳{newPackage?.price || 0}</strong>
                         </p>
                     </motion.div>
                 </motion.div>
