@@ -5,6 +5,7 @@ import StripeContent from "./StripeContent";
 import SSLCommerzContent from "./SSLCommerzContent";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useParams } from "react-router";
+import { useForm } from "react-hook-form";
 
 const packages = [
     {
@@ -52,19 +53,16 @@ const Checkout = () => {
     const axiosSecure = useAxiosSecure();
     const newPackage = packages.find((p) => p.location === packageName);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-    const fadeIn = {
-        initial: { opacity: 0, y: 10 },
-        animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    };
-
-    const handlePayment = async (m) => {
-        const paymentMethod = m;
+    const onSubmit = async(data) => {
         const info = {
-            paymentMethod,
+            ...data,
+            paymentMethod: "SSLCommerz",
             packageName: newPackage.name,
             benefits: newPackage.benefits,
             price: newPackage.price,
@@ -72,12 +70,21 @@ const Checkout = () => {
             userEmail: user.email,
             status: "Pending",
         };
-        
+
         const res = await axiosSecure.post("/ssl/create-payment", info);
         console.log(res.data);
-        if(res.status === 200 && res.data.status === "SUCCESS"){
+        if (res.status === 200 && res.data.status === "SUCCESS") {
             window.location.replace(res.data.GatewayPageURL);
         }
+    };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const fadeIn = {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.3 } },
     };
 
     return (
@@ -215,17 +222,121 @@ const Checkout = () => {
                     )}
 
                     {method === "SSLCommerz" && (
-                        <motion.div {...fadeIn} className="space-y-4">
-                            <p className="text-sm text-base-content/70">
-                                SSLCommerz checkout will appear here.
-                            </p>
+                        <motion.form
+                            {...fadeIn}
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="space-y-4"
+                        >
+                            {/* Address */}
+                            <div>
+                                <label className="block mb-1 font-medium">
+                                    Address *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="textarea w-full border focus:border-none px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="123 Street Name"
+                                    {...register("address", {
+                                        required: true,
+                                    })}
+                                />
+                                {errors.address && (
+                                    <p className="text-red-500 text-sm">
+                                        Address is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* City */}
+                            <div>
+                                <label className="block mb-1 font-medium">
+                                    City *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="input w-full border focus:border-none px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="Dhaka"
+                                    {...register("city", {
+                                        required: true,
+                                    })}
+                                />
+                                {errors.city && (
+                                    <p className="text-red-500 text-sm">
+                                        City is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Country */}
+                            <div>
+                                <label className="block mb-1 font-medium">
+                                    Country *
+                                </label>
+                                <input
+                                    type="text"
+                                    className="input w-full border focus:border-none px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="Bangladesh"
+                                    {...register("country", {
+                                        required: true,
+                                    })}
+                                />
+                                {errors.country && (
+                                    <p className="text-red-500 text-sm">
+                                        Country is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Post Code */}
+                            <div>
+                                <label className="block mb-1 font-medium">
+                                    Post Code *
+                                </label>
+                                <input
+                                    type="number"
+                                    className="input w-full border focus:border-none px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="1207"
+                                    {...register("postcode", {
+                                        required: true,
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                                {errors.postcode && (
+                                    <p className="text-red-500 text-sm">
+                                        Post code is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Phone Number */}
+                            <div>
+                                <label className="block mb-1 font-medium">
+                                    Phone Number *
+                                </label>
+                                <input
+                                    type="number"
+                                    className="input w-full border focus:border-none px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    placeholder="01XXXXXXXXX"
+                                    {...register("phone", {
+                                        required: true,
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                                {errors.phone && (
+                                    <p className="text-red-500 text-sm">
+                                        Phone number is required
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Submit */}
                             <button
-                                onClick={() => handlePayment(method)}
+                                type="submit"
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full shadow-md hover:scale-[1.03] transition"
                             >
                                 Pay with SSLCommerz
                             </button>
-                        </motion.div>
+                        </motion.form>
                     )}
                 </motion.div>
             </motion.div>
