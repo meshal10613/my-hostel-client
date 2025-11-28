@@ -21,6 +21,7 @@ import ForgetPass from "../Pages/Authentication/ForgetPass";
 import ManageUsers from "../Pages/Dashboard/ManageReviews";
 import Checkout from "../Pages/Checkout/Checkout";
 import SuccessPayment from "../Pages/Checkout/SuccessPayment";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
     {
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/checkout/:packageName",
-                element: <Checkout />,
+                element: <PrivetRoute><Checkout /></PrivetRoute>,
             },
         ],
     },

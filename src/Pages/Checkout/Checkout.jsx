@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useAuthContext from "../../Hooks/useAuthContext";
 import StripeContent from "./StripeContent";
@@ -6,6 +6,7 @@ import SSLCommerzContent from "./SSLCommerzContent";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const packages = [
     {
@@ -49,6 +50,7 @@ const packages = [
 const Checkout = () => {
     const { packageName } = useParams();
     const [method, setMethod] = useState("Stripe");
+    const [isLoading, setIsLoading] = useState(false);
     const { user } = useAuthContext();
     const axiosSecure = useAxiosSecure();
     const newPackage = packages.find((p) => p.location === packageName);
@@ -59,15 +61,17 @@ const Checkout = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = async(data) => {
+    console.log(user.displayName);
+    const onSubmit = async (data) => {
+        setIsLoading(true);
         const info = {
             ...data,
             paymentMethod: "SSLCommerz",
             packageName: newPackage.name,
             benefits: newPackage.benefits,
             price: newPackage.price,
-            userName: user.displayName,
-            userEmail: user.email,
+            userName: user?.displayName,
+            userEmail: user?.email,
             status: "Pending",
         };
 
@@ -75,6 +79,13 @@ const Checkout = () => {
         console.log(res.data);
         if (res.status === 200 && res.data.status === "SUCCESS") {
             window.location.replace(res.data.GatewayPageURL);
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Sorry!",
+                text: `${res.data.message}`,
+                confirmButtonColor: "#FFAE00",
+            });
         }
     };
 
@@ -334,7 +345,11 @@ const Checkout = () => {
                                 type="submit"
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full shadow-md hover:scale-[1.03] transition"
                             >
-                                Pay with SSLCommerz
+                                {isLoading ? (
+                                    <div className="loading loading-spinner"></div>
+                                ) : (
+                                    "Pay with SSLCommerz"
+                                )}
                             </button>
                         </motion.form>
                     )}
