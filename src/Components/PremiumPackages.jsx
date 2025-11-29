@@ -119,7 +119,7 @@ const PremiumPackages = () => {
                                     <li key={s}>{s}</li>
                                 ))}
                             </ul>
-                            <Link 
+                            <Link
                                 to={`/checkout/${p.location}`}
                                 type="submit"
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none"

@@ -61,7 +61,6 @@ const Checkout = () => {
         formState: { errors },
     } = useForm();
 
-    console.log(user.displayName);
     const onSubmit = async (data) => {
         setIsLoading(true);
         const info = {
@@ -87,6 +86,15 @@ const Checkout = () => {
                 confirmButtonColor: "#FFAE00",
             });
         }
+    };
+
+    const handlePayment = (data) => {
+        Swal.fire({
+            icon: "error",
+            title: "Sorry!",
+            text: `${data} hasn't implementd yet`,
+            confirmButtonColor: "#FFAE00",
+        });
     };
 
     useEffect(() => {
@@ -224,7 +232,7 @@ const Checkout = () => {
                                 Stripe checkout will appear here.
                             </p>
                             <button
-                                // onClick={() => handlePayment(method)}
+                                onClick={() => handlePayment(method)}
                                 className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full shadow-md hover:scale-[1.03] transition"
                             >
                                 Pay with Stripe
