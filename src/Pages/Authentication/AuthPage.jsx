@@ -21,8 +21,7 @@ export default function AuthPage() {
     const axiosInstance = useAxios();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.state.from.pathname);
-    const from = location.state.from.pathname || "/";
+    const from = location?.state?.from?.pathname || "/";
 
     const {
         register,
