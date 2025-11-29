@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useAuthContext from "../../Hooks/useAuthContext";
 import StripeContent from "./StripeContent";
@@ -7,6 +7,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import Stripe from "./Stripe";
 
 const packages = [
     {
@@ -51,16 +52,22 @@ const Checkout = () => {
     const { packageName } = useParams();
     const [method, setMethod] = useState("Stripe");
     const [isLoading, setIsLoading] = useState(false);
+    const [paymentTrigger, setPaymentTrigger] = useState(null);
+    const modalRef = useRef(null);
     const { user } = useAuthContext();
     const axiosSecure = useAxiosSecure();
     const newPackage = packages.find((p) => p.location === packageName);
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    //? SSLCommerz
     const onSubmit = async (data) => {
         setIsLoading(true);
         const info = {
@@ -88,18 +95,22 @@ const Checkout = () => {
         }
     };
 
+    //? Stripe
     const handlePayment = (data) => {
-        Swal.fire({
-            icon: "error",
-            title: "Sorry!",
-            text: `${data} hasn't implementd yet`,
-            confirmButtonColor: "#FFAE00",
-        });
+        const info = {
+            paymentMethod: data,
+            packageName: newPackage.name,
+            benefits: newPackage.benefits,
+            price: newPackage.price * 100,
+            userName: user?.displayName,
+            userEmail: user?.email,
+            status: "Pending",
+        };
+        setPaymentTrigger(info);
+        if (modalRef.current) {
+            modalRef.current.show(); // call a function exposed by the child
+        }
     };
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
 
     const fadeIn = {
         initial: { opacity: 0, y: 10 },
@@ -363,6 +374,8 @@ const Checkout = () => {
                     )}
                 </motion.div>
             </motion.div>
+
+            <Stripe ref={modalRef} paymentTrigger={paymentTrigger} />
         </div>
     );
 };

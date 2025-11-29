@@ -17,6 +17,7 @@ const SSLCommerzContent = () => {
                     <h3>Step-by-Step Guide:</h3>
                     <ol className="list-decimal list-inside">
                         <li>Select SSLCommerz as your payment method.</li>
+                        <li>Enter your address and mobile number.</li>
                         <li>Click the Pay with SSLCommerz button.</li>
                         <li>
                             You will be redirected to SSLCommerz’s secure
@@ -52,6 +53,7 @@ const SSLCommerzContent = () => {
                     <h3>পদক্ষেপ অনুসরণ করুন:</h3>
                     <ol className="list-decimal list-inside">
                         <li>পেমেন্ট মেথড হিসেবে SSLCommerz নির্বাচন করুন।</li>
+                        <li>আপনার ঠিকানা ও মোবাইল নম্বর দিন</li>
                         <li>Pay with SSLCommerz বাটনে ক্লিক করুন।</li>
                         <li>
                             আপনি SSLCommerz-এর নিরাপদ পেমেন্ট পোর্টালে
