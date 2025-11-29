@@ -35,7 +35,7 @@ const MealsCategory = () => {
 
 
     return (
-        <div className='px-0 2xl:px-[7%]'>
+        <div className='conatiner mx-auto'>
             <div className='flex items-center justify-center gap-3 meals-btn'>
                 <button onClick={() => handleMealsButton("all")} className={`btn cursor-pointer bg-white text-primary ${isActive === "all" ? "active" : ""}`}>
                     All Meals
@@ -53,7 +53,7 @@ const MealsCategory = () => {
             {
                 isLoading && <Loading/>
             }
-            <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 p-10 gap-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 p-10 gap-5'>
                 {
                     display.map((m) => (
                         <div key={m?.id} className='border-2 border-base-200 rounded-2xl p-5 bg-white space-y-3'>

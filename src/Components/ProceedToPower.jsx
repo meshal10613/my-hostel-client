@@ -7,7 +7,7 @@ import { RiArrowRightSLine } from 'react-icons/ri';
 
 const ProceedToPower = () => {
     return (
-        <div className='py-20 mb-10 mx-5 px-0 md:px-[7%] space-y-20'>
+        <div className='py-20 mb-10 container mx-auto space-y-20'>
             {/* Proceed 1 */}
             <div className='bg-white shadow-2xl rounded-2xl flex flex-col-reverse md:flex-row justify-between lg:h-[350px] xl:h-[450px]'>
                 <div className='p-10 lg:p-20 flex flex-col justify-between gap-10 h-full lg:w-1/2'>

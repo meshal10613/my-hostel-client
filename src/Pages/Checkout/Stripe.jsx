@@ -4,9 +4,10 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import StripeForm from "./StripeForm";
+import config from "../../config/config";
 
 //? Stripe Publishable Key
-const stripePromise = loadStripe(import.meta.env.VITE_stripe_payment_publishable_key);
+const stripePromise = loadStripe(config.stripe_payment_publishable_key);
 
 const Stripe = forwardRef((props, ref) => {
     const dialogRef = useRef(null);

@@ -18,15 +18,15 @@ const Footer = () => {
         });
     };
     return (
-        <div className='bg-black py-10 px-0 2xl:px-[7%]'>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around gap-10 lg:gap-0 pl-5 lg:pl-0'>
+        <div className='bg-black py-10 px-0 md:px-[3%] lg:px-[5%] xl:px-[6%] 2xl:px-[7%]'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around gap-10 lg:gap-0'>
                 {/* Company */}
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Company</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/" className='link-hover'>Home</Link>
-                        <Link to="/meals" className='link-hover'>Meals</Link>
-                        <Link to="/upcomingMeals" className='link-hover'>Upcoming Meals</Link>
+                        <Link to="/" className='link-hover w-fit'>Home</Link>
+                        <Link to="/meals" className='link-hover w-fit'>Meals</Link>
+                        <Link to="/upcomingMeals" className='link-hover w-fit'>Upcoming Meals</Link>
                         {
                             user && 
                             <Link to="/dashboard/my-profile" className='link-hover'>Dashboard</Link>
@@ -37,19 +37,19 @@ const Footer = () => {
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Contact</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/" className='link-hover'>Help & Support</Link>
-                        <Link to="/" className='link-hover'>Partner with us</Link>
-                        <Link to="/" className='link-hover'>Ride with us</Link>
+                        <Link to="/" className='link-hover w-fit'>Help & Support</Link>
+                        <Link to="/" className='link-hover w-fit'>Partner with us</Link>
+                        <Link to="/" className='link-hover w-fit'>Ride with us</Link>
                     </div>
                 </div>
                 {/* Legal */}
                 <div className='text-white space-y-5'>
                     <h2 className='font-bold text-base'>Legal</h2>
                     <div className='space-y-2 flex flex-col'>
-                        <Link to="/" className='link-hover'>Terms & Conditions</Link>
-                        <Link to="/" className='link-hover'>Refund & Cancellation</Link>
-                        <Link to="/" className='link-hover'>Privacy Policy</Link>
-                        <Link to="/" className='link-hover'>Cookie Policy</Link>
+                        <Link to="/" className='link-hover w-fit'>Terms & Conditions</Link>
+                        <Link to="/" className='link-hover w-fit'>Refund & Cancellation</Link>
+                        <Link to="/" className='link-hover w-fit'>Privacy Policy</Link>
+                        <Link to="/" className='link-hover w-fit'>Cookie Policy</Link>
                     </div>
                 </div>
                 {/* Follow Us */}

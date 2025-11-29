@@ -4,7 +4,7 @@ import { auth } from '../Firebase/firebase-init';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 
 const AuthProvider = ({children}) => {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [paymentInfo, setPaymentInfo] = useState({});
 

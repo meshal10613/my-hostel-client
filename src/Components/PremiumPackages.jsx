@@ -43,7 +43,7 @@ const PremiumPackages = () => {
     ];
 
     return (
-        <>
+        <div className="container mx-auto">
             <h2 className="text-4xl font-bold text-center">
                 Choose Your Perfect{" "}
                 <span className="text-[#FFAE00] mb-3">Meal Package</span>
@@ -130,7 +130,7 @@ const PremiumPackages = () => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
 

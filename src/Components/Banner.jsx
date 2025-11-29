@@ -20,7 +20,7 @@ const Banner = () => {
     }, []);
 
     return (
-        <div className="bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 px-0 2xl:px-[7%] relative overflow-hidden mb-10">
+        <div className="bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] py-32 xl:py-40 pl-0 lg:pl-10 xl:pl-20 2xl:pl-32 relative overflow-hidden mb-10">
             <div className="flex flex-col items-center lg:items-baseline justify-baseline space-y-3 z-30">
                 <h2 className="text-white text-5xl md:text-6xl font-semibold">
                     Are you starving?
