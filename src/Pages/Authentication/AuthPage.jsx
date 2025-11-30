@@ -12,6 +12,7 @@ import axios from "axios";
 import useAuthContext from "../../Hooks/useAuthContext";
 import Swal from "sweetalert2";
 import useAxios from "../../Hooks/useAxios";
+import config from "../../config/config";
 
 export default function AuthPage() {
     const { user, registerUser, updateUserProfile, setUser, loginUser } =
@@ -76,7 +77,7 @@ export default function AuthPage() {
         } else {
             const formData = new FormData();
             formData.append("image", data.image[0]);
-            const uploadKey = import.meta.env.VITE_imgbb_apikey;
+            const uploadKey = config.imgbb_apikey;
             const res = await axios.post(
                 `https://api.imgbb.com/1/upload?key=${uploadKey}`,
                 formData,

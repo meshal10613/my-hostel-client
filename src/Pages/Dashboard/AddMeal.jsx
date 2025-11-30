@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useAuthContext from '../../Hooks/useAuthContext';
 import Swal from 'sweetalert2';
+import config from '../../config/config';
 
 const AddMeal = () => {
     const {
@@ -35,7 +36,7 @@ const AddMeal = () => {
     const onSubmit = async(data) => {
         setIsLoading(true);
         // Image upload to imgbb
-        const uploadKey = import.meta.env.VITE_imgbb_apikey;
+        const uploadKey = config.imgbb_apikey;
         const imageFile = data.image[0];
         const formD = new FormData();
         formD.append("image", imageFile);
