@@ -41,7 +41,7 @@ const Banner = () => {
                                 ? "Please Enter Your Meal...."
                                 : "Search Your Meal"
                         }
-                        className="flex-1 bg-white h-10 rounded-md pl-3 focus:border-2 focus:border-gray-200 focus:outline-none"
+                        className="flex-1 bg-white h-10 pl-3 focus:border-b-2 focus:outline-none focus:border-primary"
                     />
                     <button
                         type="submit"
