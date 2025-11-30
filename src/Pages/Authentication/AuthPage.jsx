@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Facebook from "../../assets/facebook.png";
 import LoginAnime from "../../assets/animation/Login.json";
@@ -19,6 +19,7 @@ export default function AuthPage() {
         useAuthContext();
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [show, setShow] = useState(false);
     const axiosInstance = useAxios();
     const navigate = useNavigate();
     const location = useLocation();
@@ -44,18 +45,18 @@ export default function AuthPage() {
             const password = data.password;
             loginUser(email, password)
                 .then(async () => {
-                    // const user = result.user;
-                    // const lastSignInTime = new Date(user?.metadata?.lastSignInTime).toLocaleString();
                     const serverData = {
                         email: data.email,
-                        // lastSignInTime
                     };
                     const userRes = await axiosInstance.post(
                         "/users",
                         serverData
                     );
-                    if (userRes.status === 200 && userRes.statusText === "OK") {
-                        navigate(from);
+                    if (
+                        userRes.status === 200 &&
+                        userRes.statusText === "OK" &&
+                        userRes.data.email === user.email
+                    ) {
                         setIsLoading(false);
                         Swal.fire({
                             icon: "success",
@@ -63,6 +64,7 @@ export default function AuthPage() {
                             text: `Login successfully`,
                             confirmButtonColor: "#FFAE00",
                         });
+                        navigate(from);
                     }
                 })
                 .catch((error) => {
@@ -221,7 +223,7 @@ export default function AuthPage() {
                                             })}
                                             type="email"
                                             placeholder="Email"
-                                            className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
                                         {errors.email && (
                                             <p className="text-red-500 text-sm mt-1">
@@ -229,16 +231,26 @@ export default function AuthPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <div>
+                                    <div className="relative">
                                         <input
                                             {...register("password", {
                                                 required:
                                                     "Password is required",
                                             })}
-                                            type="password"
+                                            type={show ? "text" : "password"}
                                             placeholder="Password"
-                                            className="w-full p-3 border rounded-lg focus:outline-none focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
+                                        <span
+                                            onClick={() => setShow(!show)}
+                                            className="absolute right-0 top-1/3 cursor-pointer"
+                                        >
+                                            {show ? (
+                                                <FaEyeSlash size={20} />
+                                            ) : (
+                                                <FaEye size={20} />
+                                            )}
+                                        </span>
                                         {errors.password && (
                                             <p className="text-red-500 text-sm mt-1">
                                                 {errors.password.message}
@@ -345,7 +357,7 @@ export default function AuthPage() {
                                             })}
                                             type="file"
                                             placeholder="Your Image"
-                                            className="w-full file-inputltw1 p-2 border rounded-lg focus:outline-none  focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
                                         {errors.image && (
                                             <p className="text-red-500 text-sm mt-1">
@@ -360,7 +372,7 @@ export default function AuthPage() {
                                             })}
                                             type="text"
                                             placeholder="Your Name"
-                                            className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
                                         {errors.name && (
                                             <p className="text-red-500 text-sm mt-1">
@@ -375,7 +387,7 @@ export default function AuthPage() {
                                             })}
                                             type="email"
                                             placeholder="Email"
-                                            className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
                                         {errors.email && (
                                             <p className="text-red-500 text-sm mt-1">
@@ -383,16 +395,26 @@ export default function AuthPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <div>
+                                    <div className="relative">
                                         <input
                                             {...register("password", {
                                                 required:
                                                     "Password is required",
                                             })}
-                                            type="password"
+                                            type={show ? "text" : "password"}
                                             placeholder="Password"
-                                            className="w-full p-2 border rounded-lg focus:outline-none focus:border-primary"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
                                         />
+                                        <span
+                                            onClick={() => setShow(!show)}
+                                            className="absolute right-0 top-1/3 cursor-pointer"
+                                        >
+                                            {show ? (
+                                                <FaEyeSlash size={20} />
+                                            ) : (
+                                                <FaEye size={20} />
+                                            )}
+                                        </span>
                                         {errors.password && (
                                             <p className="text-red-500 text-sm mt-1">
                                                 {errors.password.message}
