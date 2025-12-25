@@ -7,6 +7,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [paymentInfo, setPaymentInfo] = useState({});
+    const [search, setSearch] = useState(''); //? meals page and banner search
 
     const loginUser = (email, password) => {
         setLoading(true);
@@ -43,6 +44,8 @@ const AuthProvider = ({children}) => {
         setUser,
         loading,
         setLoading,
+        search,
+        setSearch,
         paymentInfo,
         setPaymentInfo,
         loginUser,

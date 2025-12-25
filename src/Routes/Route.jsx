@@ -22,6 +22,8 @@ import ManageUsers from "../Pages/Dashboard/ManageReviews";
 import Checkout from "../Pages/Checkout/Checkout";
 import SuccessPayment from "../Pages/Checkout/SuccessPayment";
 import PrivetRoute from "./PrivetRoute";
+import VerifyOtp from "../Pages/Authentication/VerifyOtp";
+import ResetPass from "../Pages/Authentication/ResetPass";
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +63,14 @@ export const router = createBrowserRouter([
     {
         path: "/forget-pass",
         element: <ForgetPass />,
+    },
+    {
+        path: "/verify-otp",
+        element: <VerifyOtp/>
+    },
+    {
+        path: "/reset-pass",
+        element: <ResetPass/>
     },
     {
         path: "/dashboard",

@@ -52,16 +52,17 @@ export default function AuthPage() {
                         "/users",
                         serverData
                     );
+                    console.log(userRes);
                     if (
                         userRes.status === 200 &&
                         userRes.statusText === "OK" &&
-                        userRes.data.email === user.email
+                        userRes.data.success === true
                     ) {
                         setIsLoading(false);
                         Swal.fire({
                             icon: "success",
                             title: "Congratulations!",
-                            text: `Login successfully`,
+                            text: `${userRes.data.message}`,
                             confirmButtonColor: "#FFAE00",
                         });
                         navigate(from);
@@ -104,6 +105,7 @@ export default function AuthPage() {
                     };
                     const serverData = {
                         displayName: data.name,
+                        password: data.password,
                         email: result.user.email,
                         photoURL: res.data.data.url,
                         role: "user",
@@ -120,14 +122,15 @@ export default function AuthPage() {
                             );
                             if (
                                 userRes.status === 200 &&
-                                userRes.statusText === "OK"
+                                userRes.statusText === "OK" &&
+                                userRes.data.success === true
                             ) {
                                 navigate(from);
                                 setIsLoading(false);
                                 Swal.fire({
                                     icon: "success",
                                     title: "Congratulations!",
-                                    text: `Sign up successfully`,
+                                    text: `${userRes.data.message}`,
                                     confirmButtonColor: "#FFAE00",
                                 });
                             }
@@ -216,21 +219,39 @@ export default function AuthPage() {
                                     onSubmit={handleSubmit(onSubmit)}
                                     className="space-y-4"
                                 >
-                                    <div>
+                                    {/* Email */}
+                                    <div className="relative">
                                         <input
                                             {...register("email", {
                                                 required: "Email is required",
                                             })}
                                             type="email"
-                                            placeholder="Email"
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
+                                            placeholder=""
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                         />
+                                        <label
+                                            className="
+                                                absolute left-3 text-gray-500 pointer-events-none 
+                                                transition-all duration-200
+                                                top-1/2 -translate-y-1/2 text-base
+                                                peer-focus:top-0
+                                                peer-focus:-translate-y-0
+                                                peer-focus:text-sm
+                                                peer-focus:text-primary
+                                                peer-not-placeholder-shown:top-0
+                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:text-sm
+                                            "
+                                        >
+                                            Email
+                                        </label>
                                         {errors.email && (
                                             <p className="text-red-500 text-sm mt-1">
                                                 {errors.email.message}
                                             </p>
                                         )}
                                     </div>
+                                    {/* Password */}
                                     <div className="relative">
                                         <input
                                             {...register("password", {
@@ -238,9 +259,25 @@ export default function AuthPage() {
                                                     "Password is required",
                                             })}
                                             type={show ? "text" : "password"}
-                                            placeholder="Password"
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
+                                            placeholder=""
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                         />
+                                        <label
+                                            className="
+                                                absolute left-3 text-gray-500 pointer-events-none 
+                                                transition-all duration-200
+                                                top-1/2 -translate-y-1/2 text-base
+                                                peer-focus:top-0
+                                                peer-focus:-translate-y-0
+                                                peer-focus:text-sm
+                                                peer-focus:text-primary
+                                                peer-not-placeholder-shown:top-0
+                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:text-sm
+                                            "
+                                        >
+                                            Password
+                                        </label>
                                         <span
                                             onClick={() => setShow(!show)}
                                             className="absolute right-0 top-1/3 cursor-pointer"
@@ -257,8 +294,8 @@ export default function AuthPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
+                                    <div className="flex items-center justify-end">
+                                        {/* <div className="flex items-center gap-2">
                                             <input
                                                 type="checkbox"
                                                 className="w-4 h-4"
@@ -266,7 +303,7 @@ export default function AuthPage() {
                                             <span className="text-sm text-gray-600">
                                                 Remember me
                                             </span>
-                                        </div>
+                                        </div> */}
                                         <Link
                                             to="/forget-pass"
                                             className="link link-hover hover:text-primary"
@@ -365,36 +402,71 @@ export default function AuthPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <div>
+                                    {/* Name */}
+                                    <div className="relative">
                                         <input
                                             {...register("name", {
                                                 required: "Name is required",
                                             })}
                                             type="text"
-                                            placeholder="Your Name"
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
+                                            placeholder=""
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                         />
+                                        <label
+                                            className="
+                                                absolute left-3 text-gray-500 pointer-events-none 
+                                                transition-all duration-200
+                                                top-1/2 -translate-y-1/2 text-base
+                                                peer-focus:top-0
+                                                peer-focus:-translate-y-0
+                                                peer-focus:text-sm
+                                                peer-focus:text-primary
+                                                peer-not-placeholder-shown:top-0
+                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:text-sm
+                                            "
+                                        >
+                                            Name
+                                        </label>
                                         {errors.name && (
                                             <p className="text-red-500 text-sm mt-1">
                                                 {errors.name.message}
                                             </p>
                                         )}
                                     </div>
-                                    <div>
+                                    {/* Email */}
+                                    <div className="relative">
                                         <input
                                             {...register("email", {
                                                 required: "Email is required",
                                             })}
                                             type="email"
-                                            placeholder="Email"
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
+                                            placeholder=""
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                         />
+                                        <label
+                                            className="
+                                                absolute left-3 text-gray-500 pointer-events-none 
+                                                transition-all duration-200
+                                                top-1/2 -translate-y-1/2 text-base
+                                                peer-focus:top-0
+                                                peer-focus:-translate-y-0
+                                                peer-focus:text-sm
+                                                peer-focus:text-primary
+                                                peer-not-placeholder-shown:top-0
+                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:text-sm
+                                            "
+                                        >
+                                            Email
+                                        </label>
                                         {errors.email && (
                                             <p className="text-red-500 text-sm mt-1">
                                                 {errors.email.message}
                                             </p>
                                         )}
                                     </div>
+                                    {/* Password */}
                                     <div className="relative">
                                         <input
                                             {...register("password", {
@@ -402,9 +474,25 @@ export default function AuthPage() {
                                                     "Password is required",
                                             })}
                                             type={show ? "text" : "password"}
-                                            placeholder="Password"
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
+                                            placeholder=""
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                         />
+                                        <label
+                                            className="
+                                                absolute left-3 text-gray-500 pointer-events-none 
+                                                transition-all duration-200
+                                                top-1/2 -translate-y-1/2 text-base
+                                                peer-focus:top-0
+                                                peer-focus:-translate-y-0
+                                                peer-focus:text-sm
+                                                peer-focus:text-primary
+                                                peer-not-placeholder-shown:top-0
+                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:text-sm
+                                            "
+                                        >
+                                            Password
+                                        </label>
                                         <span
                                             onClick={() => setShow(!show)}
                                             className="absolute right-0 top-1/3 cursor-pointer"

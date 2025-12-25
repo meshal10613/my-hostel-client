@@ -4,9 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FaSearch, FaStar } from "react-icons/fa";
 import { Link } from "react-router";
 import Loading from "../../Components/Shared/Loading";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 const Meals = () => {
-    const [search, setSearch] = useState("");
+    const {search, setSearch} = useAuthContext();
+    // const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     // const [minPrice, setMinPrice] = useState("");
     // const [maxPrice, setMaxPrice] = useState("");
