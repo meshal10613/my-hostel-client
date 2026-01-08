@@ -7,7 +7,7 @@ import Loading from "../../Components/Shared/Loading";
 import useAuthContext from "../../Hooks/useAuthContext";
 
 const Meals = () => {
-    const {search, setSearch} = useAuthContext();
+    const { search, setSearch } = useAuthContext();
     // const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     // const [minPrice, setMinPrice] = useState("");
@@ -18,13 +18,11 @@ const Meals = () => {
         queryFn: async () => {
             const res = await axios.get(`/meals`, {
                 params: {
-                    search,
-                    category,
-                    // minPrice,
-                    // maxPrice,
+                    ...(search && { search }),
+                    ...(category && { category }),
                 },
             });
-            return res.data;
+            return res.data.data;
         },
     });
 
@@ -34,9 +32,9 @@ const Meals = () => {
         setSearch(search);
     };
     return (
-        <div className="px-0 2xl:px-[7%]">
+        <div className="container mx-auto px-4 py-8">
             {/* Filters Section */}
-            <div className="flex items-center justify-between gap-4 m-5">
+            <div className="flex items-center justify-between gap-4 my-5">
                 <form
                     onSubmit={handleSearch}
                     className="flex items-center gap-3"
@@ -60,14 +58,29 @@ const Meals = () => {
 
                 {/* Category */}
                 <select
-                    className="select select-bordered w-32"
+                    className="select select-bordered w-40"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                 >
                     <option value="">All Categories</option>
-                    <option className="hover:bg-primary hover:text-white" value="Breakfast">Breakfast</option>
-                    <option className="hover:bg-primary hover:text-white" value="Lunch">Lunch</option>
-                    <option className="hover:bg-primary hover:text-white" value="Dinner">Dinner</option>
+                    <option
+                        className="hover:bg-primary hover:text-white"
+                        value="Breakfast"
+                    >
+                        Breakfast
+                    </option>
+                    <option
+                        className="hover:bg-primary hover:text-white"
+                        value="Lunch"
+                    >
+                        Lunch
+                    </option>
+                    <option
+                        className="hover:bg-primary hover:text-white"
+                        value="Dinner"
+                    >
+                        Dinner
+                    </option>
                 </select>
 
                 {/* Min Price
@@ -89,34 +102,46 @@ const Meals = () => {
                 /> */}
             </div>
             {isLoading && <Loading />}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 p-10 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 w-fit mx-auto">
                 {meals.map((m) => (
-                    <div
+                    <Link
+                        to={`/meal/${m.id}`}
                         key={m?.id}
-                        className="border-2 border-base-200 rounded-2xl p-5 bg-white space-y-3"
+                        className="shadow-md transition-all duration-300 hover:shadow-2xl rounded-2xl bg-white max-w-76"
                     >
-                        <div className="relative">
+                        <div className="h-48 relative">
                             <img
                                 src={m?.image}
                                 alt={m?.title}
-                                className="h-60 w-full object-cover rounded-md"
+                                className="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                             />
-                            <span className="absolute top-2 left-2 bg-white text-yellow-400 flex items-center gap-1 p-1 rounded-md">
-                                <FaStar />
-                                {m.rating}
-                            </span>
+                            <span className="absolute -bottom-2.5 right-3 badge bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none">{m.category}</span>
                         </div>
-                        <h2 className="text-2xl font-semibold">{m?.title}</h2>
-                        <p className="text-base text-black flex items-center gap-1">
-                            ৳<span>{m?.price}</span>
-                        </p>
-                        <Link
-                            to={`/meal/${m.id}`}
-                            className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full"
-                        >
-                            Details
-                        </Link>
-                    </div>
+                        <div className="p-3 space-y-2">
+                            <h2 className="card-title font-semibold">
+                                {m?.title}
+                            </h2>
+                            <div className="rating">
+                                {[1, 2, 3, 4, 5].map((value) => (
+                                    <input
+                                        key={value}
+                                        type="radio"
+                                        name={`rating`}
+                                        className="mask mask-star-2 bg-orange-400"
+                                        aria-label={`${value} star${
+                                            value > 1 ? "s" : ""
+                                        }`}
+                                        value={value}
+                                        checked={value === m.averageRating}
+                                        readOnly
+                                    />
+                                ))}
+                            </div>
+                            <p className="text-base text-black flex items-center gap-1">
+                                ৳<span>{m?.price}</span>
+                            </p>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>

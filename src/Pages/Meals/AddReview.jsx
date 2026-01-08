@@ -122,7 +122,7 @@ const AddReview = ({ id, queryClient, title, category }) => {
                                 { 
                                     load 
                                     ? <div className="loading loading-spinner"></div> 
-                                    : "Submit Review" 
+                                    : "Submit" 
                                 }
                             </button>
                         </div>

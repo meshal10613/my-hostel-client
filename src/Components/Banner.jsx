@@ -42,19 +42,19 @@ const Banner = () => {
                             name="banner"
                             id=""
                             placeholder=""
-                            className="flex-1 bg-white h-10 pl-3 focus:border-b-2 focus:outline-none focus:border-primary peer"
+                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                         />
                         <label
                             className="
                                 absolute left-3 text-gray-500 pointer-events-none 
-                                transition-all duration-200
+                                transition-all duration-300
                                 top-1/2 -translate-y-1/2 text-base
                                 peer-focus:top-0
-                                peer-focus:-translate-y-0
+                                peer-focus:-translate-y-3
                                 peer-focus:text-sm
                                 peer-focus:text-primary
                                 peer-not-placeholder-shown:top-0
-                                peer-not-placeholder-shown:-translate-y-0
+                                peer-not-placeholder-shown:-translate-y-3
                                 peer-not-placeholder-shown:text-sm
                             "
                         >

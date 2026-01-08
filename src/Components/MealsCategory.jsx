@@ -13,31 +13,33 @@ const MealsCategory = () => {
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["category", category],
         queryFn: async () => {
-            const res = await axios.get(`/meals?category=${category}`);
-            return res.data;
+            const res = await axios.get(
+                `/meals${category ? `?category=${category}` : ""}`
+            );
+            return res.data.data;
         },
     });
-
+    console.log(meals);
     const handleMealsButton = (meal) => {
         setIsActive(meal);
-        if(meal === "breakfast"){
-            setCategory("Breakfast")
-        }else if(meal === "lunch"){
+        if (meal === "breakfast") {
+            setCategory("Breakfast");
+        } else if (meal === "lunch") {
             setCategory("Lunch");
-        }else if(meal === "dinner"){
-            setCategory("Dinner")
-        }else{
+        } else if (meal === "dinner") {
+            setCategory("Dinner");
+        } else {
             setCategory("");
-        };
+        }
     };
     const display = showAll ? meals : meals.slice(0, 12);
 
     return (
-        <div className="conatiner mx-auto z-50">
+        <div className="conatiner mx-auto z-50 px-4">
             <div className="flex items-center justify-center gap-3 meals-btn">
                 <button
                     onClick={() => handleMealsButton("all")}
-                    className={`btn cursor-pointer bg-white text-primary ${
+                    className={`btn cursor-pointer bg-white text-primary border-none ${
                         isActive === "all" ? "active" : ""
                     }`}
                 >
@@ -45,7 +47,7 @@ const MealsCategory = () => {
                 </button>
                 <button
                     onClick={() => handleMealsButton("breakfast")}
-                    className={`btn cursor-pointer bg-white text-primary ${
+                    className={`btn cursor-pointer bg-white text-primary border-none ${
                         isActive === "breakfast" ? "active" : ""
                     }`}
                 >
@@ -53,7 +55,7 @@ const MealsCategory = () => {
                 </button>
                 <button
                     onClick={() => handleMealsButton("lunch")}
-                    className={`btn cursor-pointer bg-white text-primary ${
+                    className={`btn cursor-pointer bg-white text-primary border-none ${
                         isActive === "lunch" ? "active" : ""
                     }`}
                 >
@@ -61,7 +63,7 @@ const MealsCategory = () => {
                 </button>
                 <button
                     onClick={() => handleMealsButton("dinner")}
-                    className={`btn cursor-pointer bg-white text-primary ${
+                    className={`btn cursor-pointer bg-white text-primary border-none ${
                         isActive === "dinner" ? "active" : ""
                     }`}
                 >
@@ -69,34 +71,48 @@ const MealsCategory = () => {
                 </button>
             </div>
             {isLoading && <Loading />}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 p-10 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 w-fit mx-auto my-10">
                 {display.map((m) => (
-                    <div
+                    <Link
+                        to={`/meal/${m.id}`}
                         key={m?.id}
-                        className="border-2 border-base-200 rounded-2xl p-5 bg-white space-y-3"
+                        className="shadow-md transition-all duration-300 hover:shadow-2xl rounded-2xl bg-white max-w-76"
                     >
-                        <div className="relative">
+                        <div className="h-48 relative">
                             <img
                                 src={m?.image}
                                 alt={m?.title}
-                                className="h-60 w-full object-cover rounded-md"
+                                className="h-48 w-full object-cover rounded-tl-2xl rounded-tr-2xl"
                             />
-                            <span className="absolute top-2 left-2 bg-white text-yellow-400 flex items-center gap-1 p-1 rounded-md">
-                                <FaStar />
-                                {m.rating}
+                            <span className="absolute -bottom-2.5 right-3 badge bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none">
+                                {m.category}
                             </span>
                         </div>
-                        <h2 className="text-2xl font-semibold">{m?.title}</h2>
-                        <p className="text-base text-black flex items-center gap-1">
-                            ৳<span>{m?.price}</span>
-                        </p>
-                        <Link
-                            to={`/meal/${m.id}`}
-                            className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white border-none w-full"
-                        >
-                            Details
-                        </Link>
-                    </div>
+                        <div className="p-3 space-y-2">
+                            <h2 className="card-title font-semibold">
+                                {m?.title}
+                            </h2>
+                            <div className="rating">
+                                {[1, 2, 3, 4, 5].map((value) => (
+                                    <input
+                                        key={value}
+                                        type="radio"
+                                        name={`rating`}
+                                        className="mask mask-star-2 bg-orange-400"
+                                        aria-label={`${value} star${
+                                            value > 1 ? "s" : ""
+                                        }`}
+                                        value={value}
+                                        checked={value === m.averageRating}
+                                        readOnly
+                                    />
+                                ))}
+                            </div>
+                            <p className="text-base text-black flex items-center gap-1">
+                                ৳<span>{m?.price}</span>
+                            </p>
+                        </div>
+                    </Link>
                 ))}
             </div>
             <div className="flex items-center justify-center">

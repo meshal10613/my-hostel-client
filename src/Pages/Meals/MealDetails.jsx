@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import useAxios from '../../Hooks/useAxios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,13 +14,11 @@ const MealDetails = () => {
     const axios = useAxios();
     const { id } = useParams();
     const { user } = useAuthContext();
-    const [liked, setLiked] = useState(false);
-    const [loading, setLoading] = useState(false);
     const { data: meal = [], isLoading } = useQuery({
         queryKey: ["meal", id],
         queryFn: async() => {
             const res = await axios.get(`/meals/${id}`);
-            return res.data;
+            return res.data.data;
         }
     });
 
@@ -41,27 +39,35 @@ const MealDetails = () => {
         },
     });
 
-    useEffect(() => {
-        const fetchLikes = async() => {
-            try{
-                setLoading(true);
-                const res = await axios.get(`/likes/${meal?.id}`, 
-                    {
-                        params: { q: user?.email }
-                    }
-                );
-                if(res.status === 200 && res.statusText === "OK" && res.data !== ""){
-                    setLiked(true);
-                }else{
-                    setLiked(false);
-                }
-            }finally{
-                setLoading(false);
-            }
-        };
+//     useEffect(() => {
+// /*************  ✨ Windsurf Command ⭐  *************/
+// /**
+//  * Fetch likes for a meal.
+//  * 
+//  * @returns {Promise<void>} - A promise that resolves when the likes are fetched.
+//  */
+// /**
+// /*******  257f8231-9b2e-441e-957b-ce61dd2ab40e  *******/
+//         const fetchLikes = async() => {
+//             try{
+//                 setLoading(true);
+//                 const res = await axios.get(`/likes/${meal?.id}`, 
+//                     {
+//                         params: { q: user?.email }
+//                     }
+//                 );
+//                 if(res.status === 200 && res.statusText === "OK" && res.data !== ""){
+//                     setLiked(true);
+//                 }else{
+//                     setLiked(false);
+//                 }
+//             }finally{
+//                 setLoading(false);
+//             }
+//         };
 
-        fetchLikes();
-    }, [meal, axios, user]);
+//         fetchLikes();
+//     }, [meal, axios, user]);
 
     const handleLike = (id) => {
         if(!user){
@@ -71,7 +77,7 @@ const MealDetails = () => {
                 icon: "question",
                 confirmButtonColor: "#FFAE00"
             });
-        }else if(liked){
+        }else if(meal.likesCount === 1){
             Swal.fire({
                 title: "Sorry!",
                 text: "You've already liked",
@@ -99,26 +105,26 @@ const MealDetails = () => {
     return (
     <>
         {
-            isLoading || loading && <Loading/>
+            isLoading && <Loading/>
         }
-        <div className='px-0 2xl:px-[7%] flex flex-col-reverse md:flex-row md:items-center justify-between gap-10 my-10 mx-5 md:mx-0'>
+        <div className='container mx-auto flex flex-col-reverse md:flex-row md:items-center justify-between gap-10 my-10'>
 
             <div className='flex-1 space-y-3'>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-4xl font-semibold'>{meal?.title} <span className='badge badge-primary'>{meal?.category}</span></h2>
                     <button 
                         onClick={() => handleLike(meal?.id)} 
-                        className={`text-primary transition-all ${liked ? "cursor-not-allowed" : "cursor-pointer"} tooltip tooltip-bottom`}
-                        data-tip={`${liked ? "Liked": "Like"}`}
+                        className={`text-primary transition-all ${meal.likesCount === 1 ? "cursor-not-allowed" : "cursor-pointer"} tooltip tooltip-bottom`}
+                        data-tip={`${meal.likesCount === 1 ? "Liked": "Like"}`}
                         >
                         {
-                            liked ?
+                            meal.likesCount === 1 ?
                             <FaHeart size={20} className='text-red-500' />:
                             <FaRegHeart size={20} className='text-red-500' />
                         }
                     </button>
                 </div>
-                <p className='text-xl'>$ {meal?.price}</p>
+                <p className='text-xl'>৳{meal?.price}</p>
                 <p>{meal?.description}</p>
                 <div className='space-y-1'>
                     <h4>Ingredients:</h4>

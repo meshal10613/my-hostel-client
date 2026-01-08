@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useAuthContext from "../../Hooks/useAuthContext";
 import StripeContent from "./StripeContent";
@@ -232,7 +232,7 @@ const Checkout = () => {
                     <motion.h2
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1, transition: { delay: 0.1 } }}
-                        className="text-xl font-semibold mb-2"
+                        className="text-xl font-semibold mb-4"
                     >
                         Complete Your Payment
                     </motion.h2>
@@ -258,18 +258,31 @@ const Checkout = () => {
                             className="space-y-4"
                         >
                             {/* Address */}
-                            <div>
-                                <label className="block mb-1 font-medium">
-                                    Address *
-                                </label>
+                            <div className="relative w-full">
                                 <input
                                     type="text"
-                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
-                                    placeholder="123 Street Name"
                                     {...register("address", {
                                         required: true,
                                     })}
+                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
+                                <label
+                                    className={`
+                                        absolute left-3 wrap-break-word text-gray-500
+                                        pointer-events-none 
+                                        transition-all duration-300
+                                        top-1/2 -translate-y-1/2 text-base
+                                        peer-focus:top-0
+                                        peer-focus:-translate-y-3
+                                        peer-focus:text-sm
+                                        peer-focus:text-primary
+                                        peer-not-placeholder-shown:top-0
+                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:text-sm
+                                    `}
+                                >
+                                    Address *
+                                </label>
                                 {errors.address && (
                                     <p className="text-red-500 text-sm">
                                         Address is required
@@ -278,18 +291,31 @@ const Checkout = () => {
                             </div>
 
                             {/* City */}
-                            <div>
-                                <label className="block mb-1 font-medium">
-                                    City *
-                                </label>
+                            <div className="relative w-full">
                                 <input
                                     type="text"
-                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
-                                    placeholder="Dhaka"
                                     {...register("city", {
                                         required: true,
                                     })}
+                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
+                                <label
+                                    className={`
+                                        absolute left-3 wrap-break-word text-gray-500
+                                        pointer-events-none 
+                                        transition-all duration-300
+                                        top-1/2 -translate-y-1/2 text-base
+                                        peer-focus:top-0
+                                        peer-focus:-translate-y-3
+                                        peer-focus:text-sm
+                                        peer-focus:text-primary
+                                        peer-not-placeholder-shown:top-0
+                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:text-sm
+                                    `}
+                                >
+                                    Dhaka *
+                                </label>
                                 {errors.city && (
                                     <p className="text-red-500 text-sm">
                                         City is required
@@ -298,18 +324,31 @@ const Checkout = () => {
                             </div>
 
                             {/* Country */}
-                            <div>
-                                <label className="block mb-1 font-medium">
-                                    Country *
-                                </label>
+                            <div className="relative w-full">
                                 <input
                                     type="text"
-                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
-                                    placeholder="Bangladesh"
                                     {...register("country", {
                                         required: true,
                                     })}
+                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
+                                <label
+                                    className={`
+                                        absolute left-3 wrap-break-word text-gray-500
+                                        pointer-events-none 
+                                        transition-all duration-300
+                                        top-1/2 -translate-y-1/2 text-base
+                                        peer-focus:top-0
+                                        peer-focus:-translate-y-3
+                                        peer-focus:text-sm
+                                        peer-focus:text-primary
+                                        peer-not-placeholder-shown:top-0
+                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:text-sm
+                                    `}
+                                >
+                                    Country *
+                                </label>
                                 {errors.country && (
                                     <p className="text-red-500 text-sm">
                                         Country is required
@@ -318,20 +357,32 @@ const Checkout = () => {
                             </div>
 
                             {/* Post Code */}
-                            <div>
-                                <label className="block mb-1 font-medium">
-                                    Post Code *
-                                </label>
+                            <div className="relative w-full">
                                 <input
                                     type="number"
-                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
-                                    placeholder="1207"
                                     {...register("postcode", {
                                         required: true,
-                                        valueAsNumber: true,
                                     })}
+                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                 />
-                                {errors.postcode && (
+                                <label
+                                    className={`
+                                        absolute left-3 wrap-break-word text-gray-500
+                                        pointer-events-none 
+                                        transition-all duration-300
+                                        top-1/2 -translate-y-1/2 text-base
+                                        peer-focus:top-0
+                                        peer-focus:-translate-y-2
+                                        peer-focus:text-sm
+                                        peer-focus:text-primary
+                                        peer-not-placeholder-shown:top-0
+                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:text-sm
+                                    `}
+                                >
+                                    Post Code *
+                                </label>
+                                {errors.country && (
                                     <p className="text-red-500 text-sm">
                                         Post code is required
                                     </p>
@@ -339,20 +390,31 @@ const Checkout = () => {
                             </div>
 
                             {/* Phone Number */}
-                            <div>
-                                <label className="block mb-1 font-medium">
-                                    Phone Number *
-                                </label>
+                            <div className="relative w-full">
                                 <input
                                     type="number"
-                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary"
-                                    placeholder="01XXXXXXXXX"
                                     {...register("phone", {
                                         required: true,
-                                        valueAsNumber: true,
                                     })}
+                                    className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
-                                {errors.phone && (
+                                <label
+                                    className="
+                                        absolute left-3 text-gray-500 pointer-events-none 
+                                        transition-all duration-300
+                                        top-1/2 -translate-y-1/2 text-base
+                                        peer-focus:top-0
+                                        peer-focus:-translate-y-3
+                                        peer-focus:text-sm
+                                        peer-focus:text-primary
+                                        peer-not-placeholder-shown:top-0
+                                        peer-not-placeholder-shown:-translate-y-3
+                                        peer-not-placeholder-shown:text-sm
+                                    "
+                                >
+                                    Phone number *
+                                </label>
+                                {errors.country && (
                                     <p className="text-red-500 text-sm">
                                         Phone number is required
                                     </p>

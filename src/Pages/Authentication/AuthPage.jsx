@@ -47,25 +47,35 @@ export default function AuthPage() {
                 .then(async () => {
                     const serverData = {
                         email: data.email,
+                        password: data.password,
                     };
-                    const userRes = await axiosInstance.post(
-                        "/users",
-                        serverData
-                    );
-                    console.log(userRes);
-                    if (
-                        userRes.status === 200 &&
-                        userRes.statusText === "OK" &&
-                        userRes.data.success === true
-                    ) {
+                    try {
+                        const userRes = await axiosInstance.post(
+                            "/users/login",
+                            serverData
+                        );
+                        if (
+                            userRes.status === 200 &&
+                            userRes.statusText === "OK" &&
+                            userRes.data.success === true
+                        ) {
+                            setIsLoading(false);
+                            Swal.fire({
+                                icon: "success",
+                                title: "Congratulations!",
+                                text: `${userRes.data.message}`,
+                                confirmButtonColor: "#FFAE00",
+                            });
+                            navigate(from);
+                        }
+                    } catch (error) {
                         setIsLoading(false);
                         Swal.fire({
-                            icon: "success",
-                            title: "Congratulations!",
-                            text: `${userRes.data.message}`,
+                            icon: "error",
+                            title: "Sorry!",
+                            text: `${error.message}`,
                             confirmButtonColor: "#FFAE00",
                         });
-                        navigate(from);
                     }
                 })
                 .catch((error) => {
@@ -93,50 +103,54 @@ export default function AuthPage() {
             registerUser(data.email, data.password)
                 .then(async (result) => {
                     const user = result.user;
-                    const creationTime = new Date(
-                        user?.metadata?.creationTime
-                    ).toLocaleString();
-                    const lastSignInTime = new Date(
-                        user?.metadata?.lastSignInTime
-                    ).toLocaleString();
                     const updateData = {
                         displayName: data.name,
                         photoURL: res.data.data.url,
                     };
                     const serverData = {
-                        displayName: data.name,
+                        name: data.name,
                         password: data.password,
                         email: result.user.email,
                         photoURL: res.data.data.url,
-                        role: "user",
-                        badge: "Bronze",
-                        creationTime,
-                        lastSignInTime,
                     };
                     updateUserProfile(updateData)
                         .then(async () => {
                             setUser({ ...user, ...updateData });
-                            const userRes = await axiosInstance.post(
-                                "/users",
-                                serverData
-                            );
-                            if (
-                                userRes.status === 200 &&
-                                userRes.statusText === "OK" &&
-                                userRes.data.success === true
-                            ) {
-                                navigate(from);
-                                setIsLoading(false);
+                            try {
+                                const userRes = await axiosInstance.post(
+                                    "/users/register",
+                                    serverData
+                                );
+                                if (
+                                    userRes.status === 200 &&
+                                    userRes.statusText === "OK" &&
+                                    userRes.data.success === true
+                                ) {
+                                    navigate(from);
+                                    setIsLoading(false);
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Congratulations!",
+                                        text: `${userRes.data.message}`,
+                                        confirmButtonColor: "#FFAE00",
+                                    });
+                                }
+                            } catch (error) {
                                 Swal.fire({
-                                    icon: "success",
-                                    title: "Congratulations!",
-                                    text: `${userRes.data.message}`,
+                                    icon: "error",
+                                    title: "Sorry!",
+                                    text: `${error.message}`,
                                     confirmButtonColor: "#FFAE00",
                                 });
                             }
                         })
-                        .catch(() => {
-                            setUser(user);
+                        .catch((error) => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Sorry!",
+                                text: `${error.message}`,
+                                confirmButtonColor: "#FFAE00",
+                            });
                         });
                 })
                 .catch((error) => {
@@ -232,14 +246,14 @@ export default function AuthPage() {
                                         <label
                                             className="
                                                 absolute left-3 text-gray-500 pointer-events-none 
-                                                transition-all duration-200
+                                                transition-all duration-300
                                                 top-1/2 -translate-y-1/2 text-base
                                                 peer-focus:top-0
-                                                peer-focus:-translate-y-0
+                                                peer-focus:-translate-y-3
                                                 peer-focus:text-sm
                                                 peer-focus:text-primary
                                                 peer-not-placeholder-shown:top-0
-                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:-translate-y-3
                                                 peer-not-placeholder-shown:text-sm
                                             "
                                         >
@@ -265,14 +279,14 @@ export default function AuthPage() {
                                         <label
                                             className="
                                                 absolute left-3 text-gray-500 pointer-events-none 
-                                                transition-all duration-200
+                                                transition-all duration-300
                                                 top-1/2 -translate-y-1/2 text-base
                                                 peer-focus:top-0
-                                                peer-focus:-translate-y-0
+                                                peer-focus:-translate-y-3
                                                 peer-focus:text-sm
                                                 peer-focus:text-primary
                                                 peer-not-placeholder-shown:top-0
-                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:-translate-y-3
                                                 peer-not-placeholder-shown:text-sm
                                             "
                                         >
@@ -415,14 +429,14 @@ export default function AuthPage() {
                                         <label
                                             className="
                                                 absolute left-3 text-gray-500 pointer-events-none 
-                                                transition-all duration-200
+                                                transition-all duration-300
                                                 top-1/2 -translate-y-1/2 text-base
                                                 peer-focus:top-0
-                                                peer-focus:-translate-y-0
+                                                peer-focus:-translate-y-3
                                                 peer-focus:text-sm
                                                 peer-focus:text-primary
                                                 peer-not-placeholder-shown:top-0
-                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:-translate-y-3
                                                 peer-not-placeholder-shown:text-sm
                                             "
                                         >
@@ -447,14 +461,14 @@ export default function AuthPage() {
                                         <label
                                             className="
                                                 absolute left-3 text-gray-500 pointer-events-none 
-                                                transition-all duration-200
+                                                transition-all duration-300
                                                 top-1/2 -translate-y-1/2 text-base
                                                 peer-focus:top-0
-                                                peer-focus:-translate-y-0
+                                                peer-focus:-translate-y-3
                                                 peer-focus:text-sm
                                                 peer-focus:text-primary
                                                 peer-not-placeholder-shown:top-0
-                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:-translate-y-3
                                                 peer-not-placeholder-shown:text-sm
                                             "
                                         >
@@ -475,19 +489,19 @@ export default function AuthPage() {
                                             })}
                                             type={show ? "text" : "password"}
                                             placeholder=""
-                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
+                                            className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                         />
                                         <label
                                             className="
                                                 absolute left-3 text-gray-500 pointer-events-none 
-                                                transition-all duration-200
+                                                transition-all duration-300
                                                 top-1/2 -translate-y-1/2 text-base
                                                 peer-focus:top-0
-                                                peer-focus:-translate-y-0
+                                                peer-focus:-translate-y-3
                                                 peer-focus:text-sm
                                                 peer-focus:text-primary
                                                 peer-not-placeholder-shown:top-0
-                                                peer-not-placeholder-shown:-translate-y-0
+                                                peer-not-placeholder-shown:-translate-y-3
                                                 peer-not-placeholder-shown:text-sm
                                             "
                                         >
