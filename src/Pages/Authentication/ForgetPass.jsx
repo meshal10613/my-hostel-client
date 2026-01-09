@@ -15,6 +15,12 @@ const ForgetPass = () => {
         if (email === "") {
             return setError("Email is required");
         }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setError("Invalid email address");
+        }
         setError("");
         const data = { email };
         try {
@@ -64,11 +70,11 @@ const ForgetPass = () => {
                                     transition-all duration-200
                                     top-1/2 -translate-y-1/2 text-base
                                     peer-focus:top-0
-                                    peer-focus:-translate-y-0
+                                    peer-focus:-translate-y-3
                                     peer-focus:text-sm
                                     peer-focus:text-primary
                                     peer-not-placeholder-shown:top-0
-                                    peer-not-placeholder-shown:-translate-y-0
+                                    peer-not-placeholder-shown:-translate-y-3
                                     peer-not-placeholder-shown:text-sm
                                 "
                             >

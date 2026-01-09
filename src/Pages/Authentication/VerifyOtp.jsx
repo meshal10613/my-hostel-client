@@ -20,6 +20,9 @@ const VerifyOtp = () => {
         setError("");
         const join = values.join();
         const otp = Number(join.replaceAll(",", ""));
+        if(otp === 0){
+            return setError("OTP is required");
+        }
         const email = location.state?.email;
         const data = { email, otp };
         try {
@@ -58,7 +61,6 @@ const VerifyOtp = () => {
                     >
                         <div className="space-y-1">
                             <PinInput
-                                required
                                 name="otp"
                                 type="number"
                                 size="lg"
@@ -84,7 +86,7 @@ const VerifyOtp = () => {
                         </button>
                     </form>
                 </div>
-            </div>
+            </div>  
         </div>
     );
 };

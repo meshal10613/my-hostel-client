@@ -264,24 +264,24 @@ const Checkout = () => {
                                     {...register("address", {
                                         required: true,
                                     })}
+                                    placeholder=""
                                     className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
                                 <label
-                                    className={`
-                                        absolute left-3 wrap-break-word text-gray-500
-                                        pointer-events-none 
-                                        transition-all duration-300
-                                        top-1/2 -translate-y-1/2 text-base
-                                        peer-focus:top-0
-                                        peer-focus:-translate-y-3
-                                        peer-focus:text-sm
-                                        peer-focus:text-primary
-                                        peer-not-placeholder-shown:top-0
-                                        peer-not-placeholder-shown:-translate-y-0
-                                        peer-not-placeholder-shown:text-sm
-                                    `}
+                                    className="
+                                absolute left-3 text-gray-500 pointer-events-none 
+                                transition-all duration-300
+                                top-1/2 -translate-y-1/2 text-base
+                                peer-focus:top-0
+                                peer-focus:-translate-y-3
+                                peer-focus:text-sm
+                                peer-focus:text-primary
+                                peer-not-placeholder-shown:top-0
+                                peer-not-placeholder-shown:-translate-y-3
+                                peer-not-placeholder-shown:text-sm
+                            "
                                 >
-                                    Address *
+                                    Address
                                 </label>
                                 {errors.address && (
                                     <p className="text-red-500 text-sm">
@@ -289,7 +289,7 @@ const Checkout = () => {
                                     </p>
                                 )}
                             </div>
-
+                            
                             {/* City */}
                             <div className="relative w-full">
                                 <input
@@ -297,6 +297,7 @@ const Checkout = () => {
                                     {...register("city", {
                                         required: true,
                                     })}
+                                    placeholder=""
                                     className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
                                 <label
@@ -310,7 +311,7 @@ const Checkout = () => {
                                         peer-focus:text-sm
                                         peer-focus:text-primary
                                         peer-not-placeholder-shown:top-0
-                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:-translate-y-3
                                         peer-not-placeholder-shown:text-sm
                                     `}
                                 >
@@ -330,6 +331,7 @@ const Checkout = () => {
                                     {...register("country", {
                                         required: true,
                                     })}
+                                    placeholder=""
                                     className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
                                 <label
@@ -343,7 +345,7 @@ const Checkout = () => {
                                         peer-focus:text-sm
                                         peer-focus:text-primary
                                         peer-not-placeholder-shown:top-0
-                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:-translate-y-3
                                         peer-not-placeholder-shown:text-sm
                                     `}
                                 >
@@ -363,6 +365,7 @@ const Checkout = () => {
                                     {...register("postcode", {
                                         required: true,
                                     })}
+                                    placeholder=""
                                     className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary peer"
                                 />
                                 <label
@@ -372,11 +375,11 @@ const Checkout = () => {
                                         transition-all duration-300
                                         top-1/2 -translate-y-1/2 text-base
                                         peer-focus:top-0
-                                        peer-focus:-translate-y-2
+                                        peer-focus:-translate-y-3
                                         peer-focus:text-sm
                                         peer-focus:text-primary
                                         peer-not-placeholder-shown:top-0
-                                        peer-not-placeholder-shown:-translate-y-0
+                                        peer-not-placeholder-shown:-translate-y-3
                                         peer-not-placeholder-shown:text-sm
                                     `}
                                 >
@@ -396,6 +399,7 @@ const Checkout = () => {
                                     {...register("phone", {
                                         required: true,
                                     })}
+                                    placeholder=""
                                     className="w-full p-3 border-b-2 focus:outline-none focus:border-b-primary focus:placeholder:hidden transition-all peer"
                                 />
                                 <label
