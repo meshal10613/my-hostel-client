@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { IoArrowUndo } from "react-icons/io5";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import useAxios from "../../Hooks/useAxios";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 const ResetPass = () => {
+    const { updateUserPassword } = useAuthContext();
     const [error, setError] = useState("");
+    const axiosInstance = useAxios();
     const location = useLocation();
+    // const navigate = useNavigate();
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
@@ -12,23 +17,39 @@ const ResetPass = () => {
         const email = location.state.data.email;
         const newPassword = e.target.newPassword.value;
         const confirmPassword = e.target.confirmPassword.value;
+
+        if (!newPassword || !confirmPassword) {
+            return setError("Password is required");
+        }
+
         if (newPassword !== confirmPassword) {
             return setError("Passwords do not match");
         }
-        const data = { email, password: newPassword };
-		console.log(data)
-        // try {
-        // 	const res = await axiosInstance.post(
-        // 		"/users/reset-password",
-        // 		data
-        // 	);
-        // 	if (res.data.success === true) {
-        // 		navigate("/login");
-        // 	}
-        // } catch (error) {
-        // 	setError(error.response.data.message);
-        // 	console.log(error);
-        // }
+        
+        try {
+            // 1️⃣ Update password in Firebase
+            await updateUserPassword(newPassword);
+
+            // 2️⃣ Update password in your backend
+            const data = { email, password: newPassword };
+            const res = await axiosInstance.post("/users/reset-password", data);
+
+            if (res.data?.success) {
+                // navigate("/login");
+                console.log("Password reset successful");
+            }
+        } catch (error) {
+            console.error(error);
+
+            // Firebase errors usually come with `code`
+            if (error.code) {
+                setError(error.message);
+            } else {
+                setError(
+                    error.response?.data?.message || "Something went wrong"
+                );
+            }
+        }
     };
 
     return (
@@ -68,11 +89,11 @@ const ResetPass = () => {
                                     transition-all duration-200
                                     top-1/2 -translate-y-1/2 text-base
                                     peer-focus:top-0
-                                    peer-focus:-translate-y-0
+                                    peer-focus:-translate-y-3
                                     peer-focus:text-sm
                                     peer-focus:text-primary
                                     peer-not-placeholder-shown:top-0
-                                    peer-not-placeholder-shown:-translate-y-0
+                                    peer-not-placeholder-shown:-translate-y-3
                                     peer-not-placeholder-shown:text-sm
                                 "
                             >
@@ -94,11 +115,11 @@ const ResetPass = () => {
                                     transition-all duration-200
                                     top-1/2 -translate-y-1/2 text-base
                                     peer-focus:top-0
-                                    peer-focus:-translate-y-0
+                                    peer-focus:-translate-y-3
                                     peer-focus:text-sm
                                     peer-focus:text-primary
                                     peer-not-placeholder-shown:top-0
-                                    peer-not-placeholder-shown:-translate-y-0
+                                    peer-not-placeholder-shown:-translate-y-3
                                     peer-not-placeholder-shown:text-sm
                                 "
                             >

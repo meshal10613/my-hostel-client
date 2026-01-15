@@ -19,7 +19,7 @@ const VerifyOtp = () => {
         e.preventDefault();
         setError("");
         const join = values.join();
-        const otp = Number(join.replaceAll(",", ""));
+        const otp = join.replaceAll(",", "");
         if(otp === 0){
             return setError("OTP is required");
         }
@@ -30,7 +30,7 @@ const VerifyOtp = () => {
                 "/users/verify-otp",
                 data
             );
-            if (res.data.success === true && res.data.message === "OTP verified") {
+            if (res.data.success === true) {
                 navigate("/reset-pass", { state: { data } });
             }
         } catch (error) {

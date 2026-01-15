@@ -79,7 +79,7 @@ const AddReview = ({ id, queryClient, title, category }) => {
     <div className="flex justify-center flex-1">
         {/* Button to open modal */}
         <button
-            className="btn btn-block text-primary bg-white border border-primary"
+            className="w-full text-primary bg-white border-none text-lg font-bold py-4 rounded-xl shadow-lg cursor-pointer"
             onClick={() => setIsOpen(true)}
         >
             Add Review

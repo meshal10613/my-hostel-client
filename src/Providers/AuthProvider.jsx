@@ -1,31 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContext';
-import { auth } from '../Firebase/firebase-init';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { auth } from "../Firebase/firebase-init";
+import {
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+    updatePassword,
+    updateProfile,
+} from "firebase/auth";
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [paymentInfo, setPaymentInfo] = useState({});
-    const [search, setSearch] = useState(''); //? meals page and banner search
+    const [search, setSearch] = useState(""); //? meals page and banner search
 
     const loginUser = (email, password) => {
         setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password)
+        return signInWithEmailAndPassword(auth, email, password);
     };
 
     const registerUser = (email, password) => {
         setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password)
+        return createUserWithEmailAndPassword(auth, email, password);
     };
 
     const logOut = () => {
         setLoading(true);
-        return signOut(auth)
+        return signOut(auth);
     };
 
     const updateUserProfile = (updateData) => {
-        return updateProfile(auth.currentUser, updateData)
+        return updateProfile(auth.currentUser, updateData);
+    };
+
+    const updateUserPassword = (password) => {
+        return updatePassword(user, password);
     };
 
     useEffect(() => {
@@ -51,14 +62,11 @@ const AuthProvider = ({children}) => {
         loginUser,
         registerUser,
         logOut,
-        updateUserProfile
+        updateUserProfile,
+        updateUserPassword
     };
 
-    return (
-        <AuthContext value={authData}>
-            {children}
-        </AuthContext>
-    );
+    return <AuthContext value={authData}>{children}</AuthContext>;
 };
 
 export default AuthProvider;
