@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "./Shared/Loading";
 import { Link } from "react-router";
-import { FaStar } from "react-icons/fa";
 
 const MealsCategory = () => {
     const [isActive, setIsActive] = useState("all");
     const [category, setCategory] = useState("");
     const [showAll, setShowAll] = useState(false);
+    const [sliceCount, setSliceCount] = useState(12);
     const axios = useAxios();
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["category", category],
@@ -32,7 +32,23 @@ const MealsCategory = () => {
             setCategory("");
         }
     };
-    const display = showAll ? meals : meals.slice(0, 12);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1536) {
+                setSliceCount(10);
+            } else {
+                setSliceCount(12);
+            }
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const display = showAll ? meals : meals.slice(0, sliceCount);
 
     return (
         <div className="conatiner mx-auto z-50 px-4">

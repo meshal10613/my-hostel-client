@@ -241,7 +241,7 @@ const MealDetails = () => {
     const increaseLike = useMutation({
         mutationFn: async (id) => {
             const res = await axios.patch(`/likes/${id}`, {
-                userId: meal?.userId?._id,
+                email: user.email,
             });
             return res.data;
         },

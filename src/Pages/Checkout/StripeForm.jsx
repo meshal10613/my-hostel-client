@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { MdError } from "react-icons/md";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const StripeForm = ({ info, dialogRef }) => {
     const axiosSecure = useAxiosSecure();
@@ -16,85 +17,83 @@ const StripeForm = ({ info, dialogRef }) => {
     const [loading, setLoading] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        setError("");
-        setLoading(true);
-        e.preventDefault();
-        if (!stripe || !elements) {
-            setError("Stripe is not loaded yet.");
-            setLoading(false);
-            return;
-        }
-        const card = elements.getElement(CardNumberElement);
-
-        if (!card) {
-            setError("Card information is required.");
-            setLoading(false);
-            return;
-        }
-
-        // Use your card Element with other Stripe.js APIs
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: "card",
-            card,
-        });
-
-        if (error) {
-            setError(error.message);
-            setLoading(false);
-            return;
-        } else {
+        try {
             setError("");
-        }
-
-        const ammountInCents = info.price;
-        const serverData = {
-            ...info,
-            status: "Pending",
-        };
-
-        //step-2: create payment intent
-        const res = await axiosSecure.post(`/stripe/create-payment-intent`, {
-            ammountInCents,
-            serverData,
-        });
-        const clientSecret = res.data.clientSecret;
-
-        const result = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: elements.getElement(CardNumberElement),
-                billing_details: {
-                    name: info?.userName,
-                    email: info?.userEmail,
-                },
-            },
-        });
-
-        if (result.error) {
-            setError(result.error.message);
-            setLoading(false);
-            return;
-        } else {
-            if (result.paymentIntent.status === "succeeded") {
-                setError("");
+            setLoading(true);
+            e.preventDefault();
+            if (!stripe || !elements) {
+                setError("Stripe is not loaded yet.");
                 setLoading(false);
-                //? Close the modal
-                dialogRef.current.close();
-                serverData.status = "Success";
-                const res = await axiosSecure.post(
-                    "/stripe/confirm-payment-intent",
-                    serverData
-                );
-                if (res.data.count) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Congratulations!",
-                        text: `Payment Successful!`,
-                        confirmButtonColor: "#FFAE00",
-                    });
+                return;
+            }
+            const card = elements.getElement(CardNumberElement);
+
+            if (!card) {
+                setError("Card information is required.");
+                setLoading(false);
+                return;
+            }
+
+            // Use your card Element with other Stripe.js APIs
+            const { error } = await stripe.createPaymentMethod({
+                type: "card",
+                card,
+            });
+
+            if (error) {
+                setError(error.message);
+                setLoading(false);
+                return;
+            } else {
+                setError("");
+            }
+
+            // step-2: create payment intent
+            const res = await axiosSecure.post(
+                `/payments/stripe/create-payment-intent`,
+                info
+            );
+            const clientSecret = res.data.clientSecret;
+
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement),
+                    billing_details: {
+                        name: info?.userName,
+                        email: info?.userEmail,
+                    },
+                },
+            });
+            if (result.error) {
+                setError(result.error.message);
+                setLoading(false);
+                return;
+            } else {
+                if (result.paymentIntent.status === "succeeded") {
+                    setError("");
+                    setLoading(false);
+                    //? Close the modal
+                    dialogRef.current.close();
+                    const res = await axiosSecure.patch(
+                        "/payments/stripe/confirm-payment-intent",
+                        { email: info?.userEmail, status: "Success" }
+                    );
+                    if (res.data.success === true) {
+                        navigate("/success-payment");
+                    }
                 }
             }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "Congratulations!",
+                text: `${error.response.data.message}`,
+                confirmButtonColor: "#FFAE00",
+            });
         }
     };
 

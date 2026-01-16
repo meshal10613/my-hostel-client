@@ -104,7 +104,7 @@ const Checkout = () => {
             price: newPackage.price * 100,
             userName: user?.displayName,
             userEmail: user?.email,
-            status: "Pending",
+            status: "Initiated",
         };
         setPaymentTrigger(info);
         if (modalRef.current) {
@@ -179,7 +179,7 @@ const Checkout = () => {
                 animate={{ opacity: 1, x: 0, transition: { duration: 0.4 } }}
                 className="w-full lg:col-span-4 h-fit space-y-4"
             >
-                <motion.div
+                {/* <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{
                         opacity: 1,
@@ -217,6 +217,57 @@ const Checkout = () => {
                         <p className="flex items-center justify-between">
                             Grand Total:{" "}
                             <strong>৳{newPackage?.price || 0}</strong>
+                        </p>
+                    </motion.div>
+                </motion.div> */}
+                <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{
+                        opacity: 1,
+                        x: 0,
+                        transition: { duration: 0.4 },
+                    }}
+                    className="w-full lg:col-span-4 bg-base-100 p-6 rounded-xl shadow-lg border border-base-300 h-fit space-y-6"
+                >
+                    <motion.h2
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+                        className="text-xl font-semibold mb-2"
+                    >
+                        Payment Summary
+                    </motion.h2>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { delay: 0.15 } }}
+                        className="space-y-4"
+                    >
+                        {/* Existing summary lines */}
+                        <div className="space-y-2">
+                            <p className="flex items-center justify-between">
+                                Package: <strong>Gold</strong>
+                            </p>
+                            <p className="flex items-center justify-between">
+                                Total:{" "}
+                                <strong>৳{newPackage?.price || 0}</strong>
+                            </p>
+                            <p className="flex items-center justify-between">
+                                Discount:{" "}
+                                <strong>৳{newPackage?.discount || 0}</strong>
+                            </p>
+                            <p className="flex items-center justify-between">
+                                Tax: <strong>৳{newPackage?.tax || 0}</strong>
+                            </p>
+                        </div>
+                        {/* Grand Total */}
+                        <p className="flex items-center justify-between text-lg font-bold">
+                            Grand Total:{" "}
+                            <span className="text-primary">
+                                ৳
+                                {newPackage?.finalPrice ||
+                                    newPackage?.price ||
+                                    0}
+                            </span>
                         </p>
                     </motion.div>
                 </motion.div>
@@ -289,7 +340,7 @@ const Checkout = () => {
                                     </p>
                                 )}
                             </div>
-                            
+
                             {/* City */}
                             <div className="relative w-full">
                                 <input
