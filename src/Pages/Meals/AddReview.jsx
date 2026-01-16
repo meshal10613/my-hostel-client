@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import useAuthContext from '../../Hooks/useAuthContext';
-import useAxios from '../../Hooks/useAxios';
-import Swal from 'sweetalert2';
-import StarRating from './StarRating';
+import React, { useState } from "react";
+import useAuthContext from "../../Hooks/useAuthContext";
+import useAxios from "../../Hooks/useAxios";
+import Swal from "sweetalert2";
+import StarRating from "./StarRating";
 
 const AddReview = ({ id, queryClient, title, category }) => {
     const { user } = useAuthContext();
@@ -12,8 +12,16 @@ const AddReview = ({ id, queryClient, title, category }) => {
     const [review, setReview] = useState("");
     const [load, setLoad] = useState(false);
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!user) {
+            Swal.fire({
+                title: "Please Login",
+                text: "You need to be logged in to like this meal.",
+                icon: "warning",
+                confirmButtonColor: "#FFAE00",
+            });
+        }
         setLoad(true);
 
         const ratingValue = parseFloat(rating);
@@ -31,29 +39,29 @@ const AddReview = ({ id, queryClient, title, category }) => {
             review,
             reviewUserName: user?.displayName,
             reviewUserEmail: user?.email,
-            reviewUserPhotoURL: user?.photoURL
+            reviewUserPhotoURL: user?.photoURL,
         };
 
         const res = await axios.post("/reviews", serverData);
-        if(res.data.success === true && res.data.action === "created"){
+        if (res.data.success === true && res.data.action === "created") {
             setLoad(false);
             Swal.fire({
                 icon: "success",
                 title: "Congratulations!",
                 text: `Rating added successfully!`,
-                confirmButtonColor: "#FFAE00"
+                confirmButtonColor: "#FFAE00",
             });
             // reset fields
             setRating("");
             setReview("");
             setIsOpen(false);
             queryClient.invalidateQueries(["meal"]);
-        }else if(res.data.success === true && res.data.action === "updated"){
+        } else if (res.data.success === true && res.data.action === "updated") {
             Swal.fire({
                 icon: "success",
                 title: "Congratulations!",
                 text: `Rating updated successfully`,
-                confirmButtonColor: "#FFAE00"
+                confirmButtonColor: "#FFAE00",
             });
             setLoad(false);
             // reset fields
@@ -61,12 +69,12 @@ const AddReview = ({ id, queryClient, title, category }) => {
             setReview("");
             setIsOpen(false);
             queryClient.invalidateQueries(["meal"]);
-        }else{
+        } else {
             Swal.fire({
                 icon: "error",
                 title: "Sorry!",
                 text: `${res.data.message}`,
-                confirmButtonColor: "#FFAE00"
+                confirmButtonColor: "#FFAE00",
             });
             setLoad(false);
             // reset fields
@@ -76,62 +84,67 @@ const AddReview = ({ id, queryClient, title, category }) => {
         }
     };
     return (
-    <div className="flex justify-center flex-1">
-        {/* Button to open modal */}
-        <button
-            className="w-full text-primary bg-white border-none text-lg font-bold py-4 rounded-xl shadow-lg cursor-pointer"
-            onClick={() => setIsOpen(true)}
-        >
-            Add Review
-        </button>
+        <div className="flex justify-center flex-1">
+            {/* Button to open modal */}
+            <button
+                className="w-full text-primary bg-white border-none text-lg font-bold py-4 rounded-xl shadow-lg cursor-pointer"
+                onClick={() => setIsOpen(true)}
+            >
+                Add Review
+            </button>
 
-        {/* Modal */}
-        {isOpen && (
-            <dialog className="modal modal-open">
-                <div className="modal-box">
-                    <h3 className="font-bold text-lg mb-4">Add Your Review</h3>
+            {/* Modal */}
+            {isOpen && (
+                <dialog className="modal modal-open">
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg mb-4">
+                            Add Your Review
+                        </h3>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {/* Rating Input */}
-                        <StarRating onRatingChange={setRating} />
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            {/* Rating Input */}
+                            <StarRating onRatingChange={setRating} />
 
-                        {/* Review Textarea */}
-                        <div>
-                            <label className="label">
-                            <span className="label-text">Your Review</span>
-                            </label>
-                            <textarea
-                            className="textarea textarea-bordered w-full"
-                            placeholder="Write your review..."
-                            value={review}
-                            onChange={(e) => setReview(e.target.value)}
-                            required
-                            ></textarea>
-                        </div>
+                            {/* Review Textarea */}
+                            <div>
+                                <label className="label">
+                                    <span className="label-text">
+                                        Your Review
+                                    </span>
+                                </label>
+                                <textarea
+                                    className="textarea textarea-bordered w-full"
+                                    placeholder="Write your review..."
+                                    value={review}
+                                    onChange={(e) => setReview(e.target.value)}
+                                    required
+                                ></textarea>
+                            </div>
 
-                        <div className='flex items-center justify-between'>
-                            {/* Close Button */}
-                            <button
-                                className="btn modal-action justify-center mt-0"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                Close
-                            </button>
-                            {/* Submit Button */}
-                            <button type="submit" className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg w-32">
-                                { 
-                                    load 
-                                    ? <div className="loading loading-spinner"></div> 
-                                    : "Submit" 
-                                }
-                            </button>
-                        </div>
-                    </form>
-
-
-                </div>
-            </dialog>
-        )}
+                            <div className="flex items-center justify-between">
+                                {/* Close Button */}
+                                <button
+                                    className="btn modal-action justify-center mt-0"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Close
+                                </button>
+                                {/* Submit Button */}
+                                <button
+                                    type="submit"
+                                    className="btn bg-gradient-to-r from-[#FFAE00] to-[#FF8A00] text-white py-3 rounded-lg w-32"
+                                >
+                                    {load ? (
+                                        <div className="loading loading-spinner"></div>
+                                    ) : (
+                                        "Submit"
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </dialog>
+            )}
         </div>
     );
 };

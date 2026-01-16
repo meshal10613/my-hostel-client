@@ -19,7 +19,7 @@ const MealsCategory = () => {
             return res.data.data;
         },
     });
-    console.log(meals);
+
     const handleMealsButton = (meal) => {
         setIsActive(meal);
         if (meal === "breakfast") {

@@ -24,6 +24,7 @@ import SuccessPayment from "../Pages/Checkout/SuccessPayment";
 import PrivetRoute from "./PrivetRoute";
 import VerifyOtp from "../Pages/Authentication/VerifyOtp";
 import ResetPass from "../Pages/Authentication/ResetPass";
+import Forbidden from "../Pages/Forbidden";
 
 export const router = createBrowserRouter([
     {
@@ -49,7 +50,7 @@ export const router = createBrowserRouter([
             {
                 path: "/checkout/:packageName",
                 element: <PrivetRoute><Checkout /></PrivetRoute>,
-            },
+            }
         ],
     },
     {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
     {
         path: "/reset-pass",
         element: <ResetPass/>
+    },
+    {
+        path: "/forbidden",
+        element: <Forbidden/>
     },
     {
         path: "/dashboard",

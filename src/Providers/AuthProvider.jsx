@@ -9,9 +9,12 @@ import {
     updatePassword,
     updateProfile,
 } from "firebase/auth";
+import useAxios from "../Hooks/useAxios";
 
 const AuthProvider = ({ children }) => {
+    const axios = useAxios();
     const [user, setUser] = useState(null);
+    const [databaseUser, setDatabaseUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [paymentInfo, setPaymentInfo] = useState({});
     const [search, setSearch] = useState(""); //? meals page and banner search
@@ -28,6 +31,7 @@ const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         setLoading(true);
+        localStorage.removeItem("food-wagon-token");
         return signOut(auth);
     };
 
@@ -40,19 +44,29 @@ const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
             setLoading(false);
+            if (currentUser?.email) {
+                const userData = { email: currentUser.email };
+                const res = await axios.post("/users/jwt", userData);
+                setDatabaseUser(res.data.user);
+                localStorage.setItem("food-wagon-token", res.data.token);
+            } else {
+                localStorage.removeItem("food-wagon-token");
+            }
         });
 
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [axios]);
 
     const authData = {
         user,
         setUser,
+        databaseUser,
+        setDatabaseUser,
         loading,
         setLoading,
         search,
@@ -63,7 +77,7 @@ const AuthProvider = ({ children }) => {
         registerUser,
         logOut,
         updateUserProfile,
-        updateUserPassword
+        updateUserPassword,
     };
 
     return <AuthContext value={authData}>{children}</AuthContext>;
